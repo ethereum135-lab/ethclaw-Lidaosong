@@ -1,0 +1,27 @@
+{
+  "node": "NG#17",
+  "timestamp": "2026-05-18T16:34:36+08:00",
+  "ts_unix": 1779086076,
+  "btc_price": 76901,
+  "fng": 27,
+  "usdt": 254.20,
+  "total_equity_approx": 297.44,
+  "positions": [
+    {"asset": "DOT", "qty": 12.02, "price": 1.225, "cost": 1.246, "pnl_pct": -1.69, "value": 14.72, "decision": "HOLD", "entry_type": "mean_reversion", "stop": 1.2214, "hours_held": 8.4, "note": "距止损仅$0.0036(0.3%),密切观察"},
+    {"asset": "ADA", "qty": 60.175, "price": 0.2493, "cost": null, "pnl_pct": null, "value": 14.99, "decision": "HOLD_legacy", "entry_type": "legacy", "note": "老引擎遗留仓,无成本价,~$15"},
+    {"asset": "TON", "qty": 2.736, "price": 1.933, "cost": 2.361, "pnl_pct": -18.1, "value": 5.29, "decision": "HOLD_dust", "entry_type": "legacy"},
+    {"asset": "UNI", "qty": 1.224, "price": 3.420, "cost": 4.052, "pnl_pct": -15.6, "value": 4.18, "decision": "HOLD_dust", "entry_type": "legacy"},
+    {"asset": "XEC", "qty": 580139, "price": 0.000007, "cost": 0.0000075, "pnl_pct": -6.67, "value": 4.06, "decision": "HOLD_dust", "entry_type": "legacy"}
+  ],
+  "actions_taken": ["hold_all"],
+  "new_buys": 0,
+  "new_sells": 0,
+  "exit_signals_checked": "P1-none(全部RSI<70),止损-none(尘埃<$10),24h超时-DOT仅8.4h,尘止损-TON/UNI/XEC<-3%但<$10不可执行",
+  "a3_recommendation": "none",
+  "rsidivergence": {"DOT":"NONE","ADA":"NONE","ZEC":"NONE"},
+  "trend_check": {"DOT":"SKIP(1/9)","ZEC":"BUY_PULLBACK(4/9)","UTK":"BUY_PULLBACK(5/9)","ADA":"WATCH(3/9)"},
+  "rsi_bb": {"buy_count":0,"signal":"all_WATCH","timestamp":"16:06"},
+  "idle_funds_scan": "三源无BUY_NOW: RSI+BB 0BUY,动量无A2,持仓DOT-1.69%未改善",
+  "idle_check": "⚠️连续HOLD~15节点(8h自08:31末笔SELL),根因:市场持续阴跌BTC$78K→$76.9K,F&G=27,全市场超卖但无反弹信号,守纪律等待",
+  "market_note": "BTC$76.9K全天阴跌(-1.4%今晨),F&G=27深度恐惧,0/19RSI+BB全WATCH.DOT距止损$1.2214仅0.3%.ZEC/UTK均为BUY_PULLBACK未达BUY_NOW.等待18:00赛道扫描或价格反弹."
+}

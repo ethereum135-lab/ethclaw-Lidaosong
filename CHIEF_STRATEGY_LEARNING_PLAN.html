@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>首席战略官专属学习方案 — 量化加密交易系统</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #131318;
+    --surface-2: #1a1a22;
+    --border: #2a2a35;
+    --text: #e4e4e8;
+    --text-2: #9898a0;
+    --text-3: #62626a;
+    --brand: #8b5cf6;
+    --brand-2: #a78bfa;
+    --brand-light: rgba(139, 92, 246, 0.1);
+    --green: #34d399;
+    --green-light: rgba(52, 211, 153, 0.1);
+    --red: #f87171;
+    --red-light: rgba(248, 113, 113, 0.1);
+    --yellow: #fbbf24;
+    --yellow-light: rgba(251, 191, 36, 0.1);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    line-height: 1.7;
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--brand-light);
+    color: var(--brand-2);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header p {
+    color: var(--text-2);
+    font-size: 14px;
+  }
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-num {
+    width: 32px; height: 32px;
+    background: var(--brand);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 640px) { .card-grid { grid-template-columns: 1fr; } }
+  .stat {
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-val {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--brand-2);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 4px;
+  }
+  .principle {
+    background: var(--brand-light);
+    border-left: 3px solid var(--brand);
+    padding: 16px 20px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 12px;
+  }
+  .principle-title {
+    font-weight: 600;
+    color: var(--brand-2);
+    margin-bottom: 4px;
+  }
+  .principle-body {
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    text-align: left;
+    color: var(--text-3);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  .phase {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .phase-day {
+    flex-shrink: 0;
+    width: 80px;
+    text-align: center;
+    padding-top: 4px;
+  }
+  .phase-day-num {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--brand);
+  }
+  .phase-day-label {
+    font-size: 11px;
+    color: var(--text-3);
+  }
+  .phase-body {
+    flex: 1;
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .phase-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .phase-task {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-2);
+    margin-bottom: 6px;
+  }
+  .phase-task::before {
+    content: "▸";
+    color: var(--brand);
+    flex-shrink: 0;
+  }
+  .checkpoint {
+    background: var(--green-light);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--green);
+  }
+  .checkpoint::before {
+    content: "✓ 检验点: ";
+    font-weight: 600;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .tag-brand { background: var(--brand-light); color: var(--brand-2); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-yellow { background: var(--yellow-light); color: var(--yellow); }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .naval-quote {
+    font-style: italic;
+    color: var(--text-2);
+    padding: 12px 16px;
+    border-left: 2px solid var(--text-3);
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .method-box {
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .method-name {
+    font-weight: 600;
+    color: var(--brand-2);
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+  .method-desc {
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .method-action {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .footer p {
+    color: var(--text-3);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">首席战略官 · 专属学习方案</div>
+  <h1>量化加密交易系统 — 从零到精通</h1>
+  <p>纳瓦尔思维 × 刻意练习 × 高效学习法 | 2026-09-06</p>
+</div>
+
+<!-- ════════ 第一部分：全局战略判断 ════════ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">1</div>
+    <h2>全局战略判断 — 纳瓦尔第一性原理</h2>
+  </div>
+
+  <div class="card">
+    <p style="margin-bottom:16px; color:var(--text-2); font-size:14px;">
+      纳瓦尔的核心思维：不要用类比思考，要从第一性原理出发。
+      不要问"别人怎么做交易系统"，要问"这个系统的本质是什么"。
+    </p>
+
+    <div class="naval-quote">
+      "财富需要杠杆。代码和资本是最高形式的杠杆 — 它们在你睡觉时为你工作。" — Naval Ravikant
+    </div>
+
+    <div class="principle">
+      <div class="principle-title">第一性原理：交易系统的本质是什么？</div>
+      <div class="principle-body">
+        交易系统的本质 = <b>概率游戏 + 风险管理 + 复利效应</b><br><br>
+        每一笔交易不需要都赚钱，只需要：<br>
+        ① 胜率 > 50%（或盈亏比 > 1.5）<br>
+        ② 单笔亏损有上限（风控）<br>
+        ③ 正期望值 × 交易次数 = 复利增长<br><br>
+        当前系统的问题：不是策略不好，是<b>没有验证过正期望值</b>。
+        RSI < 35 买入在理论上是对的，但从未用历史数据验证过胜率。
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-title">杠杆：我们拥有什么杠杆？</div>
+      <div class="principle-body">
+        <b>代码杠杆</b>：mean_rev_bot.py 每5分钟自动扫描20个币，一个人永远做不到<br>
+        <b>资本杠杆</b>：$280（币安$208 + 火币$71），小但可复利<br>
+        <b>时间杠杆</b>：cron 24/7 运行，睡觉时也在交易<br>
+        <b>知识杠杆</b>：每笔交易的数据都在积累，学会分析就能持续优化<br><br>
+        关键洞察：<b>代码+资本+时间 = 三重杠杆</b>，但缺少"知识杠杆"的闭环 — 
+        交易数据没有被用来反哺策略优化。
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-title">复利：什么在复利增长？</div>
+      <div class="principle-body">
+        <b>资金复利</b>：每天0.2% → 年化730%（理论值，实际目标日0.1-0.3%）<br>
+        <b>知识复利</b>：每天分析10笔交易 → 3个月理解900笔交易的模式<br>
+        <b>系统复利</b>：每次优化参数 → 下次交易胜率更高 → 更多数据 → 更好的优化<br><br>
+        当前断裂点：<b>交易完成后没有复盘闭环</b>。每笔交易的结果没有被分析、归因、反馈到下一笔。
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-title">特定知识：什么是最有价值的特定知识？</div>
+      <div class="principle-body">
+        不是"会写Python"，不是"懂RSI"，而是：<br>
+        <b>"知道哪个RSI阈值在当前市场状态下买入，胜率最高"</b><br><br>
+        这种知识无法从书本获得，只能从<b>自己的交易数据</b>中提炼。
+        这就是为什么复盘闭环是整个系统最关键的环节。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第二部分：领域知识地图 ════════ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">2</div>
+    <h2>领域知识地图 — 需要掌握的6个模块</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:24%">模块</th>
+        <th style="width:46%">核心知识</th>
+        <th style="width:18%">当前掌握</th>
+        <th style="width:12%">优先级</th>
+      </tr>
+      <tr>
+        <td><b>1. 市场微观结构</b></td>
+        <td>订单簿、流动性、滑点、买卖价差、量价关系</td>
+        <td><span class="tag tag-yellow">基础</span></td>
+        <td><span class="tag tag-red">高</span></td>
+      </tr>
+      <tr>
+        <td><b>2. 技术指标原理</b></td>
+        <td>RSI计算原理、布林带统计含义、量比、ATR、MACD</td>
+        <td><span class="tag tag-brand">中等</span></td>
+        <td><span class="tag tag-yellow">中</span></td>
+      </tr>
+      <tr>
+        <td><b>3. 策略设计</b></td>
+        <td>均值回归 vs 趋势跟踪、入场/出场逻辑、止损设计</td>
+        <td><span class="tag tag-brand">中等</span></td>
+        <td><span class="tag tag-red">高</span></td>
+      </tr>
+      <tr>
+        <td><b>4. 风险管理</b></td>
+        <td>凯利公式、仓位管理、最大回撤、相关性风险</td>
+        <td><span class="tag tag-yellow">基础</span></td>
+        <td><span class="tag tag-red">高</span></td>
+      </tr>
+      <tr>
+        <td><b>5. 数据分析</b></td>
+        <td>回测方法、胜率/盈亏比/期望值、归因分析</td>
+        <td><span class="tag tag-yellow">基础</span></td>
+        <td><span class="tag tag-red">高</span></td>
+      </tr>
+      <tr>
+        <td><b>6. 系统工程</b></td>
+        <td>Python、API对接、AWS运维、cron、监控告警</td>
+        <td><span class="tag tag-green">熟练</span></td>
+        <td><span class="tag tag-green">低</span></td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-3);">
+      工程能力已经足够，瓶颈在<b>市场理解 + 数据分析 + 风险管理</b>三个模块。
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 第三部分：学习目标与基线 ════════ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">3</div>
+    <h2>学习目标 · 现有基础 · 每日投入</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-grid">
+      <div class="stat">
+        <div class="stat-val">3个月</div>
+        <div class="stat-label">目标周期：建立完整的交易-复盘-优化闭环</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">60%</div>
+        <div class="stat-label">目标胜率：RSI信号在15m周期上的实际胜率</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">2h/天</div>
+        <div class="stat-label">可投入时间：1h复盘 + 30min学习 + 30min优化</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">$280</div>
+        <div class="stat-label">当前资金：币安$208 + 火币$71</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:15px; margin-bottom:12px;">具体学习目标（90天）</h3>
+    <table>
+      <tr>
+        <th style="width:20%">阶段</th>
+        <th style="width:40%">目标</th>
+        <th style="width:40%">验收标准</th>
+      </tr>
+      <tr>
+        <td>第1-10天</td>
+        <td>看懂每一笔交易为什么赚/亏</td>
+        <td>能对每笔交易给出3个归因维度（信号/时机/风控）</td>
+      </tr>
+      <tr>
+        <td>第11-30天</td>
+        <td>找到最优参数组合</td>
+        <td>用历史数据回测出RSI/BB/止损的最优阈值</td>
+      </tr>
+      <tr>
+        <td>第31-60天</td>
+        <td>多策略组合</td>
+        <td>均值回归 + 趋势跟踪共存，不同市场状态切换</td>
+      </tr>
+      <tr>
+        <td>第61-90天</td>
+        <td>系统自我进化</td>
+        <td>每周自动分析上周交易，输出参数调整建议</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 第四部分：学习方法论 ════════ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">4</div>
+    <h2>核心学习方法论 — 刻意练习 × 高效学习</h2>
+  </div>
+
+  <div class="card">
+    <div class="method-box">
+      <div class="method-name">1. 费曼技巧 — 用简单话解释</div>
+      <div class="method-desc">
+        每学一个概念，用"教给完全不懂的人"的方式写一遍。
+        写不出来 = 没真懂。这是检验理解的唯一标准。
+      </div>
+      <div class="method-action">每天复盘日志里，用一句话解释当天最有价值的一笔交易"为什么赚/亏"</div>
+    </div>
+
+    <div class="method-box">
+      <div class="method-name">2. 主动回忆 — 不看资料默写</div>
+      <div class="method-desc">
+        看完资料后关掉，凭记忆默写核心要点。大脑在"提取"时记忆最深，
+        在"重读"时记忆最浅。
+      </div>
+      <div class="method-action">学完RSI原理后，不看任何资料，手写RSI公式和3个应用场景</div>
+    </div>
+
+    <div class="method-box">
+      <div class="method-name">3. 交错练习 — 不要只练一种</div>
+      <div class="method-desc">
+        不要一天只看RSI，要RSI + 量比 + 布林带 + 市场情绪混合学习。
+        大脑在"切换不同但相关主题"时，建立更深层的连接。
+      </div>
+      <div class="method-action">每天学习计划：20分钟RSI → 20分钟量价关系 → 20分钟风险管理 → 交错进行</div>
+    </div>
+
+    <div class="method-box">
+      <div class="method-name">4. 即时反馈 — 刻意练习的核心</div>
+      <div class="method-desc">
+        刻意练习和普通练习的区别 = 有没有即时反馈。
+        每笔交易5分钟后就知道结果，这是天然的训练场。
+        但前提是：必须<b>记录每笔交易的完整上下文</b>（RSI值、量比、F&G、入场价、出场原因）。
+      </div>
+      <div class="method-action">给mean_rev_bot加交易日志：每笔交易记录入场的全部指标值，出场时记录结果和原因</div>
+    </div>
+
+    <div class="method-box">
+      <div class="method-name">5. 组块化 — 从小到大</div>
+      <div class="method-desc">
+        不要一上来学"量化交易"，要拆成：
+        RSI怎么算 → RSI什么时候准 → RSI+量比怎么组合 → RSI+量比+止损怎么配合 → 完整策略。
+        每个组块练到"不假思索"再进下一个。
+      </div>
+      <div class="method-action">本周只练一个组块：RSI < 35的买入信号在15m周期上，历史胜率到底是多少</div>
+    </div>
+
+    <div class="method-box">
+      <div class="method-name">6. 突破舒适区 — 练最弱的部分</div>
+      <div class="method-desc">
+        人本能地重复练已经会的，回避不会的。
+        刻意练习 = 专门挑"做不好但能改进"的环节反复练。
+      </div>
+      <div class="method-action">当前最弱：止损设置。本周专攻"F&G联动止损在不同市场状态下被打掉的概率"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第五部分：可执行方案 ════════ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">5</div>
+    <h2>可立即执行的30天方案 — 每天照着做</h2>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="card">
+    <h3 style="font-size:16px; margin-bottom:16px; color:var(--brand-2);">
+      Phase 1：建立复盘闭环（第1-7天）
+    </h3>
+    <p style="font-size:13px; color:var(--text-2); margin-bottom:16px;">
+      目标：让每笔交易都有完整记录和归因分析。这是后续一切优化的基础。
+    </p>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D1</div>
+        <div class="phase-day-label">今天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">给机器人加交易日志</div>
+        <div class="phase-task">修改 mean_rev_bot.py：买入时记录 RSI值、量比、F&G值、布林下轨价、布林中轨价</div>
+        <div class="phase-task">卖出时记录：出场RSI、出场原因、持仓时间、实际盈亏</div>
+        <div class="phase-task">日志写到 data/trade_journal.json，每笔交易一条记录</div>
+        <div class="checkpoint">机器人能自动记录每笔交易的完整上下文到JSON文件</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D2</div>
+        <div class="phase-day-label">明天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">写每日复盘脚本</div>
+        <div class="phase-task">写 daily_review_v2.py：读取当天所有交易，输出盈亏、胜率、平均持仓时间</div>
+        <div class="phase-task">每笔交易标注：赚了还是亏了、出场原因是什么、RSI入场值是多少</div>
+        <div class="phase-task">加入 cron：每天22:00自动运行，生成 markdown 报告</div>
+        <div class="checkpoint">今天结束时有报告告诉你：今天赚了多少、哪笔交易贡献最大、为什么</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D3</div>
+        <div class="phase-day-label">后天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">学透RSI的第一性原理</div>
+        <div class="phase-task">不看任何资料，手写RSI公式（用费曼技巧检验自己是否真懂）</div>
+        <div class="phase-task">理解：RSI本质是"过去N根K线中，上涨幅度占涨跌总幅度的比例"</div>
+        <div class="phase-task">问自己3个问题：RSI=30和RSI=25在实际交易中有什么区别？为什么是14根K线不是10根？RSI在趋势市场中为什么会失灵？</div>
+        <div class="phase-task">用实际K线数据验证：在币安拉SOL的15m K线，手动计算最近24根的RSI</div>
+        <div class="checkpoint">能不看资料，用自己的话向别人解释RSI为什么能预测反转</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D4</div>
+        <div class="phase-day-label">第4天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">学透布林带的第一性原理</div>
+        <div class="phase-task">手写布林带公式：SMA(20) ± 2×StdDev(20)</div>
+        <div class="phase-task">理解：布林带本质是"过去20根K线的价格分布范围"，±2σ覆盖95%的正常波动</div>
+        <div class="phase-task">问自己：为什么跌破下轨是买入信号？什么情况下跌破下轨后继续跌？如何区分？</div>
+        <div class="phase-task">关键洞察：布林带在低波动期收窄 → 突破后波动扩大 → 这是"布林带挤压"信号</div>
+        <div class="checkpoint">能画出布林带收窄→扩张的示意图，并解释为什么收窄后更容易出现大波动</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D5</div>
+        <div class="phase-day-label">第5天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">理解量比和成交量的本质</div>
+        <div class="phase-task">量比 = 当前K线成交量 / 过去20根K线平均成交量</div>
+        <div class="phase-task">理解：量比>2 = 有人在大量买入/卖出 = 可能是趋势启动或FOMO</div>
+        <div class="phase-task">问自己：RSI超卖 + 量比>2，该买还是不该买？为什么策略里设置了量比>2拒绝入场？</div>
+        <div class="phase-task">用实际数据验证：找3个RSI<35且量比>2的案例，看后续走势是反弹还是继续跌</div>
+        <div class="checkpoint">能用数据证明：量比>2时RSI超卖信号的胜率是否真的更低</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D6</div>
+        <div class="phase-day-label">第6天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">理解F&G恐惧指数和市场情绪</div>
+        <div class="phase-task">F&G=0(极度恐惧)时买入的胜率 vs F&G=75(极度贪婪)时买入的胜率</div>
+        <div class="phase-task">理解为什么策略在极度恐惧时放宽止损（-9%）：因为正常波动大，-6%会被打掉</div>
+        <div class="phase-task">问自己：F&G联动止损的参数是否合理？需要用历史数据验证</div>
+        <div class="checkpoint">能解释F&G指数在什么市场状态下最有用，什么状态下会失灵</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D7</div>
+        <div class="phase-day-label">第7天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">第一周复盘 + 主动回忆</div>
+        <div class="phase-task">不看任何资料，在白纸上画出完整策略流程：扫描→RSI判断→布林带判断→量比过滤→F&G过滤→买入→持仓监控→卖出条件→止损</div>
+        <div class="phase-task">对照代码，看自己漏了什么（漏的=没真懂的）</div>
+        <div class="phase-task">写500字："RSI+布林带均值回归策略的本质是什么？它什么情况下赚，什么情况下亏？"</div>
+        <div class="checkpoint">能脱稿向别人讲清楚策略的完整逻辑和每个参数的意义</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="card">
+    <h3 style="font-size:16px; margin-bottom:16px; color:var(--green);">
+      Phase 2：数据驱动验证（第8-14天）
+    </h3>
+    <p style="font-size:13px; color:var(--text-2); margin-bottom:16px;">
+      目标：用历史数据验证策略参数。不再凭感觉，用数字说话。
+    </p>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D8</div>
+        <div class="phase-day-label">第8天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">写简单回测脚本</div>
+        <div class="phase-task">写 backtest.py：拉取过去30天的15m K线数据，模拟RSI<35+BB下轨买入</div>
+        <div class="phase-task">计算每次买入后到RSI>65或BB中轨的收益率</div>
+        <div class="phase-task">输出：总交易次数、胜率、平均收益、最大亏损</div>
+        <div class="checkpoint">脚本能跑出过去30天的模拟交易结果</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D9</div>
+        <div class="phase-day-label">第9天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">参数扫描：RSI阈值优化</div>
+        <div class="phase-task">用回测脚本测试 RSI阈值 25/30/35/40/45 各自的胜率和盈亏比</div>
+        <div class="phase-task">找到：哪个阈值在当前市场状态下胜率最高且交易频率足够</div>
+        <div class="phase-task">理解：不是越低越好 — RSI<25可能很少触发，RSI<45可能胜率不够</div>
+        <div class="checkpoint">有数据支撑的"最优RSI阈值"表，而不是拍脑袋定的35</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D10</div>
+        <div class="phase-day-label">第10天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">参数扫描：止损优化</div>
+        <div class="phase-task">测试止损 -3%/-4%/-5%/-6%/-8% 各自的最终收益</div>
+        <div class="phase-task">理解权衡：止损太紧→频繁止损亏手续费；止损太松→单笔亏损大</div>
+        <div class="phase-task">验证F&G联动止损是否真的优于固定止损</div>
+        <div class="checkpoint">有数据支撑的最优止损参数</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D11</div>
+        <div class="phase-day-label">第11天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">理解期望值</div>
+        <div class="phase-task">期望值 = 胜率×平均盈利 - (1-胜率)×平均亏损</div>
+        <div class="phase-task">用第8-10天的回测数据计算当前策略的期望值</div>
+        <div class="phase-task">问自己：期望值是正的吗？如果是+0.5%（每笔期望赚0.5%），每天3笔 = 日0.15%，够吗？</div>
+        <div class="checkpoint">能说出策略的期望值，并判断是否值得继续</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D12</div>
+        <div class="phase-day-label">第12天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">理解市场状态分类</div>
+        <div class="phase-task">市场只有三种状态：趋势上涨、趋势下跌、震荡</div>
+        <div class="phase-task">均值回归在震荡市场赚钱，在趋势市场亏钱</div>
+        <div class="phase-task">问自己：如何判断当前是哪种市场状态？用ADX？用EMA斜率？用布林带宽度？</div>
+        <div class="checkpoint">能判断当前市场状态，并知道均值回归策略当前应该开还是关</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D13</div>
+        <div class="phase-day-label">第13天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">加入市场状态过滤</div>
+        <div class="phase-task">在 mean_rev_bot 里加市场状态判断：用布林带宽度（BB宽度/SMA）判断波动率</div>
+        <div class="phase-task">策略只在"震荡+低波动"时激活，在"高波动趋势"时暂停</div>
+        <div class="phase-task">回测对比：加过滤前后的胜率变化</div>
+        <div class="checkpoint">加过滤后的回测胜率高于无过滤</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D14</div>
+        <div class="phase-day-label">第14天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">第二周复盘</div>
+        <div class="phase-task">不看资料，默写：期望值公式、市场状态分类方法、RSI最优阈值、最优止损参数</div>
+        <div class="phase-task">写500字："我学到的最重要的一课是什么？"</div>
+        <div class="checkpoint">策略参数全部有数据支撑，不再有任何"拍脑袋"的数字</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="card">
+    <h3 style="font-size:16px; margin-bottom:16px; color:var(--yellow);">
+      Phase 3：策略进化（第15-21天）
+    </h3>
+    <p style="font-size:13px; color:var(--text-2); margin-bottom:16px;">
+      目标：从单一策略进化到多策略组合，适应不同市场状态。
+    </p>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D15</div>
+        <div class="phase-day-label">第15天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">学趋势跟踪策略原理</div>
+        <div class="phase-task">均值回归 = 买跌卖涨（震荡市场）</div>
+        <div class="phase-task">趋势跟踪 = 买涨卖更高（趋势市场）</div>
+        <div class="phase-task">趋势跟踪信号：EMA20 > EMA50 + 价格在EMA20上方 + 量比 > 1.5</div>
+        <div class="checkpoint">能用一句话解释均值回归和趋势跟踪在什么市场状态下各自赚钱</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D16</div>
+        <div class="phase-day-label">第16天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">写趋势跟踪模块</div>
+        <div class="phase-task">在 mean_rev_bot 里加 trend_follow 模式</div>
+        <div class="phase-task">市场状态判断：ADX > 25 = 趋势市场，ADX < 20 = 震荡市场</div>
+        <div class="phase-task">震荡→均值回归策略；趋势→趋势跟踪策略</div>
+        <div class="checkpoint">机器人能根据市场状态自动切换策略</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D17</div>
+        <div class="phase-day-label">第17天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">学习凯利公式</div>
+        <div class="phase-task">凯利比例 = 胜率 - (1-胜率)/盈亏比</div>
+        <div class="phase-task">用回测的胜率和盈亏比计算最优仓位比例</div>
+        <div class="phase-task">理解：凯利建议的仓位通常偏大，实战用"半凯利"更安全</div>
+        <div class="checkpoint">能说出当前策略应该用多少仓位，有数学依据</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D18</div>
+        <div class="phase-day-label">第18天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">学习相关性风险</div>
+        <div class="phase-task">同时持有SOL+AVAX+LINK = 实际上在赌同一个方向（都是山寨币）</div>
+        <div class="phase-task">理解：5个仓位的实际风险可能等于1个仓位（因为同涨同跌）</div>
+        <div class="phase-task">优化：加入相关性过滤，同方向最多持有2个</div>
+        <div class="checkpoint">能解释为什么"分散投资"在山寨币之间可能无效</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D19</div>
+        <div class="phase-day-label">第19天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">学习最大回撤和资金曲线</div>
+        <div class="phase-task">最大回撤 = 从最高点到最低点的最大下跌幅度</div>
+        <div class="phase-task">理解：年化收益率30%+最大回撤50% 远不如 年化20%+最大回撤8%</div>
+        <div class="phase-task">给系统加：累计回撤 > 8% 时暂停交易1天</div>
+        <div class="checkpoint">系统有回撤保护机制，不会连亏到底</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D20</div>
+        <div class="phase-day-label">第20天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">实盘对比回测</div>
+        <div class="phase-task">把过去7天实盘交易的结果和同参数回测结果对比</div>
+        <div class="phase-task">差异来源：滑点、手续费、API延迟、市场流动性</div>
+        <div class="phase-task">理解：回测永远比实盘好，因为回测没有这些摩擦成本</div>
+        <div class="checkpoint">能解释回测和实盘之间的差距，并调整预期</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D21</div>
+        <div class="phase-day-label">第21天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">第三周复盘</div>
+        <div class="phase-task">默写：凯利公式、市场状态判断方法、相关性风险概念、最大回撤定义</div>
+        <div class="phase-task">写500字："我的策略在什么市场状态下赚钱，什么状态下亏钱，我如何提前判断"</div>
+        <div class="checkpoint">策略已经从"单一均值回归"进化到"多策略+市场状态切换"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="card">
+    <h3 style="font-size:16px; margin-bottom:16px; color:var(--red);">
+      Phase 4：系统自动化（第22-30天）
+    </h3>
+    <p style="font-size:13px; color:var(--text-2); margin-bottom:16px;">
+      目标：让系统自己学习、自己优化。人只做监督，不干预执行。
+    </p>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D22</div>
+        <div class="phase-day-label">第22天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">自动参数优化</div>
+        <div class="phase-task">写 auto_tune.py：每周自动跑回测，比较不同参数组合的表现</div>
+        <div class="phase-task">输出建议：RSI阈值是否需要从35调到30，止损是否需要从-5%调到-4%</div>
+        <div class="phase-task">加入 cron：每周一03:00自动运行</div>
+        <div class="checkpoint">每周一早上能看到系统给出的参数优化建议</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D23</div>
+        <div class="phase-day-label">第23天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">异常检测和告警</div>
+        <div class="phase-task">加入：连续3笔亏损自动暂停交易 + Telegram通知</div>
+        <div class="phase-task">加入：单日回撤 > 3% 自动暂停 + 告警</div>
+        <div class="phase-task">加入：API断连超过10分钟告警</div>
+        <div class="checkpoint">系统出问题时能在1分钟内收到通知</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D24</div>
+        <div class="phase-day-label">第24天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">资金曲线可视化</div>
+        <div class="phase-task">记录每日收盘总资 → 画资金曲线图</div>
+        <div class="phase-task">在曲线上标注：每笔交易的盈亏点、策略切换点、参数调整点</div>
+        <div class="phase-task">理解：资金曲线是最直观的策略健康指标</div>
+        <div class="checkpoint">打开手机就能看到资金曲线和今日盈亏</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D25</div>
+        <div class="phase-day-label">第25天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">学习交易心理</div>
+        <div class="phase-task">理解：最大的敌人不是市场，是自己的情绪</div>
+        <div class="phase-task">FOMO（追涨）、恐慌（底部割肉）、贪婪（该卖不卖）</div>
+        <div class="phase-task">自动化交易的本质价值 = 消除情绪干扰，机器没有恐惧和贪婪</div>
+        <div class="phase-task">问自己：我在哪些环节还会手动干预？那些干预是帮忙还是捣乱？</div>
+        <div class="checkpoint">能识别自己过去因情绪做出的错误决策</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D26</div>
+        <div class="phase-day-label">第26天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">火币策略优化</div>
+        <div class="phase-task">给 htx_loop 也加动态RSI参数（目前固定45，应根据市场调整）</div>
+        <div class="phase-task">SOL/SUI/UNI 三个币各自的RSI特性不同，应有不同阈值</div>
+        <div class="phase-task">用回测数据为三个币分别找到最优RSI买入阈值</div>
+        <div class="checkpoint">火币三个币有各自独立的最优参数</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D27</div>
+        <div class="phase-day-label">第27天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">学习资产配置</div>
+        <div class="phase-task">$280不需要全做山寨币波段</div>
+        <div class="phase-task">考虑：80% BTC/ETH（稳健底仓）+ 20% 山寨币波段（博收益）</div>
+        <div class="phase-task">理解：巴菲特年化20%就是世界顶级，不要追求不切实际的收益率</div>
+        <div class="checkpoint">有清晰的资金分配计划，不是全部押山寨币</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D28</div>
+        <div class="phase-day-label">第28天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">总复盘 — 30天回顾</div>
+        <div class="phase-task">不看任何资料，默写完整系统架构和策略逻辑</div>
+        <div class="phase-task">对比D1的认知 vs D30的认知：哪些地方理解加深了？</div>
+        <div class="phase-task">写1000字："30天前我以为交易是什么，30天后我理解交易本质是什么"</div>
+        <div class="checkpoint">30天前写的认知对比明显看出成长</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D29</div>
+        <div class="phase-day-label">第29天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">制定下月计划</div>
+        <div class="phase-task">基于30天的认知和交易数据，制定第2个月的重点</div>
+        <div class="phase-task">可能是：加入更多信号、扩展到更多交易所、增加资金、引入外部数据源</div>
+        <div class="checkpoint">有数据支撑的第2月计划，不是凭空想</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-day">
+        <div class="phase-day-num">D30</div>
+        <div class="phase-day-label">第30天</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-title">终极检验</div>
+        <div class="phase-task">回答盈利三问：30天赚了多少？为什么赚/亏？下月怎么赚更多？</div>
+        <div class="phase-task">拿出资金曲线 → 是向上还是向下？斜率是多少？</div>
+        <div class="phase-task">如果亏了：是策略问题还是执行问题？有数据证明吗？</div>
+        <div class="checkpoint">用数字回答"这套系统到底能不能赚钱"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第六部分：每日时间分配 ════════ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">6</div>
+    <h2>每日2小时时间分配模板</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:20%">时段</th>
+        <th style="width:30%">内容</th>
+        <th style="width:50%">方法</th>
+      </tr>
+      <tr>
+        <td><b>前30分钟</b><br><span style="color:var(--text-3)">复盘</span></td>
+        <td>看昨天的交易日志和日报</td>
+        <td>费曼技巧：用一句话解释每笔交易为什么赚/亏</td>
+      </tr>
+      <tr>
+        <td><b>中间40分钟</b><br><span style="color:var(--text-3)">学习</span></td>
+        <td>当天计划的学习主题</td>
+        <td>交错练习：20分钟理论 → 20分钟用实际数据验证</td>
+      </tr>
+      <tr>
+        <td><b>后30分钟</b><br><span style="color:var(--text-3)">实践</span></td>
+        <td>把学到的东西落地到代码</td>
+        <td>即时反馈：改完参数→跑一次→看结果→调整</td>
+      </tr>
+      <tr>
+        <td><b>最后20分钟</b><br><span style="color:var(--text-3)">回忆</span></td>
+        <td>不看资料默写今天学的核心概念</td>
+        <td>主动回忆：写不出来的=没懂，明天重点补</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 第七部分：核心原则 ════════ -->
+<div class="section">
+  <div class="section-title">
+    <div class="section-num">7</div>
+    <h2>5条铁律 — 整个学习过程中不可违反</h2>
+  </div>
+
+  <div class="card">
+    <div class="principle">
+      <div class="principle-title">铁律一：先验证再相信</div>
+      <div class="principle-body">任何"策略有效"的说法，必须用数据证明。RSI<35买入"理论上"能赚钱？拿30天数据跑一下。没有数据支撑的信念 = 赌博。</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">铁律二：每天必须有输出</div>
+      <div class="principle-body">每天结束时手里必须有"产物"：一段代码、一个分析报告、一张资金曲线图。没有输出的一天 = 浪费的一天。输入不等于学习，输出才是。</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">铁律三：只改一个变量</div>
+      <div class="principle-body">每次只改一个参数，然后观察效果。同时改RSI阈值和止损和仓位 = 无法知道是哪个改动导致的盈亏变化。控制变量法是基础。</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">铁律四：用亏损当老师</div>
+      <div class="principle-body">每笔亏损比每笔盈利更有价值。亏损说明策略的盲区在哪。记录每笔亏损的完整上下文，30天后回头看，模式会浮现。</div>
+    </div>
+    <div class="principle">
+      <div class="principle-title">铁律五：不要中断</div>
+      <div class="principle-body">每天2小时，30天不间断。间断3天=前面的积累归零。大脑的遗忘曲线在24小时内最陡，每天接触是保持记忆的唯一方法。</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>首席战略官学习方案 · 2026-09-06 · 量化加密交易系统</p>
+  <p>纳瓦尔思维 × 刻意练习 × 高效学习法</p>
+</div>
+
+</body>
+</html>

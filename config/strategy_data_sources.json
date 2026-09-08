@@ -1,0 +1,15 @@
+{
+  "smart_money_addresses": {
+    "MEME_GALE": ["0x71...64f", "Ej...5z (SOL)"],
+    "KAT_WHALE": ["0x93...f2"],
+    "MOVR_WHALE": ["0x12...ac"]
+  },
+  "kol_feeds": [
+    "@elonmusk", "@cz_binance", "@Ansem", "@lookonchain", "@Arthur_0x", "@HsakaTrades"
+  ],
+  "data_anchors": {
+    "binance_ws": "stream.binance.com:9443",
+    "social_engagement": "LunarCrush API",
+    "net_inflow_threshold": 50000.0
+  }
+}

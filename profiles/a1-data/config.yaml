@@ -1,0 +1,26 @@
+model:
+  default: deepseek-v4-flash
+  provider: deepseek
+  fallback:
+    - provider: deepseek
+      model: deepseek-chat
+    - provider: openrouter
+      model: anthropic/claude-sonnet-4
+agent:
+  temperature: 0.3
+  name: "a1-data-officer"
+  role: "data-collector"
+cron:
+  learn:
+    schedule: "0 8 * * *"
+    description: "每日08:00 BJT学习"
+  collect:
+    schedule: "0 5 * * *"
+    description: "每日05:00 BJT采集6维数据"
+  selfcheck:
+    schedule: "0 17 * * *"
+    description: "每日17:00 BJT自检6文件+日志"
+output:
+  path: "profiles/a1-data/output/"
+  format: "markdown"
+  retention_days: 7

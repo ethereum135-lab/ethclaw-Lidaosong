@@ -1,0 +1,70 @@
+{
+    "system_goal": "430U -> 1,000,000U (Phase 1: 10,000U)",
+    "execution_standard": "30min Node / 3-Coin Diversification / Socrates Verification",
+    "active_50_watchlist": {
+        "AI_Sector": {
+            "tokens": [
+                "NEAR",
+                "FET",
+                "RNDR",
+                "ARKM",
+                "TAO"
+            ],
+            "data_sources": {
+                "official": "https://twitter.com/Fetch_ai",
+                "smart_money": [
+                    "0x123... (AI Whale 1)",
+                    "0x456... (VC Wallet)"
+                ],
+                "kol_pulse": [
+                    "@Cobie",
+                    "@HsakaTrades"
+                ]
+            }
+        },
+        "MEME_Sector": {
+            "tokens": [
+                "PEPE",
+                "DOGE",
+                "SHIB",
+                "WIF",
+                "BONK"
+            ],
+            "data_sources": {
+                "official": "https://pepe.vip",
+                "smart_money": [
+                    "0x2af... (Pepe OG)",
+                    "0x71c... (Dex Whale)"
+                ],
+                "kol_pulse": [
+                    "@Whale_Chart",
+                    "@paulelvis"
+                ]
+            }
+        },
+        "Infrastructure": {
+            "tokens": [
+                "SOL",
+                "AVAX",
+                "XLM",
+                "LINK",
+                "TIA"
+            ],
+            "data_sources": {
+                "official": "https://solana.com",
+                "smart_money": [
+                    "EjM... (Solana OG)",
+                    "0x3fC... (L1 Whale)"
+                ],
+                "kol_pulse": [
+                    "@Ansem",
+                    "@SolanaLegend"
+                ]
+            }
+        }
+    },
+    "logic_computation": {
+        "entry_formula": "(Vol_24h_Score * 0.4) + (Smart_Money_Flow * 0.4) + (Social_Pulse * 0.2)",
+        "exit_rule": "Profit > 3% (Trailing) OR Loss < -2% (Hard Stop) OR Rank < Top 20 (Force Swap)"
+    }
+}

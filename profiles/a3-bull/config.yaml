@@ -1,0 +1,54 @@
+# A3 牛币官 配置文件
+# 路径: profiles/a3-bull/config.yaml
+
+# ⚡ LLM驱动推理Agent — 需要云端大模型做多维度深度分析
+# 每天运行消耗少量token，但选币准确性优先级高于token成本
+
+# Cron配置（BJT时间）
+cron:
+  - task: 每日精选
+    schedule: "0 7 * * *"  # 每天07:00 BJT
+    description: 读A2候选池→四维分析→精选唯一牛币→四档价格
+
+  - task: 每日自检
+    schedule: "0 17 * * *"  # 每天17:00 BJT
+    description: 文件完整性检查 + 日志检查 + 今日产出检查
+
+  - task: 每日学习
+    schedule: "0 8 * * *"  # 每天08:00 BJT
+    description: 对标大师学习/策略学习/案例复盘
+
+# 路径配置
+paths:
+  output_dir: output
+  log_dir: logs
+  a2_data_dir: ../a2-selector/output
+  a1_data_dir: ../a1-data/output
+  hot_sectors_path: ../../shared/hot_sectors.md
+
+# 四维精选法权重
+analysis:
+  weights:
+    volume_price_structure: 0.40  # 量价结构
+    trend_position: 0.25          # 趋势位置
+    narrative_logic: 0.20         # 叙事逻辑
+    risk_reward_ratio: 0.15       # 风险回报比
+
+# 风险回报比阈值
+risk_reward:
+  excellent: 3.0    # ≥3.0 → 果断执行
+  acceptable: 2.0   # 2.0-2.9 → 限仓执行
+  # < 2.0 → 放弃
+
+# 量价结构关键阈值
+volume_price:
+  surge_ratio: 3.0     # 量比>3x = 启动信号
+  watch_ratio: 2.0     # 量比>2x = 关注
+  low_ratio: 0.8       # 量比<0.8 = 缩量
+  breakout_volume: 2.5 # 突破时量比需>2.5x
+
+# 运行限制
+runtime:
+  max_candidates: 10    # 最多分析10个候选币（A2通常3-10个）
+  max_selection: 1      # 每天最多选1个牛币
+  max_log_size_mb: 10   # 日志文件最大大小

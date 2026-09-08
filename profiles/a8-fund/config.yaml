@@ -1,0 +1,30 @@
+# A8 资金官 配置文件
+
+model:
+  default: deepseek-v4-flash
+  provider: deepseek
+  temperature: 0.2
+  fallback:
+    model: claude-sonnet-4
+    provider: anthropic
+
+paths:
+  profile_dir: profiles/a8-fund/
+  output_dir: profiles/a8-fund/output/
+  logs_dir: profiles/a8-fund/logs/
+  fund_output: agents/a8/fund_flow.md
+
+schedule:
+  monitor: "0 * * * *"          # 每小时
+  learning: "0 8 * * 2,5"       # 周二五08:00
+
+monitoring:
+  whale_transfer_threshold: 1000000  # >$100万
+  update_interval: 60                # 60分钟
+
+learning:
+  topics:
+    - "链上数据分析方法（聪明钱追踪/地址聚类/资金流向分析）"
+    - "机构持仓分析（13F报告/ETF流量/基金仓位）"
+    - "Whale Alert模式分析（大额转账的信号意义）"
+    - "DeFi资金流动（流动性池变化/借贷协议资金进出）"

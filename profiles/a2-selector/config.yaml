@@ -1,0 +1,66 @@
+# A2 选币官 配置文件
+# 路径: profiles/a2-selector/config.yaml
+
+# ⚡ 零模型依赖 — A2是纯Python机械运算引擎，不需要任何LLM
+# 每天运行不消耗任何token，零成本
+
+# Cron配置（BJT时间）
+cron:
+  - task: 两阶段筛选
+    schedule: "0 6 * * *"  # 每天06:00 BJT
+    description: 读取A1数据 → Stage 1硬过滤 → Stage 2五因子评分 → 输出候选池
+
+  - task: 自检
+    schedule: "0 16 * * *"  # 每天16:00 BJT
+    description: 文件完整性检查 + 日志检查
+
+# 路径配置
+paths:
+  output_dir: output
+  log_dir: logs
+  a1_data_dir: ../a1-data/output
+  hot_sectors_path: shared/hot_sectors.md
+
+# Stage 1 硬过滤阈值（可调整）
+stage1:
+  min_volume_24h: 1000000     # $1M
+  min_price: 0.001            # >$0.001
+  min_market_cap: 10000000    # $10M
+  max_market_cap: 1000000000  # $1B
+  exclude_patterns:
+    - "USDT"
+    - "BUSD"
+    - "DAI"
+    - "USDC"
+    - "DOWN"
+    - "UP"
+  min_funding_rate: -0.0001   # -0.01%
+  max_funding_rate: 0.0002    # +0.02%
+
+# Stage 2 五因子权重（可调整）
+stage2:
+  weights:
+    volume_anomaly: 0.30    # 成交量异常
+    momentum: 0.25           # 动量结构
+    funding_health: 0.20     # 费率健康
+    rsi_position: 0.15      # RSI位置
+    heat_correction: 0.10    # 热度修正
+  thresholds:
+    candidate_pool: 70       # ≥70分 → 候选池
+    watch_pool_min: 50       # 50-69分 → 待观察池
+    # <50分 → 排除
+
+# 运行限制
+runtime:
+  max_scan_coins: 100       # 最大扫描币种数（按赛道分配，含热度赛道优先）
+  max_log_size_mb: 10       # 日志文件最大大小
+
+# 赛道权重分配（按热度赛道动态调整扫描优先级）
+sector_weight_allocation:
+  deFi: 0.25             # DeFi 赛道权重
+  layer1: 0.20           # Layer1 赛道权重
+  layer2: 0.15           # Layer2 赛道权重
+  meme: 0.15             # Meme 赛道权重
+  ai: 0.10               # AI/Crypto AI 赛道权重
+  gaming: 0.08           # GameFi 赛道权重
+  infrastructure: 0.07   # 基础设施赛道权重

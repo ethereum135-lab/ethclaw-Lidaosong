@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>总蓝图定稿 v2.0 — 六大系统定位+协同机制+地基架构</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #131318;
+    --surface-2: #1a1a22;
+    --border: #2a2a35;
+    --text: #e4e4e8;
+    --text-2: #9898a0;
+    --text-3: #62626a;
+    --brand: #8b5cf6;
+    --brand-2: #a78bfa;
+    --brand-light: rgba(139, 92, 246, 0.12);
+    --green: #34d399;
+    --green-light: rgba(52, 211, 153, 0.12);
+    --red: #f87171;
+    --red-light: rgba(248, 113, 113, 0.12);
+    --yellow: #fbbf24;
+    --yellow-light: rgba(251, 191, 36, 0.12);
+    --blue: #60a5fa;
+    --blue-light: rgba(96, 165, 250, 0.12);
+    --orange: #fb923c;
+    --orange-light: rgba(251, 146, 60, 0.12);
+    --cyan: #22d3ee;
+    --cyan-light: rgba(34, 211, 238, 0.12);
+    --pink: #f472b6;
+    --pink-light: rgba(244, 114, 182, 0.12);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    line-height: 1.75;
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero { text-align: center; padding: 48px 0 36px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+  .hero-badge { display: inline-block; background: var(--green-light); color: var(--green); padding: 6px 18px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: 1px; margin-bottom: 16px; }
+  .hero h1 { font-size: 34px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, var(--cyan), var(--brand)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p { color: var(--text-2); font-size: 14px; }
+  .section { margin-bottom: 48px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .section-num { width: 36px; height: 36px; background: var(--brand); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+  .section-header h2 { font-size: 22px; font-weight: 700; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 16px; }
+  .card-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--text-3); font-weight: 500; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 500; }
+  .tag-brand { background: var(--brand-light); color: var(--brand-2); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-yellow { background: var(--yellow-light); color: var(--yellow); }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+  .tag-orange { background: var(--orange-light); color: var(--orange); }
+  .tag-cyan { background: var(--cyan-light); color: var(--cyan); }
+  .tag-pink { background: var(--pink-light); color: var(--pink); }
+  .quote-box { background: var(--surface-2); border-left: 3px solid var(--brand); padding: 14px 20px; border-radius: 0 var(--radius) var(--radius) 0; margin: 16px 0; font-size: 14px; color: var(--text-2); }
+  .arch-layer { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 8px; display: flex; align-items: center; gap: 16px; }
+  .arch-layer-body { flex: 1; }
+  .arch-layer-name { font-size: 15px; font-weight: 600; }
+  .arch-layer-desc { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+  .arch-layer-owners { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ascii-box { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; line-height: 1.8; color: var(--text-2); white-space: pre; overflow-x: auto; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+  .footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border); margin-top: 40px; }
+  .footer p { color: var(--text-3); font-size: 12px; }
+  .loop-arrow { color: var(--green); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">定稿版 v2.0</div>
+  <h1>六大系统定位 + 协同机制 + 地基架构</h1>
+  <p>全网调研后确认 · 活文档 · 边执行边完善</p>
+</div>
+
+<!-- ════════ 第一部分：最终架构 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>最终架构全景</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">完整架构图 — 8层+地基+2个闭环</div>
+    <div class="ascii-box">
+┌──────────────────────────────────────────────────┐
+│                   传播层                           │
+│  WorkBuddy (PPT/视频) ← TraeCode (文案)             │
+│  ↕ 内容闭环：发布→社交反馈→优化下一期 ↺             │
+├──────────────────────────────────────────────────┤
+│                   监控层                           │
+│  OpenClaw → 微信/Telegram                          │
+│  (读日志→推告警→抓社交情绪→反馈给TraeCode)          │
+├──────────────────────────────────────────────────┤
+│                   执行层                           │
+│  Hermes (AWS 24/7)                                 │
+│  交易执行官 + 风控官(独立止损/熔断)                  │
+├──────────────────────────────────────────────────┤
+│                   决策层                           │
+│  TraeCode (对话式)                                 │
+│  多空辩论 → 裁判 → 决策 → 写策略                    │
+│  ↕ 学习闭环：交易→复盘→归因→优化策略 ↺              │
+├──────────────────────────────────────────────────┤
+│                   分析层                           │
+│  TraeCode + Vibe-Trading (29个智能体)              │
+│  美林时钟 + 传导链 + 多空辩论                       │
+├──────────────────────────────────────────────────┤
+│                   工程层                           │
+│  Claude Code (策略代码) + Codex (运维管道)          │
+├══════════════════════════════════════════════════┤
+│              沟通层 (跨平台自主协同)                 │
+│  Redis消息总线 + A2A协议 + 共享上下文                │
+│  (所有平台发布/订阅事件 → 实时感知)                  │
+├──────────────────────────────────────────────────┤
+│           ⬇ 地基层：共享上下文层 ⬇                  │
+│  Vibe-Trading (AWS Docker 24/7)                    │
+│  6大数据源 + 22个MCP工具 + 共享存储                 │
+│  (所有平台读写同一份数据)                           │
+└──────────────────────────────────────────────────┘
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第二部分：六大系统定位 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>六大系统定位（定稿）</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:13%">平台</th>
+        <th style="width:10%">代号</th>
+        <th style="width:12%">定位</th>
+        <th style="width:10%">运行模式</th>
+        <th style="width:20%">核心职责</th>
+        <th style="width:10%">安全等级</th>
+        <th style="width:12%">降级方案</th>
+        <th style="width:13%">月成本</th>
+      </tr>
+      <tr>
+        <td><b>Vibe-Trading</b></td>
+        <td>地基层</td>
+        <td>共享上下文层</td>
+        <td><span class="tag tag-green">AWS 24/7</span></td>
+        <td>数据采集+分析+共享存储+22个MCP工具</td>
+        <td><span class="tag tag-green">低</span></td>
+        <td>自动降级备用数据源</td>
+        <td>$0 (MIT开源)</td>
+      </tr>
+      <tr>
+        <td><b>Hermes</b></td>
+        <td>手</td>
+        <td>执行层</td>
+        <td><span class="tag tag-green">AWS 24/7</span></td>
+        <td>执行交易+独立风控(止损/熔断)</td>
+        <td><span class="tag tag-red">最高</span></td>
+        <td>自主运行最后策略+自动熔断</td>
+        <td>$5-20 (AWS)</td>
+      </tr>
+      <tr>
+        <td><b>TraeCode</b></td>
+        <td>脑</td>
+        <td>决策层+编排</td>
+        <td><span class="tag tag-yellow">对话式</span></td>
+        <td>读分析→多空辩论→决策→写策略→编排</td>
+        <td><span class="tag tag-yellow">中</span></td>
+        <td>Hermes自主运行，等上线复盘</td>
+        <td>按用量</td>
+      </tr>
+      <tr>
+        <td><b>OpenClaw</b></td>
+        <td>眼</td>
+        <td>监控层</td>
+        <td><span class="tag tag-green">本地24/7</span></td>
+        <td>监控异常→推送通知+社交情绪抓取</td>
+        <td><span class="tag tag-green">低</span></td>
+        <td>Hermes自动熔断兜底</td>
+        <td>$0 (基础免费)</td>
+      </tr>
+      <tr>
+        <td><b>WorkBuddy</b></td>
+        <td>嘴</td>
+        <td>传播层</td>
+        <td><span class="tag tag-yellow">按需</span></td>
+        <td>生成PPT/视频/海报+硬件采集</td>
+        <td><span class="tag tag-green">低</span></td>
+        <td>TraeCode直接输出内容</td>
+        <td>$0-15</td>
+      </tr>
+      <tr>
+        <td><b>Codex</b></td>
+        <td>运维</td>
+        <td>运维+本地推理</td>
+        <td><span class="tag tag-yellow">按需+定时</span></td>
+        <td>跑数据管道+Ollama本地推理+GitHub Actions</td>
+        <td><span class="tag tag-yellow">中</span></td>
+        <td>Vibe-Trading内置数据采集</td>
+        <td>$0 (本地)</td>
+      </tr>
+      <tr>
+        <td><b>Claude Code</b></td>
+        <td>工程</td>
+        <td>策略工程</td>
+        <td><span class="tag tag-yellow">按需</span></td>
+        <td>写/调试策略代码+扩展Vibe-Trading</td>
+        <td><span class="tag tag-yellow">中</span></td>
+        <td>TraeCode直接改代码</td>
+        <td>$0 (本地)</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-2);">
+      <b>月总成本目标：&lt;$50</b>（资金量&lt;$5K阶段）
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 第三部分：Agent人格 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>7个Agent人格定义（SOUL.md）</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:15%">Agent</th>
+        <th style="width:12%">所在平台</th>
+        <th style="width:25%">人格定义</th>
+        <th style="width:25%">决策风格</th>
+        <th style="width:23%">不能做什么</th>
+      </tr>
+      <tr>
+        <td><b>交易执行官</b></td>
+        <td>Hermes</td>
+        <td>铁血执行者：策略说买就买，说卖就卖</td>
+        <td>不犹豫、不追涨、不杀跌</td>
+        <td>不能自己改策略参数</td>
+      </tr>
+      <tr>
+        <td><b>风控官</b></td>
+        <td>Hermes</td>
+        <td>铁律守门人：止损是铁律，不可覆盖</td>
+        <td>冷静、机械、无情绪</td>
+        <td>不能被任何指令覆盖止损</td>
+      </tr>
+      <tr>
+        <td><b>策略分析师</b></td>
+        <td>TraeCode</td>
+        <td>全球视野+周期思维，理性不情绪</td>
+        <td>多空辩论，不偏听</td>
+        <td>不能直接调交易所API</td>
+      </tr>
+      <tr>
+        <td><b>裁判</b></td>
+        <td>TraeCode</td>
+        <td>综合多空意见做最终AI层判断</td>
+        <td>权衡风险收益，保守优先</td>
+        <td>不能覆盖风控官的止损</td>
+      </tr>
+      <tr>
+        <td><b>监控哨兵</b></td>
+        <td>OpenClaw</td>
+        <td>敏感哨兵：任何异常立即告警</td>
+        <td>宁可误报不漏报</td>
+        <td>不能触发交易</td>
+      </tr>
+      <tr>
+        <td><b>内容官</b></td>
+        <td>WorkBuddy</td>
+        <td>把复杂分析变成通俗内容</td>
+        <td>通俗、有趣、有数据支撑</td>
+        <td>不能接触交易系统</td>
+      </tr>
+      <tr>
+        <td><b>工程师</b></td>
+        <td>Claude Code</td>
+        <td>代码工匠：写代码、测试、部署</td>
+        <td>严谨、可测试、不偷懒</td>
+        <td>不能接触API密钥</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 第四部分：决策权层级 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>决策权层级 — 冲突时听谁的</h2>
+  </div>
+
+  <div class="card">
+    <div class="ascii-box">
+第一优先级：风控官（Hermes风控模块）
+  → 止损/熔断是不可覆盖的铁律
+  → 任何人和任何Agent都不能覆盖
+  → 连续5笔亏损 → 自动熔断，等人工重启
+
+第二优先级：人工决策（你）
+  → 你说的优先于一切AI建议
+  → TraeCode只是给你建议，你拍板
+  → 你可以手动Kill Switch
+
+第三优先级：裁判（TraeCode）
+  → 综合多空辩论做最终AI层判断
+  → Vibe-Trading的AI分析是参考
+  → TraeCode做最终决策
+
+第四优先级：Vibe-Trading（29个智能体）
+  → 数据和初步分析
+  → 不直接做决策，只提供输入
+    </div>
+
+    <div class="quote-box">
+      <b>核心原则：</b> 风控 > 人工 > AI判断 > AI分析<br>
+      风控官的止损是绝对铁律 — 即使TraeCode说"再等等"，风控官说止损就止损。
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第五部分：协同机制 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>协同机制 — 3个系统</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">系统1：Redis消息总线 + A2A协议</div>
+    <div class="ascii-box">
+Vibe-Trading: "美林时钟从复苏→过热，大宗商品利好"
+    ↓ (A2A消息 → Redis pub/sub)
+TraeCode: "策略方向：减仓加密，关注大宗"
+    ↓ (写策略文件 + A2A消息)
+Hermes: "收到，执行减仓" → 下卖单
+    ↓ (A2A消息 + 写共享日志)
+OpenClaw: "Hermes执行了减仓，推送通知到手机"
+    ↓ (A2A消息)
+WorkBuddy: "TraeCode产出分析文案 → 生成今日视频"
+    </div>
+    <p style="font-size:13px; color:var(--text-2); margin-top:8px;">
+      所有平台通过Redis发布/订阅事件，实时感知彼此状态。<br>
+      A2A协议（Linux Foundation开放标准）定义消息格式，MCP管Agent→工具，A2A管Agent→Agent。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">系统2：多空辩论机制</div>
+    <div class="ascii-box">
+Vibe-Trading产出数据
+    ↓
+看多分析师：为什么该买入？（找3个理由）
+    ↓
+看空分析师：为什么不该买？（找3个理由）
+    ↓
+裁判（TraeCode）：综合判断 → 最终决策
+    ↓
+风控官（Hermes）：检查仓位/止损是否符合规则
+    ↓
+执行
+    </div>
+    <p style="font-size:13px; color:var(--text-2); margin-top:8px;">
+      避免单一视角偏见 — TradingAgents验证：多空对抗优于单Agent决策。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">系统3：共享上下文层（数据流转）</div>
+    <table>
+      <tr>
+        <th style="width:20%">数据类型</th>
+        <th style="width:20%">谁写入</th>
+        <th style="width:20%">谁读取</th>
+        <th style="width:25%">存储位置</th>
+        <th style="width:15%">格式</th>
+      </tr>
+      <tr><td>全球宏观数据</td><td>Vibe-Trading</td><td>TraeCode</td><td>AWS共享目录</td><td>JSON/CSV</td></tr>
+      <tr><td>美林时钟状态</td><td>Vibe-Trading</td><td>TraeCode+Hermes</td><td>AWS共享JSON</td><td>JSON</td></tr>
+      <tr><td>交易策略配置</td><td>TraeCode</td><td>Hermes</td><td>AWS策略文件</td><td>YAML/JSON</td></tr>
+      <tr><td>交易记录</td><td>Hermes</td><td>TraeCode+OpenClaw</td><td>AWS日志</td><td>JSONL/MD</td></tr>
+      <tr><td>告警事件</td><td>OpenClaw</td><td>手机(Telegram)</td><td>OpenClaw内部</td><td>消息</td></tr>
+      <tr><td>内容素材</td><td>TraeCode</td><td>WorkBuddy</td><td>本地共享目录</td><td>Markdown</td></tr>
+      <tr><td>F&G/RSI指标</td><td>Hermes</td><td>Vibe-Trading+TraeCode</td><td>AWS共享JSON</td><td>JSON</td></tr>
+    </table>
+    <p style="margin-top:8px; font-size:13px; color:var(--text-2);">
+      <b>规则：任何平台不直接调用另一个平台的内部数据。</b> 所有数据通过共享上下文层流转。
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 第六部分：两个闭环 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>两个闭环 — 系统越跑越聪明</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">闭环1：学习闭环（交易→复盘→优化→再交易）</div>
+    <div class="ascii-box">
+Hermes执行交易 → 交易记录写入共享上下文
+    ↓
+TraeCode复盘：赚了/亏了？为什么？
+    ↓
+归因：选币问题？信号问题？执行问题？止损问题？
+    ↓
+修改策略参数 → 写入新策略配置
+    ↓
+Hermes读新策略 → 下一次执行改进了
+    ↓
+<span class="loop-arrow">↺ 循环 — 每次都比上次聪明一点</span>
+    </div>
+    <div class="quote-box" style="border-left-color: var(--green);">
+      <b>这就是"每一天能盈利"的核心机制</b> — 不是每次都赚，而是每次都比上次聪明一点。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">闭环2：内容闭环（分析→内容→发布→反馈→优化）</div>
+    <div class="ascii-box">
+TraeCode产出经济分析
+    ↓
+WorkBuddy生成推特/视频/抖音内容
+    ↓
+发布到各平台
+    ↓
+读者评论/点赞/转发 → OpenClaw抓取
+    ↓
+反馈输入TraeCode → 优化下一期内容方向
+    ↓
+<span class="loop-arrow">↺ 循环 — 内容越做越精准</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第七部分：安全体系 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>安全体系 — 三层隔离 + Kill Switch</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:15%">平台</th>
+        <th style="width:20%">能接触</th>
+        <th style="width:20%">不能接触</th>
+        <th style="width:25%">安全措施</th>
+        <th style="width:20%">风险等级</th>
+      </tr>
+      <tr><td><b>Hermes</b></td><td>交易所API(交易权限)</td><td>提现权限(永不开)</td><td>环境变量+IP白名单</td><td><span class="tag tag-red">最高</span></td></tr>
+      <tr><td><b>TraeCode</b></td><td>读写策略配置</td><td>不能直接调交易所API</td><td>通过SSH改Hermes配置</td><td><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td><b>OpenClaw</b></td><td>读交易日志</td><td>不能触发交易、不接触密钥</td><td>只读权限+SOUL.md限制</td><td><span class="tag tag-green">低</span></td></tr>
+      <tr><td><b>Vibe-Trading</b></td><td>公开市场数据API</td><td>不接触交易密钥</td><td>数据Key独立于交易Key</td><td><span class="tag tag-green">低</span></td></tr>
+      <tr><td><b>Codex/CC</b></td><td>代码仓库</td><td>不接触API密钥</td><td>密钥在.env, gitignore</td><td><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td><b>WorkBuddy</b></td><td>内容素材</td><td>不接触交易系统</td><td>完全隔离</td><td><span class="tag tag-green">低</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">三层Kill Switch（紧急停止）</div>
+    <div class="ascii-box">
+第1层：Hermes自动熔断
+  → 连续5笔亏损 / 总回撤>8% → 自动停止
+  → 不需要任何人触发
+
+第2层：Telegram命令熔断
+  → 手机发 "/killswitch HALT" → Hermes立即停所有交易
+  → 人工远程触发
+
+第3层：人工API撤销
+  → 登录交易所 → 撤销API Key → 物理断连
+  → 最终保底
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第八部分：降级方案 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <h2>降级方案 — 故障树</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:18%">故障</th>
+        <th style="width:12%">概率</th>
+        <th style="width:30%">影响</th>
+        <th style="width:40%">应对</th>
+      </tr>
+      <tr><td><b>AWS宕机</b></td><td><span class="tag tag-red">极低</span></td><td>Hermes+Vibe全停</td><td>OpenClaw检测断连→推送手机→人工撤单→等恢复</td></tr>
+      <tr><td><b>Hermes宕机</b></td><td><span class="tag tag-yellow">低</span></td><td>交易停止，挂单仍在</td><td>OpenClaw检测无心跳→告警→人工重启</td></tr>
+      <tr><td><b>TraeCode不在线</b></td><td><span class="tag tag-yellow">常态</span></td><td>无新策略，交易继续</td><td>Hermes用最后策略自主运行→我上线后复盘</td></tr>
+      <tr><td><b>数据源断</b></td><td><span class="tag tag-yellow">中</span></td><td>无新数据</td><td>Vibe-Trading自动降级备用数据源→OpenClaw告警</td></tr>
+      <tr><td><b>OpenClaw挂</b></td><td><span class="tag tag-green">低</span></td><td>无告警</td><td>Hermes自动熔断兜底→定期人工检查</td></tr>
+      <tr><td><b>API限流</b></td><td><span class="tag tag-yellow">中</span></td><td>下单失败</td><td>Hermes指数退避重试→超阈值暂停→告警</td></tr>
+      <tr><td><b>持续亏损</b></td><td><span class="tag tag-red">已发生</span></td><td>资金减少</td><td>连续5笔亏损→自动熔断→等人工复盘修复</td></tr>
+    </table>
+    <div class="quote-box">
+      <b>核心原则：</b> 任何单点故障都不能导致资金损失。交易所侧的止损单独立于系统存在。
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第九部分：跨市场协同 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">9</div>
+    <h2>跨市场协同 — 加密/股票/竞猜</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:15%">市场</th>
+        <th style="width:20%">数据层</th>
+        <th style="width:25%">分析层</th>
+        <th style="width:25%">执行层</th>
+        <th style="width:15%">当前阶段</th>
+      </tr>
+      <tr>
+        <td><b>加密货币</b></td>
+        <td>Vibe-Trading(CCXT)</td>
+        <td>TraeCode(美林时钟+RSI)</td>
+        <td>Hermes自动交易</td>
+        <td><span class="tag tag-green">Phase 1 运行中</span></td>
+      </tr>
+      <tr>
+        <td><b>美股/A股/港股</b></td>
+        <td>Vibe-Trading(yfinance/Tushare)</td>
+        <td>TraeCode(周期分析)</td>
+        <td>导出TradingView→人工下单</td>
+        <td><span class="tag tag-yellow">Phase 1 数据+分析</span></td>
+      </tr>
+      <tr>
+        <td><b>竞猜(Polymarket)</b></td>
+        <td>Vibe-Trading抓赔率</td>
+        <td>TraeCode(情绪指标)</td>
+        <td>TraeCode出信号→OpenClaw推手机→人工</td>
+        <td><span class="tag tag-blue">情绪数据源</span></td>
+      </tr>
+    </table>
+
+    <div class="quote-box">
+      <b>协同核心：数据互通，不是执行互通。</b><br><br>
+      美联储加息 → Polymarket加息概率涨 → TraeCode判断利空加密 → Hermes减仓<br>
+      美债涨 → 美股跌 → Vibe-Trading检测到 → A股/港股跟跌 → OpenClaw推送手机<br><br>
+      <b>竞猜平台的核心价值不是赚钱，而是另类情绪数据源 — Polymarket赔率变化比新闻快。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 第十部分：下一步 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <h2>下一步 — 从地基层开始</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:10%">步骤</th>
+        <th style="width:25%">做什么</th>
+        <th style="width:20%">用哪个平台</th>
+        <th style="width:15%">预计时间</th>
+        <th style="width:30%">验证标准</th>
+      </tr>
+      <tr>
+        <td><b>第1步</b></td>
+        <td>部署Vibe-Trading到AWS</td>
+        <td>Vibe-Trading + Codex</td>
+        <td>1天</td>
+        <td>Docker跑起来，6数据源能采集</td>
+      </tr>
+      <tr>
+        <td><b>第2步</b></td>
+        <td>部署Redis消息总线</td>
+        <td>Codex + Claude Code</td>
+        <td>半天</td>
+        <td>两个平台能通过Redis通信</td>
+      </tr>
+      <tr>
+        <td><b>第3步</b></td>
+        <td>Hermes接入Redis</td>
+        <td>Claude Code</td>
+        <td>半天</td>
+        <td>Hermes交易事件→Redis→OpenClaw推送</td>
+      </tr>
+      <tr>
+        <td><b>第4步</b></td>
+        <td>OpenClaw接入Redis+共享上下文</td>
+        <td>OpenClaw</td>
+        <td>半天</td>
+        <td>交易异常→30秒内推送到Telegram</td>
+      </tr>
+      <tr>
+        <td><b>第5步</b></td>
+        <td>TraeCode接入共享上下文层</td>
+        <td>TraeCode</td>
+        <td>1天</td>
+        <td>我能读Vibe-Trading分析+写策略给Hermes</td>
+      </tr>
+      <tr>
+        <td><b>第6步</b></td>
+        <td>部署多空辩论机制</td>
+        <td>Claude Code + TraeCode</td>
+        <td>1天</td>
+        <td>看多/看空Agent能对抗分析</td>
+      </tr>
+      <tr>
+        <td><b>第7步</b></td>
+        <td>接WorkBuddy内容闭环</td>
+        <td>WorkBuddy + TraeCode</td>
+        <td>1天</td>
+        <td>分析→内容→发布→反馈跑通</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-2);">
+      <b>预计总时间：5-7天</b> 完成地基层+沟通层搭建，之后系统可以自主运转。<br>
+      <b>这是活文档</b> — 搭建过程中发现问题随时修正。
+    </p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>总蓝图定稿 v2.0 · 2026-09-06</p>
+  <p>基于全网调研 + 深度架构设计 · 活文档 · 边执行边完善</p>
+</div>
+
+</body>
+</html>

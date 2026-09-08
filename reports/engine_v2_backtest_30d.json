@@ -1,0 +1,124 @@
+{
+  "initial_capital": 500.0,
+  "final_equity": 571.5807046199127,
+  "total_return_pct": 14.316140923982545,
+  "total_pnl": 71.5807046199127,
+  "n_trades": 33,
+  "n_wins": 22,
+  "n_losses": 11,
+  "win_rate": 66.66666666666666,
+  "avg_win_pct": 4.729472009070411,
+  "avg_loss_pct": -2.6378884812097905,
+  "avg_win_usd": 4.793385013281524,
+  "avg_loss_usd": 3.079433242934641,
+  "profit_factor": 3.1131605299639618,
+  "expectancy_usd": 2.1691122612094693,
+  "max_drawdown_pct": 4.169481272638623,
+  "exit_reasons": {
+    "TP": 11,
+    "TIME": 17,
+    "SL": 5
+  },
+  "per_coin": {
+    "PROM": {
+      "n": 2,
+      "pnl": 16.66,
+      "win_rate": 100
+    },
+    "LINK": {
+      "n": 3,
+      "pnl": 14.3,
+      "win_rate": 67
+    },
+    "DOGE": {
+      "n": 2,
+      "pnl": 10.52,
+      "win_rate": 100
+    },
+    "SOL": {
+      "n": 2,
+      "pnl": 9.37,
+      "win_rate": 100
+    },
+    "TAO": {
+      "n": 1,
+      "pnl": 8.62,
+      "win_rate": 100
+    },
+    "NEAR": {
+      "n": 1,
+      "pnl": 8.49,
+      "win_rate": 100
+    },
+    "BMT": {
+      "n": 1,
+      "pnl": 8.47,
+      "win_rate": 100
+    },
+    "PUMP": {
+      "n": 1,
+      "pnl": 7.85,
+      "win_rate": 100
+    },
+    "AVAX": {
+      "n": 2,
+      "pnl": 7.64,
+      "win_rate": 50
+    },
+    "ETH": {
+      "n": 4,
+      "pnl": 5.9,
+      "win_rate": 75
+    },
+    "ZEC": {
+      "n": 1,
+      "pnl": 2.12,
+      "win_rate": 100
+    },
+    "BNB": {
+      "n": 1,
+      "pnl": 1.03,
+      "win_rate": 100
+    },
+    "WLD": {
+      "n": 2,
+      "pnl": 0.47,
+      "win_rate": 100
+    },
+    "XAUT": {
+      "n": 1,
+      "pnl": -0.05,
+      "win_rate": 0
+    },
+    "TRUMP": {
+      "n": 1,
+      "pnl": -0.74,
+      "win_rate": 0
+    },
+    "TRX": {
+      "n": 2,
+      "pnl": -1.74,
+      "win_rate": 50
+    },
+    "AUCTION": {
+      "n": 2,
+      "pnl": -4.47,
+      "win_rate": 50
+    },
+    "ENA": {
+      "n": 1,
+      "pnl": -5.29,
+      "win_rate": 0
+    },
+    "ENSO": {
+      "n": 1,
+      "pnl": -5.77,
+      "win_rate": 0
+    },
+    "HEMI": {
+      "n": 2,
+      "pnl": -11.81,
+      "win_rate": 0
+    }
+  }
+}

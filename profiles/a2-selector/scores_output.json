@@ -1,0 +1,735 @@
+{
+  "date": "2026-05-13",
+  "time": "17:38",
+  "fg_index": "42",
+  "fg_classification": "Fear",
+  "btc_dominance": "58.194583653775766",
+  "btc_price": "81298.60",
+  "eth_price": "2323.02",
+  "total_mcap": "2793013854387.9663",
+  "total_vol": "100683871480.22728",
+  "trending": [
+    {
+      "name": "Zano",
+      "symbol": "ZANO"
+    },
+    {
+      "name": "Injective",
+      "symbol": "INJ"
+    },
+    {
+      "name": "Firo",
+      "symbol": "FIRO"
+    },
+    {
+      "name": "Billions Network",
+      "symbol": "BILL"
+    },
+    {
+      "name": "wojak",
+      "symbol": "WOJAK"
+    },
+    {
+      "name": "LAB",
+      "symbol": "LAB"
+    },
+    {
+      "name": "Monad",
+      "symbol": "MON"
+    },
+    {
+      "name": "Ondo",
+      "symbol": "ONDO"
+    },
+    {
+      "name": "Toncoin",
+      "symbol": "TON"
+    },
+    {
+      "name": "Akash Network",
+      "symbol": "AKT"
+    },
+    {
+      "name": "Sui",
+      "symbol": "SUI"
+    },
+    {
+      "name": "Kaspa",
+      "symbol": "KAS"
+    },
+    {
+      "name": "Venice Token",
+      "symbol": "VVV"
+    },
+    {
+      "name": "Bittensor",
+      "symbol": "TAO"
+    },
+    {
+      "name": "Unibase",
+      "symbol": "UB"
+    }
+  ],
+  "stage1_total": 50,
+  "stablecoin_excluded": [
+    "RLUSDUSDT",
+    "EURUSDT",
+    "UUSDT"
+  ],
+  "price_excluded": [
+    "PEPEUSDT",
+    "LUNCUSDT"
+  ],
+  "funding_excluded_fails": [
+    {
+      "symbol": "CHIPUSDT",
+      "fr": -0.00048268
+    },
+    {
+      "symbol": "INJUSDT",
+      "fr": -0.0021379
+    },
+    {
+      "symbol": "VICUSDT",
+      "fr": -0.00014885
+    },
+    {
+      "symbol": "COSUSDT",
+      "fr": -0.00915554
+    },
+    {
+      "symbol": "币安人生USDT",
+      "fr": 0.00028731
+    }
+  ],
+  "candidate_pool": [
+    {
+      "symbol": "BNBUSDT",
+      "total": 73.0,
+      "volume_score": 70,
+      "momentum_score": 70,
+      "fr_score": 100,
+      "rsi_score": 50,
+      "heat_score": 70,
+      "price": 685.36,
+      "volume": 144023388.16685,
+      "change_pct": 3.648,
+      "funding_rate": 6.065e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "total": 73.0,
+      "volume_score": 70,
+      "momentum_score": 70,
+      "fr_score": 100,
+      "rsi_score": 50,
+      "heat_score": 70,
+      "price": 0.11452,
+      "volume": 109862912.04476,
+      "change_pct": 4.537,
+      "funding_rate": 0.0001,
+      "is_trending": false
+    },
+    {
+      "symbol": "LINKUSDT",
+      "total": 70.0,
+      "volume_score": 60,
+      "momentum_score": 70,
+      "fr_score": 100,
+      "rsi_score": 50,
+      "heat_score": 70,
+      "price": 10.79,
+      "volume": 37184607.9825,
+      "change_pct": 4.352,
+      "funding_rate": 0.0001,
+      "is_trending": false
+    },
+    {
+      "symbol": "TRUMPUSDT",
+      "total": 70.0,
+      "volume_score": 60,
+      "momentum_score": 70,
+      "fr_score": 100,
+      "rsi_score": 50,
+      "heat_score": 70,
+      "price": 2.463,
+      "volume": 35586215.936225,
+      "change_pct": 4.276,
+      "funding_rate": 5e-05,
+      "is_trending": false
+    }
+  ],
+  "watch_pool": [
+    {
+      "symbol": "DYMUSDT",
+      "total": 69.5,
+      "volume_score": 60,
+      "momentum_score": 80,
+      "fr_score": 100,
+      "rsi_score": 30,
+      "heat_score": 70,
+      "price": 0.0276,
+      "volume": 28591071.85431,
+      "change_pct": 5.344,
+      "funding_rate": 5e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "BTCUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 81298.6,
+      "volume": 938571359.0052975,
+      "change_pct": 0.474,
+      "funding_rate": 4.862e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "ETHUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 2323.02,
+      "volume": 464367216.560362,
+      "change_pct": 1.349,
+      "funding_rate": 7.142e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "XRPUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 1.4655,
+      "volume": 158145401.787,
+      "change_pct": 0.659,
+      "funding_rate": 0.0001,
+      "is_trending": false
+    },
+    {
+      "symbol": "ZECUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 553.36,
+      "volume": 131281714.80833,
+      "change_pct": 0.245,
+      "funding_rate": 8.843e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "NEARUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 1.605,
+      "volume": 50766343.061,
+      "change_pct": 1.198,
+      "funding_rate": 4.761e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "SPKUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 0.035262,
+      "volume": 48574038.157662,
+      "change_pct": 1.281,
+      "funding_rate": 5e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "TRXUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 0.3504,
+      "volume": 32222878.06562,
+      "change_pct": 0.286,
+      "funding_rate": 0.0001,
+      "is_trending": false
+    },
+    {
+      "symbol": "ADAUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 0.2774,
+      "volume": 24318913.59767,
+      "change_pct": 0.69,
+      "funding_rate": 2.315e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "LTCUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 58.91,
+      "volume": 17485981.52162,
+      "change_pct": 1.22,
+      "funding_rate": 5.303e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 99.79,
+      "volume": 15652936.14361,
+      "change_pct": 1.074,
+      "funding_rate": 0.0001,
+      "is_trending": false
+    },
+    {
+      "symbol": "CRVUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 0.2879,
+      "volume": 12462216.86242,
+      "change_pct": 1.373,
+      "funding_rate": 6.939e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "DASHUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 46.26,
+      "volume": 12329534.44107,
+      "change_pct": 1.425,
+      "funding_rate": 6.609e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "ENAUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 0.1251,
+      "volume": 12165688.733604,
+      "change_pct": 0.321,
+      "funding_rate": 5e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "HBARUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 0.09554,
+      "volume": 11261141.89791,
+      "change_pct": 0.315,
+      "funding_rate": 9.736e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "UNIUSDT",
+      "total": 67.5,
+      "volume_score": 50,
+      "momentum_score": 60,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 3.835,
+      "volume": 10592736.47278,
+      "change_pct": 0.815,
+      "funding_rate": 7.662e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "total": 67.0,
+      "volume_score": 50,
+      "momentum_score": 70,
+      "fr_score": 100,
+      "rsi_score": 50,
+      "heat_score": 70,
+      "price": 10.14,
+      "volume": 17045207.6353,
+      "change_pct": 2.218,
+      "funding_rate": 9.159e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "PENDLEUSDT",
+      "total": 67.0,
+      "volume_score": 50,
+      "momentum_score": 70,
+      "fr_score": 100,
+      "rsi_score": 50,
+      "heat_score": 70,
+      "price": 2.093,
+      "volume": 14285060.2509,
+      "change_pct": 2.247,
+      "funding_rate": -8.7e-06,
+      "is_trending": false
+    },
+    {
+      "symbol": "ATOMUSDT",
+      "total": 67.0,
+      "volume_score": 50,
+      "momentum_score": 70,
+      "fr_score": 100,
+      "rsi_score": 50,
+      "heat_score": 70,
+      "price": 2.144,
+      "volume": 12848030.05209,
+      "change_pct": 4.128,
+      "funding_rate": -4.922e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "WLDUSDT",
+      "total": 67.0,
+      "volume_score": 50,
+      "momentum_score": 70,
+      "fr_score": 100,
+      "rsi_score": 50,
+      "heat_score": 70,
+      "price": 0.2856,
+      "volume": 11783874.46824,
+      "change_pct": 4.196,
+      "funding_rate": -4.33e-06,
+      "is_trending": false
+    },
+    {
+      "symbol": "KITEUSDT",
+      "total": 66.5,
+      "volume_score": 50,
+      "momentum_score": 80,
+      "fr_score": 100,
+      "rsi_score": 30,
+      "heat_score": 70,
+      "price": 0.2081,
+      "volume": 13477424.72366,
+      "change_pct": 11.165,
+      "funding_rate": 5e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "FFUSDT",
+      "total": 66.5,
+      "volume_score": 50,
+      "momentum_score": 80,
+      "fr_score": 100,
+      "rsi_score": 30,
+      "heat_score": 70,
+      "price": 0.08235,
+      "volume": 13433925.105624,
+      "change_pct": 10.374,
+      "funding_rate": 5e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "SOLUSDT",
+      "total": 65.0,
+      "volume_score": 50,
+      "momentum_score": 50,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 95.84,
+      "volume": 235299264.85016,
+      "change_pct": -0.073,
+      "funding_rate": -2.268e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "PAXGUSDT",
+      "total": 65.0,
+      "volume_score": 50,
+      "momentum_score": 50,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 4686.23,
+      "volume": 27322204.024745,
+      "change_pct": -0.143,
+      "funding_rate": -3.498e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "FETUSDT",
+      "total": 65.0,
+      "volume_score": 50,
+      "momentum_score": 50,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 0.2274,
+      "volume": 12158080.23684,
+      "change_pct": -0.829,
+      "funding_rate": 0.0001,
+      "is_trending": false
+    },
+    {
+      "symbol": "XAUTUSDT",
+      "total": 65.0,
+      "volume_score": 50,
+      "momentum_score": 50,
+      "fr_score": 100,
+      "rsi_score": 70,
+      "heat_score": 70,
+      "price": 4686.99,
+      "volume": 10177639.052694,
+      "change_pct": -0.121,
+      "funding_rate": -3.256e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "SAGAUSDT",
+      "total": 64.5,
+      "volume_score": 80,
+      "momentum_score": 30,
+      "fr_score": 100,
+      "rsi_score": 40,
+      "heat_score": 70,
+      "price": 0.02994,
+      "volume": 170324923.722306,
+      "change_pct": -13.066,
+      "funding_rate": 5e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "PENGUUSDT",
+      "total": 64.0,
+      "volume_score": 50,
+      "momentum_score": 40,
+      "fr_score": 100,
+      "rsi_score": 80,
+      "heat_score": 70,
+      "price": 0.009586,
+      "volume": 13979185.555892,
+      "change_pct": -4.178,
+      "funding_rate": -3.992e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "TAOUSDT",
+      "total": 63.0,
+      "volume_score": 60,
+      "momentum_score": 40,
+      "fr_score": 100,
+      "rsi_score": 80,
+      "heat_score": 30,
+      "price": 307.8,
+      "volume": 25861294.02641,
+      "change_pct": -2.255,
+      "funding_rate": 1.66e-06,
+      "is_trending": true
+    },
+    {
+      "symbol": "SUIUSDT",
+      "total": 62.5,
+      "volume_score": 50,
+      "momentum_score": 50,
+      "fr_score": 100,
+      "rsi_score": 80,
+      "heat_score": 30,
+      "price": 1.2532,
+      "volume": 76810135.46887,
+      "change_pct": -1.779,
+      "funding_rate": 1.888e-05,
+      "is_trending": true
+    },
+    {
+      "symbol": "TIAUSDT",
+      "total": 62.5,
+      "volume_score": 50,
+      "momentum_score": 80,
+      "fr_score": 80,
+      "rsi_score": 30,
+      "heat_score": 70,
+      "price": 0.5103,
+      "volume": 19025512.8847,
+      "change_pct": 12.923,
+      "funding_rate": -9.33e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "TONUSDT",
+      "total": 60.5,
+      "volume_score": 70,
+      "momentum_score": 30,
+      "fr_score": 100,
+      "rsi_score": 60,
+      "heat_score": 30,
+      "price": 2.265,
+      "volume": 50271244.612,
+      "change_pct": -7.248,
+      "funding_rate": 3.491e-05,
+      "is_trending": true
+    },
+    {
+      "symbol": "CHIPUSDT",
+      "total": 60.0,
+      "volume_score": 70,
+      "momentum_score": 40,
+      "fr_score": 50,
+      "rsi_score": 80,
+      "heat_score": 70,
+      "price": 0.06343,
+      "volume": 1064998313.62508,
+      "change_pct": -3.234,
+      "funding_rate": -0.00048268,
+      "is_trending": false
+    },
+    {
+      "symbol": "VICUSDT",
+      "total": 59.5,
+      "volume_score": 60,
+      "momentum_score": 80,
+      "fr_score": 50,
+      "rsi_score": 30,
+      "heat_score": 70,
+      "price": 0.0564,
+      "volume": 20943460.044914,
+      "change_pct": 14.17,
+      "funding_rate": -0.00014885,
+      "is_trending": false
+    },
+    {
+      "symbol": "ONDOUSDT",
+      "total": 59.0,
+      "volume_score": 60,
+      "momentum_score": 40,
+      "fr_score": 80,
+      "rsi_score": 80,
+      "heat_score": 30,
+      "price": 0.4033,
+      "volume": 25144806.00556,
+      "change_pct": -4.363,
+      "funding_rate": -6.861e-05,
+      "is_trending": true
+    },
+    {
+      "symbol": "SOLVUSDT",
+      "total": 58.5,
+      "volume_score": 50,
+      "momentum_score": 30,
+      "fr_score": 100,
+      "rsi_score": 60,
+      "heat_score": 70,
+      "price": 0.00507,
+      "volume": 17897282.80357,
+      "change_pct": -6.285,
+      "funding_rate": 5e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "SAHARAUSDT",
+      "total": 58.5,
+      "volume_score": 50,
+      "momentum_score": 30,
+      "fr_score": 100,
+      "rsi_score": 60,
+      "heat_score": 70,
+      "price": 0.04101,
+      "volume": 17524171.47717,
+      "change_pct": -9.109,
+      "funding_rate": 2.548e-05,
+      "is_trending": false
+    },
+    {
+      "symbol": "UTKUSDT",
+      "total": 56.5,
+      "volume_score": 50,
+      "momentum_score": 80,
+      "fr_score": 50,
+      "rsi_score": 30,
+      "heat_score": 70,
+      "price": 0.00795,
+      "volume": 10207948.62723,
+      "change_pct": 16.228,
+      "funding_rate": null,
+      "is_trending": false
+    },
+    {
+      "symbol": "币安人生USDT",
+      "total": 54.5,
+      "volume_score": 50,
+      "momentum_score": 80,
+      "fr_score": 40,
+      "rsi_score": 30,
+      "heat_score": 70,
+      "price": 0.4094,
+      "volume": 12833195.13825,
+      "change_pct": 6.504,
+      "funding_rate": 0.00028731,
+      "is_trending": false
+    },
+    {
+      "symbol": "COSUSDT",
+      "total": 53.5,
+      "volume_score": 60,
+      "momentum_score": 80,
+      "fr_score": 20,
+      "rsi_score": 30,
+      "heat_score": 70,
+      "price": 0.001726,
+      "volume": 20847689.016677,
+      "change_pct": 44.92,
+      "funding_rate": -0.00915554,
+      "is_trending": false
+    }
+  ],
+  "excluded_pool": [
+    {
+      "symbol": "INJUSDT",
+      "total": 49.5,
+      "price": 5.829,
+      "volume": 41701451.40682,
+      "change_pct": 22.484,
+      "funding_rate": -0.0021379
+    }
+  ]
+}

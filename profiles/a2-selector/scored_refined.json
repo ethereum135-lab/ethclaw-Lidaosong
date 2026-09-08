@@ -1,0 +1,505 @@
+{
+  "market_env": {
+    "fg_index": "42",
+    "fg_classification": "Fear",
+    "btc_price": "81298.60",
+    "eth_price": "2323.02",
+    "btc_dominance": "58.194583653775766",
+    "total_mcap": "2793013854387.9663"
+  },
+  "stage1_exclusions": {
+    "stablecoins": [
+      "EURUSDT",
+      "RLUSDUSDT",
+      "UUSDT"
+    ],
+    "price_fails": [
+      "LUNCUSDT",
+      "PEPEUSDT"
+    ],
+    "large_caps": [
+      "AAVEUSDT",
+      "ADAUSDT",
+      "AVAXUSDT",
+      "BNBUSDT",
+      "BTCUSDT",
+      "DOGEUSDT",
+      "ETHUSDT",
+      "HBARUSDT",
+      "LINKUSDT",
+      "LTCUSDT",
+      "NEARUSDT",
+      "PEPEUSDT",
+      "SOLUSDT",
+      "SUIUSDT",
+      "TAOUSDT",
+      "TONUSDT",
+      "TRXUSDT",
+      "UNIUSDT",
+      "XRPUSDT"
+    ],
+    "funding_fails": [
+      {
+        "symbol": "CHIPUSDT",
+        "fr": -0.00048268
+      },
+      {
+        "symbol": "COSUSDT",
+        "fr": -0.00915554
+      },
+      {
+        "symbol": "INJUSDT",
+        "fr": -0.0021379
+      },
+      {
+        "symbol": "VICUSDT",
+        "fr": -0.00014885
+      },
+      {
+        "symbol": "币安人生USDT",
+        "fr": 0.00028731
+      }
+    ]
+  },
+  "candidate_pool": [
+    {
+      "symbol": "DYMUSDT",
+      "base": "DYM",
+      "price": 0.0276,
+      "volume": 28591071.85431,
+      "change_pct": 5.344,
+      "funding_rate": 5e-05,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 75.5,
+      "vol": 75,
+      "mom": 80,
+      "fr": 100,
+      "rsi": 40,
+      "heat": 70
+    },
+    {
+      "symbol": "KITEUSDT",
+      "base": "KITE",
+      "price": 0.2081,
+      "volume": 13477424.72366,
+      "change_pct": 11.165,
+      "funding_rate": 5e-05,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 75.0,
+      "vol": 75,
+      "mom": 90,
+      "fr": 100,
+      "rsi": 20,
+      "heat": 70
+    },
+    {
+      "symbol": "FFUSDT",
+      "base": "FF",
+      "price": 0.08235,
+      "volume": 13433925.105624,
+      "change_pct": 10.374,
+      "funding_rate": 5e-05,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 75.0,
+      "vol": 75,
+      "mom": 90,
+      "fr": 100,
+      "rsi": 20,
+      "heat": 70
+    },
+    {
+      "symbol": "TRUMPUSDT",
+      "base": "TRUMP",
+      "price": 2.463,
+      "volume": 35586215.936225,
+      "change_pct": 4.276,
+      "funding_rate": 5e-05,
+      "is_trending": false,
+      "mcap_estimate": 500000000,
+      "mcap_ok": true,
+      "total": 73.0,
+      "vol": 65,
+      "mom": 70,
+      "fr": 100,
+      "rsi": 60,
+      "heat": 70
+    },
+    {
+      "symbol": "ATOMUSDT",
+      "base": "ATOM",
+      "price": 2.144,
+      "volume": 12848030.05209,
+      "change_pct": 4.128,
+      "funding_rate": -4.922e-05,
+      "is_trending": false,
+      "mcap_estimate": 830000000,
+      "mcap_ok": true,
+      "total": 73.0,
+      "vol": 65,
+      "mom": 70,
+      "fr": 100,
+      "rsi": 60,
+      "heat": 70
+    },
+    {
+      "symbol": "WLDUSDT",
+      "base": "WLD",
+      "price": 0.2856,
+      "volume": 11783874.46824,
+      "change_pct": 4.196,
+      "funding_rate": -4.33e-06,
+      "is_trending": false,
+      "mcap_estimate": 350000000,
+      "mcap_ok": true,
+      "total": 73.0,
+      "vol": 65,
+      "mom": 70,
+      "fr": 100,
+      "rsi": 60,
+      "heat": 70
+    },
+    {
+      "symbol": "ZECUSDT",
+      "base": "ZEC",
+      "price": 553.36,
+      "volume": 131281714.80833,
+      "change_pct": 0.245,
+      "funding_rate": 8.843e-05,
+      "is_trending": false,
+      "mcap_estimate": 900000000,
+      "mcap_ok": true,
+      "total": 72.0,
+      "vol": 60,
+      "mom": 60,
+      "fr": 100,
+      "rsi": 80,
+      "heat": 70
+    },
+    {
+      "symbol": "SPKUSDT",
+      "base": "SPK",
+      "price": 0.035262,
+      "volume": 48574038.157662,
+      "change_pct": 1.281,
+      "funding_rate": 5e-05,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 72.0,
+      "vol": 60,
+      "mom": 60,
+      "fr": 100,
+      "rsi": 80,
+      "heat": 70
+    },
+    {
+      "symbol": "TIAUSDT",
+      "base": "TIA",
+      "price": 0.5103,
+      "volume": 19025512.8847,
+      "change_pct": 12.923,
+      "funding_rate": -9.33e-05,
+      "is_trending": false,
+      "mcap_estimate": 300000000,
+      "mcap_ok": true,
+      "total": 72.0,
+      "vol": 75,
+      "mom": 90,
+      "fr": 85,
+      "rsi": 20,
+      "heat": 70
+    },
+    {
+      "symbol": "SOLVUSDT",
+      "base": "SOLV",
+      "price": 0.00507,
+      "volume": 17897282.80357,
+      "change_pct": -6.285,
+      "funding_rate": 5e-05,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 70.0,
+      "vol": 75,
+      "mom": 40,
+      "fr": 100,
+      "rsi": 70,
+      "heat": 70
+    },
+    {
+      "symbol": "PENGUUSDT",
+      "base": "PENGU",
+      "price": 0.009586,
+      "volume": 13979185.555892,
+      "change_pct": -4.178,
+      "funding_rate": -3.992e-05,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 70.0,
+      "vol": 65,
+      "mom": 40,
+      "fr": 100,
+      "rsi": 90,
+      "heat": 70
+    }
+  ],
+  "watch_pool": [
+    {
+      "symbol": "CRVUSDT",
+      "base": "CRV",
+      "price": 0.2879,
+      "volume": 12462216.86242,
+      "change_pct": 1.373,
+      "funding_rate": 6.939e-05,
+      "is_trending": false,
+      "mcap_estimate": 350000000,
+      "mcap_ok": true,
+      "total": 69.0,
+      "vol": 50,
+      "mom": 60,
+      "fr": 100,
+      "rsi": 80,
+      "heat": 70
+    },
+    {
+      "symbol": "DASHUSDT",
+      "base": "DASH",
+      "price": 46.26,
+      "volume": 12329534.44107,
+      "change_pct": 1.425,
+      "funding_rate": 6.609e-05,
+      "is_trending": false,
+      "mcap_estimate": 550000000,
+      "mcap_ok": true,
+      "total": 69.0,
+      "vol": 50,
+      "mom": 60,
+      "fr": 100,
+      "rsi": 80,
+      "heat": 70
+    },
+    {
+      "symbol": "ENAUSDT",
+      "base": "ENA",
+      "price": 0.1251,
+      "volume": 12165688.733604,
+      "change_pct": 0.321,
+      "funding_rate": 5e-05,
+      "is_trending": false,
+      "mcap_estimate": 220000000,
+      "mcap_ok": true,
+      "total": 69.0,
+      "vol": 50,
+      "mom": 60,
+      "fr": 100,
+      "rsi": 80,
+      "heat": 70
+    },
+    {
+      "symbol": "PENDLEUSDT",
+      "base": "PENDLE",
+      "price": 2.093,
+      "volume": 14285060.2509,
+      "change_pct": 2.247,
+      "funding_rate": -8.7e-06,
+      "is_trending": false,
+      "mcap_estimate": 600000000,
+      "mcap_ok": true,
+      "total": 68.5,
+      "vol": 50,
+      "mom": 70,
+      "fr": 100,
+      "rsi": 60,
+      "heat": 70
+    },
+    {
+      "symbol": "SAGAUSDT",
+      "base": "SAGA",
+      "price": 0.02994,
+      "volume": 170324923.722306,
+      "change_pct": -13.066,
+      "funding_rate": 5e-05,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 67.5,
+      "vol": 85,
+      "mom": 30,
+      "fr": 100,
+      "rsi": 50,
+      "heat": 70
+    },
+    {
+      "symbol": "SAHARAUSDT",
+      "base": "SAHARA",
+      "price": 0.04101,
+      "volume": 17524171.47717,
+      "change_pct": -9.109,
+      "funding_rate": 2.548e-05,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 67.5,
+      "vol": 75,
+      "mom": 30,
+      "fr": 100,
+      "rsi": 70,
+      "heat": 70
+    },
+    {
+      "symbol": "PAXGUSDT",
+      "base": "PAXG",
+      "price": 4686.23,
+      "volume": 27322204.024745,
+      "change_pct": -0.143,
+      "funding_rate": -3.498e-05,
+      "is_trending": false,
+      "mcap_estimate": 500000000,
+      "mcap_ok": true,
+      "total": 66.5,
+      "vol": 50,
+      "mom": 50,
+      "fr": 100,
+      "rsi": 80,
+      "heat": 70
+    },
+    {
+      "symbol": "FETUSDT",
+      "base": "FET",
+      "price": 0.2274,
+      "volume": 12158080.23684,
+      "change_pct": -0.829,
+      "funding_rate": 0.0001,
+      "is_trending": false,
+      "mcap_estimate": 600000000,
+      "mcap_ok": true,
+      "total": 66.5,
+      "vol": 50,
+      "mom": 50,
+      "fr": 100,
+      "rsi": 80,
+      "heat": 70
+    },
+    {
+      "symbol": "XAUTUSDT",
+      "base": "XAUT",
+      "price": 4686.99,
+      "volume": 10177639.052694,
+      "change_pct": -0.121,
+      "funding_rate": -3.256e-05,
+      "is_trending": false,
+      "mcap_estimate": 500000000,
+      "mcap_ok": true,
+      "total": 66.5,
+      "vol": 50,
+      "mom": 50,
+      "fr": 100,
+      "rsi": 80,
+      "heat": 70
+    },
+    {
+      "symbol": "UTKUSDT",
+      "base": "UTK",
+      "price": 0.00795,
+      "volume": 10207948.62723,
+      "change_pct": 16.228,
+      "funding_rate": null,
+      "is_trending": false,
+      "mcap_estimate": null,
+      "mcap_ok": null,
+      "total": 65.0,
+      "vol": 75,
+      "mom": 90,
+      "fr": 50,
+      "rsi": 20,
+      "heat": 70
+    },
+    {
+      "symbol": "ONDOUSDT",
+      "base": "ONDO",
+      "price": 0.4033,
+      "volume": 25144806.00556,
+      "change_pct": -4.363,
+      "funding_rate": -6.861e-05,
+      "is_trending": true,
+      "mcap_estimate": 600000000,
+      "mcap_ok": true,
+      "total": 63.0,
+      "vol": 65,
+      "mom": 40,
+      "fr": 85,
+      "rsi": 90,
+      "heat": 30
+    }
+  ],
+  "excluded_pool": [],
+  "trending": [
+    {
+      "name": "Zano",
+      "symbol": "ZANO"
+    },
+    {
+      "name": "Injective",
+      "symbol": "INJ"
+    },
+    {
+      "name": "Firo",
+      "symbol": "FIRO"
+    },
+    {
+      "name": "Billions Network",
+      "symbol": "BILL"
+    },
+    {
+      "name": "wojak",
+      "symbol": "WOJAK"
+    },
+    {
+      "name": "LAB",
+      "symbol": "LAB"
+    },
+    {
+      "name": "Monad",
+      "symbol": "MON"
+    },
+    {
+      "name": "Ondo",
+      "symbol": "ONDO"
+    },
+    {
+      "name": "Toncoin",
+      "symbol": "TON"
+    },
+    {
+      "name": "Akash Network",
+      "symbol": "AKT"
+    },
+    {
+      "name": "Sui",
+      "symbol": "SUI"
+    },
+    {
+      "name": "Kaspa",
+      "symbol": "KAS"
+    },
+    {
+      "name": "Venice Token",
+      "symbol": "VVV"
+    },
+    {
+      "name": "Bittensor",
+      "symbol": "TAO"
+    },
+    {
+      "name": "Unibase",
+      "symbol": "UB"
+    }
+  ]
+}

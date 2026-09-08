@@ -1,0 +1,148 @@
+#!/usr/bin/env python3
+"""
+A4状态同步器 — 从TRADES.md提取最新A4状态，写入state/a4.json
+
+背景：A4引擎运行在AWS（独立部署），本地state/a4.json会过期。
+本脚本每5分钟随state_aggregator.py跑一次，从TRADES.md解析最新
+A4活动状态，确保global_state.json显示正确。
+
+输出：state/a4.json（含真实ts_unix、持仓数、USDT余额、信号ID）
+"""
+import json, os, re, time
+
+PROJECT_ROOT = "/Users/lidaosong/zq_web4_trading_system"
+TRADES_PATH = os.path.join(PROJECT_ROOT, "audit", "TRADES.md")
+STATE_PATH = os.path.join(PROJECT_ROOT, "state", "a4.json")
+NODE_HISTORY = os.path.join(PROJECT_ROOT, "data", "node_history.jsonl")
+
+
+def parse_latest_from_trades() -> dict:
+    """从TRADES.md解析最新的A4状态"""
+    if not os.path.exists(TRADES_PATH):
+        return None
+
+    with open(TRADES_PATH, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    # 提取所有信号发送区块
+    signal_pattern = (
+        r'### (\d{4}-\d{2}-\d{2} \d{2}:\d{2}) BJT \| 信号发送\n'
+        r'\| 字段 \| 值 \|\n'
+        r'\|:-----\|:---\|\n'
+        r'\| 信号ID \| (\S+) \|\n'
+        r'\| 买入信号 \| (\d+)个 \|\n'
+        r'\| 卖出信号 \| (\d+)个 \|\n'
+        r'\| 详情 \| 买入: \[([^\]]*)\] 卖出: \[([^\]]*)\] \|\n'
+        r'\| 状态 \| (.+) \|'
+    )
+    signals = re.findall(signal_pattern, text)
+
+    # 提取所有持仓评估区块
+    eval_pattern = (
+        r'### (\d{4}-\d{2}-\d{2} \d{2}:\d{2}) BJT \| 持仓评估\n'
+        r'\| 字段 \| 值 \|\n'
+        r'\|:-----\|:---\|\n'
+        r'\| 持仓数 \| (\d+) \|\n'
+        r'\| USDT \| \$([0-9.]+) \|\n'
+        r'\| 操作 \| (.+) \|\n'
+        r'\| 详情 \| (.*) \|'
+    )
+    evals = re.findall(eval_pattern, text)
+
+    if not signals and not evals:
+        return None
+
+    # ========== 构建状态 ==========
+    result = {
+        "agent": "a4",
+        "status": "ok",
+        "data": {
+            "positions_count": 0,
+            "usdt_balance": 0.0,
+            "last_action": "无操作",
+            "last_signal_id": None,
+            "buy_signals": 0,
+            "sell_signals": 0,
+            "active_positions": []
+        },
+        "errors": None,
+        "timestamp": None,
+        "ts_unix": 0
+    }
+
+    # 解析最新持仓评估 (最后一组 = 最新)
+    if evals:
+        latest_eval = evals[-1]
+        ts_str = latest_eval[0]
+        ts_unix = int(time.mktime(time.strptime(ts_str, "%Y-%m-%d %H:%M")))
+        result["timestamp"] = f"{ts_str}:00+08:00"
+        result["ts_unix"] = ts_unix
+        result["data"]["positions_count"] = int(latest_eval[1])
+        result["data"]["usdt_balance"] = float(latest_eval[2])
+        result["data"]["last_action"] = latest_eval[3]
+
+    # 解析最新信号
+    if signals:
+        latest_sig = signals[-1]
+        sig_ts = latest_sig[0]
+        sig_unix = int(time.mktime(time.strptime(sig_ts, "%Y-%m-%d %H:%M")))
+
+        result["data"]["last_signal_id"] = latest_sig[1]
+        result["data"]["buy_signals"] = int(latest_sig[2])
+        result["data"]["sell_signals"] = int(latest_sig[3])
+
+        buy_raw = latest_sig[4].strip()
+        sell_raw = latest_sig[5].strip()
+        result["data"]["signals_detail"] = {
+            "buy": [x.strip() + ")" for x in buy_raw.split(")") if x.strip()] if buy_raw else [],
+            "sell": [x.strip() + ")" for x in sell_raw.split(")") if x.strip()] if sell_raw else []
+        }
+        result["data"]["push_status"] = latest_sig[6]
+
+        # 使用更活跃的时间戳 (信号 或 评估中较新的)
+        if sig_unix > result.get("ts_unix", 0):
+            result["timestamp"] = f"{sig_ts}:00+08:00"
+            result["ts_unix"] = sig_unix
+
+    # 从node_history.jsonl补充余额数据
+    try:
+        with open(NODE_HISTORY, "r") as f:
+            lines = f.readlines()
+            if lines:
+                last_line = json.loads(lines[-1].strip())
+                total = last_line.get("total", 0)
+                if total > 0:
+                    result["data"]["total_equity"] = total
+                    result["data"]["total_source"] = "node_history.jsonl"
+    except Exception:
+        pass
+
+    return result
+
+
+def write_state(data: dict):
+    """原子写入state/a4.json"""
+    os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
+    tmp = STATE_PATH + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+        f.flush()
+    os.replace(tmp, STATE_PATH)
+
+
+def main():
+    a4_state = parse_latest_from_trades()
+    if a4_state:
+        write_state(a4_state)
+        ts_str = time.strftime("%Y-%m-%d %H:%M", time.localtime(a4_state["ts_unix"]))
+        print(f"[sync_a4_state] ✅ 更新 A4 状态: "
+              f"持仓{a4_state['data']['positions_count']} | "
+              f"USDT${a4_state['data']['usdt_balance']} | "
+              f"信号{a4_state['data'].get('last_signal_id', 'N/A')} | "
+              f"时间{ts_str}")
+    else:
+        print("[sync_a4_state] ⚠️ 未从TRADES.md找到A4数据，保留原状态")
+
+
+if __name__ == "__main__":
+    main()

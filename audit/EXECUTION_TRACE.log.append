@@ -1,0 +1,7 @@
+
+[2026-05-01 04:51:26] NODE_04:51 | ENGINE_RUN_v2 | RESULT: FAIL-CONNECTIVITY | v2 engine |
+Top3(scores): N/A — Binance API unreachable |
+USDT: $56.91 (prev node estimate, unchanged) |
+Holdings: LINK(~28.87 @ ~$9.145)/WLD(348.5 @ $0.2446)/USDT($56.91) |
+Total: $407.09 estimate (prev node, unchanged — no price update available) |
+DECISION: NO TRADES — All Binance endpoints (api/api1/api2/api3, 6+ CDN IPs, IPv6) TCP timeout. cloudflare.com OK but binance.com mainnet completely unreachable. Clash Verge installed (mihomo core) but core not running (profiles:current=null). LetsVPN.app running but no proxy port. Cannot fetch prices/balances/klines. All positions unchanged from last node. LINK/WLD safety unverifiable. Suggested fix: enable Clash proxy or reconnect VPN before next node.

@@ -1,0 +1,81 @@
+{
+  "date": "2026-05-17",
+  "generated_at": "07:07 BJT",
+  "note": "量价(40%)+趋势(25%)+RR(15%)=80%已脚本精确计算。叙事(20%)需LLM填入填入后补齐最终综合分",
+  "data_source": "aws_snapshot.json (AWS→Binance API)",
+  "market": {
+    "fg_value": "31",
+    "fg_label": "Fear",
+    "btc_price": "$78217.71000000"
+  },
+  "candidates": [
+    {
+      "symbol": "XRPUSDT",
+      "price": 1.4141,
+      "change_24h": -1.291,
+      "volume_rank_in_top50": 4,
+      "vp_score": 75,
+      "vp_label": "吸筹",
+      "trend_score": 50,
+      "trend_label": "中性",
+      "narrative_score": null,
+      "narrative_label": "待LLM判断",
+      "rr_score": 30,
+      "rr_label": "差",
+      "composite_80pct": 58.8,
+      "if_strong_narrative": 63.0,
+      "if_weak_narrative": 53.0
+    },
+    {
+      "symbol": "BNBUSDT",
+      "price": 656.53,
+      "change_24h": -2.36,
+      "volume_rank_in_top50": 5,
+      "vp_score": 65,
+      "vp_label": "吸筹",
+      "trend_score": 80,
+      "trend_label": "埋伏",
+      "narrative_score": null,
+      "narrative_label": "待LLM判断",
+      "rr_score": 50,
+      "rr_label": "一般",
+      "composite_80pct": 66.9,
+      "if_strong_narrative": 69.5,
+      "if_weak_narrative": 59.5
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "price": 0.10966,
+      "change_24h": -2.93,
+      "volume_rank_in_top50": 6,
+      "vp_score": 65,
+      "vp_label": "吸筹",
+      "trend_score": 80,
+      "trend_label": "埋伏",
+      "narrative_score": null,
+      "narrative_label": "待LLM判断",
+      "rr_score": 50,
+      "rr_label": "一般",
+      "composite_80pct": 66.9,
+      "if_strong_narrative": 69.5,
+      "if_weak_narrative": 59.5
+    },
+    {
+      "symbol": "SUIUSDT",
+      "price": 1.0656,
+      "change_24h": -2.605,
+      "volume_rank_in_top50": 9,
+      "vp_score": 50,
+      "vp_label": "健康整理",
+      "trend_score": 50,
+      "trend_label": "中性",
+      "narrative_score": null,
+      "narrative_label": "待LLM判断",
+      "rr_score": 30,
+      "rr_label": "差",
+      "composite_80pct": 46.2,
+      "if_strong_narrative": 53.0,
+      "if_weak_narrative": 43.0
+    }
+  ]
+}

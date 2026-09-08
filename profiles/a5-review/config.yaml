@@ -1,0 +1,109 @@
+# A5 复盘官 完整配置文件 v2.0
+# 最后更新: 2026-05-17 — 新增三职能框架
+
+# ==========================================
+# 模型配置
+# ==========================================
+model:
+  default: deepseek-v4-flash
+  provider: deepseek
+  temperature: 0.3     # 复盘需要客观一致性
+  fallback:
+    model: claude-sonnet-4
+    provider: anthropic
+
+# ==========================================
+# 路径配置
+# ==========================================
+paths:
+  profile_dir: profiles/a5-review/
+  output_dir: profiles/a5-review/output/
+  logs_dir: profiles/a5-review/logs/
+  
+  # 数据源
+  trades_log: audit/TRADES.md
+  experience_dir: data/experience/trades/
+  master_experience: data/experience/MASTER_EXPERIENCE.json
+  daily_summary: data/experience/daily/
+  archive: audit/experience_archive.md
+  reviews_dir: audit/reviews/
+  
+  # 工具
+  analyze_script: ~/.hermes/skills/trading/zq-a5-review-agent/scripts/analyze-recent-sell.py
+  dqw_script: ~/.hermes/skills/trading/zq-a5-review-agent/scripts/dqw-check.py
+  
+  # 三职能工具（v2.0新增）
+  supervision_eval: tools/supervision_eval.py
+  tool_eval: tools/tool_eval.py
+  learning_suggest: tools/learning_suggest.py
+  
+  # 三职能产出目录
+  supervision_output: profiles/a5-review/output/监督_
+  tool_eval_output: profiles/a5-review/output/工具评估_
+  learning_suggest_output: profiles/a5-review/output/建议ZH学习方向_
+  
+  # Agent工具
+  trade_experience: tools/trade_experience.py
+
+# ==========================================
+# 时间配置
+# ==========================================
+schedule:
+  experience_collect: "*/30 * * * *"    # 每30分钟
+  daily_review: "0 23 * * *"            # 每天23:00
+  self_check: "0 17 * * *"              # 每天17:00自检
+  daily_learning: "0 8 * * *"           # 每天08:00学习
+  supervision: "30 8 * * *"             # 每天08:30监督评估（v2.0新增）
+
+
+# ==========================================
+# 退出质量分类阈值
+# ==========================================
+quality:
+  correct_threshold: 0.03      # >+3% → 正确退出
+  neutral_upper: 0.03          # -1% ~ +3% → 中性
+  neutral_lower: -0.01
+  wrong_threshold: -0.01       # <-1% → 错误退出
+
+# ==========================================
+# DQW检测阈值
+# ==========================================
+dqw:
+  price_ratio_upper: 10.0      # sell/buy >10x → Column Shift
+  price_ratio_lower: 0.1       # sell/buy <0.1x → Column Shift
+  qty_ratio_upper: 5.0         # sell_qty/buy_qty >5x → 列错位
+  qty_ratio_lower: 0.2         # sell_qty/buy_qty <0.2x → 列错位
+  zero_price_tolerance: 0.0001 # 价格=0 → 精度截断
+
+# ==========================================
+# 复盘报告配置
+# ==========================================
+review:
+  sections: 7                   # 7章节复盘
+  max_issues: 5                 # 最多标记5个问题
+  min_plans: 4                  # 至少4个明日计划
+  max_plans: 6                  # 最多6个明日计划
+
+# ==========================================
+# 学习配置
+# ==========================================
+learning:
+  enabled: true
+  schedule: "0 8 * * *"
+  rotation:
+    # 第1周：基础框架
+    - "交易大师框架（CZ/V神/徐明星/孙宇晨的四视角判断法）"
+    - "决策质量评估方法论（区分决策质量与盈亏结果）"
+    - "交易系统失败模式（入场/出场/选币/风控典型问题）"
+    - "查理·芒格投资哲学（避免错误、心理模型、归因技巧）"
+    - "工具评估方法论（A/B测试设计、Before/After对比）"
+    - "航空事故调查案例（因果链分析/系统故障模式）"
+    - "量化回测知识（回测/过拟合/参数优化）"
+    # 第2周：专业升级（v2.2新增）
+    - "AAR复盘框架（预期→实际→差异→改进四段式）"
+    - "桥水原则决策评估（Dot Collector+不事后诸葛亮）"
+    - "归因层次分析（L1选币/L2执行/L3决策/L4环境）"
+    - "信号衰减检测（策略工具生命周期前中后段对比）"
+    - "统计显著性检验（样本量门槛/中位数vs平均数）"
+    - "PDCA系统改进循环（Plan-Do-Check-Act制度化）"
+    - "工具副作用检测（改善A的同时是否损害B）"

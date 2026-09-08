@@ -1,0 +1,26 @@
+{
+  "node": "NG#11",
+  "timestamp": "2026-05-18T12:34:04+08:00",
+  "ts_unix": 1779078844,
+  "btc_price": 76832,
+  "fng": 27,
+  "usdt": 269.19,
+  "total_equity_approx": 297.33,
+  "positions": [
+    {"asset": "DOT", "qty": 12.02, "price": 1.237, "cost": 1.246, "pnl_pct": -0.72, "value": 14.87, "decision": "HOLD", "entry_type": "mean_reversion", "stop": 1.2247, "hours_held": 3.5},
+    {"asset": "TON", "qty": 2.736, "price": 1.924, "cost": 2.361, "pnl_pct": -18.2, "value": 5.26, "decision": "HOLD_dust", "entry_type": "legacy"},
+    {"asset": "UNI", "qty": 1.224, "price": 3.425, "cost": 4.052, "pnl_pct": -15.2, "value": 4.19, "decision": "HOLD_dust", "entry_type": "legacy"},
+    {"asset": "XEC", "qty": 580139, "price": 0.000007, "cost": 0.0000075, "pnl_pct": -6.67, "value": 4.06, "decision": "HOLD_dust", "entry_type": "legacy"}
+  ],
+  "actions_taken": ["hold_all"],
+  "new_buys": 0,
+  "new_sells": 0,
+  "exit_signals_checked": "P1-none止损-none(尘埃不可操)动量-N/A超时-N/A尘埃-3%-qualify但<阈值",
+  "a3_recommendation": "none",
+  "rsidivergence": {"DOT":"NONE","ZEC":"NONE","ETH":"NONE"},
+  "trend_check": {"DOT":"SKIP(4/9)","ZEC":"WATCH(3/9)","UTK":"BUY_PULLBACK(5/9)"},
+  "rsi_bb": {"buy_count":0,"signal":"all_WATCH"},
+  "idle_funds_scan": "三源无BUY_NOW",
+  "idle_check": "✅正常7连续CHECK(<8)",
+  "market_note": "BTC$76.8K第6h缓慢下行,恐慌27深度恐惧,全市场超卖但趋势向下,守纪律等13:00赛道扫描"
+}

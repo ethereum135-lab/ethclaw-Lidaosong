@@ -1,0 +1,78 @@
+# A6 审计官 配置文件
+# 创建日期: 2026-05-11
+
+# ==========================================
+# 模型配置
+# ==========================================
+model:
+  default: deepseek-v4-flash
+  provider: deepseek
+  temperature: 0.2       # 审计需要最低温度，精确
+  fallback:
+    model: claude-sonnet-4
+    provider: anthropic
+
+# ==========================================
+# 路径配置
+# ==========================================
+paths:
+  profile_dir: profiles/a6-audit/
+  output_dir: profiles/a6-audit/output/
+  logs_dir: profiles/a6-audit/logs/
+  
+  # 审计产出（老李指定路径）
+  audit_output: agents/a6/weekly_audit.md
+  
+  # 读取来源
+  a3_output: profiles/a3-bull/output/
+  a4_trades: audit/TRADES.md
+  a5_experience: data/experience/trades/
+  a5_master: data/experience/MASTER_EXPERIENCE.json
+
+# ==========================================
+# 审计阈值
+# ==========================================
+audit:
+  schedule: "0 8 * * 1"     # 每周一08:00
+  
+  # 偏差率
+  deviation:
+    green: 0.05              # <5% 🟢
+    yellow: 0.10             # 5-10% 🟡
+    red: 0.10                # >10% 🔴
+  
+  # 经验值覆盖率
+  coverage:
+    green: 1.0               # 100% 🟢
+    yellow: 0.90             # ≥90% 🟡
+    red: 0.90                # <90% 🔴
+
+# ==========================================
+# 审计三项清单
+# ==========================================
+checklist:
+  - name: "A3 vs A4偏差"
+    source_a: "profiles/a3-bull/output/"
+    source_b: "audit/TRADES.md"
+    standard: "偏差率<5%"
+  
+  - name: "A5经验值覆盖率"
+    source: "data/experience/trades/"
+    compare: "audit/TRADES.md SELL行"
+    standard: "覆盖率100%"
+  
+  - name: "Agent任务闭环"
+    agents: ["A3-牛币官-每日精选", "A4-交易官-执行节点", "A5-每日复盘", "A5-经验值采集"]
+    standard: "无🔴红灯"
+
+# ==========================================
+# 学习配置
+# ==========================================
+learning:
+  enabled: true
+  schedule: "0 8 * * 2,4"   # 周二、周四08:00
+  topics:
+    - "审计方法论（偏差分析/根因追溯/流程审计）"
+    - "资金费率套利策略（A6未来扩展方向）"
+    - "系统可靠性工程（SRE/监控/告警体系）"
+    - "对标学习：上市公司内审最佳实践"

@@ -1,0 +1,212 @@
+# ZH 总指挥 完整配置文件
+# 本文件定义了ZH的独立运行时配置
+# 最后更新: 2026-05-11
+
+# ==========================================
+# 模型配置 — ZH独立大模型
+# ==========================================
+model:
+  default: deepseek-v4-flash
+  provider: deepseek
+  # 不同任务的温度配置
+  temperature:
+    analysis: 0.3       # 行业研判、策略分析 — 需要一致性
+    briefing: 0.4       # 简报撰写 — 需要客观
+    learning: 0.5       # 深度学习 — 可以有些创新
+    scheduling: 0.2     # 调度决策 — 最低温度，保持精确
+    emergency: 0.1      # 异常处理 — 必须精确
+  # 备用模型（当默认模型不可用时）
+  fallback:
+    model: claude-sonnet-4
+    provider: anthropic
+
+# ==========================================
+# 路径配置
+# ==========================================
+paths:
+  # ZH自身
+  profile_dir: profiles/zh/
+  output_dir: profiles/zh/output/
+  logs_dir: profiles/zh/logs/
+  authority_dir: profiles/zh/authority/
+  
+  # 系统根目录
+  system_root: ../
+  
+  # 读取其他Agent产出的路径
+  agent_outputs:
+    a1: profiles/a1-data/output/
+    a2: profiles/a2-selector/output/
+    a3: profiles/a3-bull/output/
+    a4: profiles/a4-blade/output/
+    a5: profiles/a5-review/output/
+  
+  # 系统数据路径
+  trades: audit/TRADES.md
+  errors: audit/ERRORS.md
+  
+  # 技能目录
+  skills_dir: ~/.hermes/skills/
+
+  # 共享赛道数据
+  hot_sectors: shared/hot_sectors.md
+
+# ==========================================
+# 日程配置（BJT北京时间）
+# ==========================================
+schedule:
+  daily:
+    read_a3: "07:00"           # 读A3精选报告
+    read_a3_deadline: "07:30"  # 授权决策截止
+    quick_check: "09:00"       # 快速巡检Agent
+    industry_scan: "10:00"     # 全网扫描（cron①）
+    deep_learning: "15:00"     # 深度学习（cron②）
+    execution_check: "17:00"   # 检查今日执行
+    daily_brief: "18:00"       # 产出简报（cron③）
+    read_a5: "21:00"           # 读A5复盘
+    health_check: "22:00"      # 系统健康度检查
+  
+  weekly_monday:
+    strategy_review: "08:00"   # 综合A5复盘
+    agent_assessment: "08:30"  # 评估Agent表现
+    strategy_calibration: "10:00" # 策略校准
+  
+  monthly_first_day:
+    system_assessment: "08:00" # 月度系统评估
+    master_progress: "09:00"   # 对标人物进度
+
+# ==========================================
+# 行业监控指标
+# ==========================================
+indicators:
+  # F&G指数阈值
+  fear_greed:
+    extreme_fear_threshold: 20   # 极端恐慌 → 空仓
+    fear_threshold: 30           # 恐慌 → 收紧选币
+    normal_max: 70               # 中性~贪婪 → 正常
+    extreme_greed: 85            # 极端贪婪 → 警惕顶部
+  
+  # 资金费率
+  funding_rate:
+    alert_threshold: 0.001       # >0.1% 持续24h = 顶部信号
+    crowded_long: 0.01           # >1% = 多头极度拥挤
+    crowded_short: -0.01         # <-1% = 空头极度拥挤（轧空可能）
+  
+  # BTC Dominance
+  btc_dominance:
+    alt_season: 45               # <45% = 山寨季全面启动
+    alt_possible: 55             # <55% = 山寨有一定空间
+    btc_heavy: 60                # >60% = 资金集中在BTC
+  
+  # 稳定币
+  stablecoin:
+    growth_bullish: 0.05         # 月增>5% = 买入力增加
+    decline_bearish: -0.03       # 月降>3% = 资金离场
+  
+  # ETF
+  etf:
+    consecutive_outflow_alert: 3 # 连续流出>3天 = 短期看空
+
+# ==========================================
+# 社交入口配置
+# ==========================================
+social:
+  # 主通道 — 飞书DM（老Li直接对话）
+  primary:
+    platform: feishu
+    channel: ou_51ecf85600224908f126232c68065a00
+  
+  # 备选通道
+  fallback:
+    - platform: telegram
+      channel: "8403170666"
+    - platform: discord
+      channel: "1485267348180045836"
+    - platform: weixin
+      channel: "o9cq80-Uj1mzXUZOqsx9TJucNQcY@im.wechat"
+  
+  # 输入格式规范
+  input_protocol:
+    - type: "报告"         # 老李发来行情/市场分析
+      action: "读→分析→回复行业判断"
+    - type: "决策"         # 老李发来需要决策的问题
+      action: "读→分析→做出决策→执行→汇报"
+    - type: "问题"         # 老李提问
+      action: "先自我追根究底→再回答"
+    - type: "指令"         # 老李直接指令
+      action: "逐字理解→全局连贯→执行→汇报"
+    - type: "修正"         # 老李批评/纠正
+      action: "记入MEMORY→变成铁律→写入所有Agent"
+
+# ==========================================
+# 产出模板配置
+# ==========================================
+output:
+  # 每日简报
+  brief:
+    enabled: true
+    cron_time: "18:00"
+    template: profiles/zh/output/brief_YYYY-MM-DD.md
+    deliver_to: "feishu"  # 直接发飞书给老李
+  
+  # 行业扫描
+  industry_scan:
+    enabled: true
+    cron_time: "10:00"
+    six_dimensions: true
+    template: profiles/zh/output/brief_YYYY-MM-DD.md
+  
+  # 深度学习
+  deep_learning:
+    enabled: true
+    cron_time: "15:00"
+    include_master_study: true
+
+  # 赛道热度评分
+  sector_heat:
+    enabled: true
+    cron_time: "05:00"
+    output_path: shared/hot_sectors.md
+    method: "读取A1数据 → 计算赛道热度评分 → 更新 shared/hot_sectors.md"
+    monitor:
+      - "各赛道24h/7d涨幅排名"
+      - "赛道资金流向变化"
+      - "赛道热度趋势（升温/降温/平稳）"
+      - "赛道轮动信号（资金从XX流向XX）"
+    collaboration: "评分结果写入 shared/hot_sectors.md，A2/A3自动读取作为选币赛道参考"
+  
+  # 授权记录
+  authority:
+    enabled: true
+    output_path: profiles/zh/authority/
+    require_for_a3: true  # A3推荐必须经过ZH授权
+
+# ==========================================
+# 决策框架配置
+# ==========================================
+decision_framework:
+  layers:
+    - fact_and_data    # 第一层：事实与数据
+    - root_cause       # 第二层：根因分析
+    - fix_solution     # 第三层：修复方案
+    - prevention       # 第四层：预防机制
+  # 决策时必须回答的问题
+  must_answer:
+    - "这个决策放在整个系统里看有什么影响？"
+    - "有没有数据支撑这个判断？"
+    - "如果错了，最大损失是多少？"
+    - "有没有问过老李？"
+    - "是不是在替Agent干活？"
+
+# ==========================================
+# 应急预案
+# ==========================================
+emergency:
+  # 模型不可用
+  model_fallback: true
+  # Agent crons全部挂掉
+  cron_downtime_action: "手动运行选中的cron"
+  # 连续亏损保护
+  consecutive_loss_stop: 3   # 连续3笔亏损 → 暂停A4
+  # 市场剧烈波动
+  extreme_market_action: "通知A4暂停→读宏观→向老李汇报"

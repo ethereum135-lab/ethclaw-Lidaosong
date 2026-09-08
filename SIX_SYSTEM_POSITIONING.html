@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六大系统定位 — 全球经济体架构</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #131318;
+    --surface-2: #1a1a22;
+    --border: #2a2a35;
+    --text: #e4e4e8;
+    --text-2: #9898a0;
+    --text-3: #62626a;
+    --brand: #8b5cf6;
+    --brand-2: #a78bfa;
+    --brand-light: rgba(139, 92, 246, 0.12);
+    --green: #34d399;
+    --green-light: rgba(52, 211, 153, 0.12);
+    --red: #f87171;
+    --red-light: rgba(248, 113, 113, 0.12);
+    --yellow: #fbbf24;
+    --yellow-light: rgba(251, 191, 36, 0.12);
+    --blue: #60a5fa;
+    --blue-light: rgba(96, 165, 250, 0.12);
+    --orange: #fb923c;
+    --orange-light: rgba(251, 146, 60, 0.12);
+    --cyan: #22d3ee;
+    --cyan-light: rgba(34, 211, 238, 0.12);
+    --pink: #f472b6;
+    --pink-light: rgba(244, 114, 182, 0.12);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    line-height: 1.75;
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .hero {
+    text-align: center;
+    padding: 48px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--brand-light);
+    color: var(--brand-2);
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--cyan), var(--brand));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p { color: var(--text-2); font-size: 14px; }
+  .section { margin-bottom: 44px; }
+  .section-header {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    background: var(--brand); color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 22px; font-weight: 700; }
+
+  .platform-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .platform-header {
+    display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--border);
+  }
+  .platform-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 700; flex-shrink: 0;
+  }
+  .platform-name { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+  .platform-tag { font-size: 12px; color: var(--text-3); }
+  .platform-role {
+    margin-left: auto;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+  .info-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+  .info-label { font-size: 12px; font-weight: 600; color: var(--text-3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .info-body { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+  .info-body b { color: var(--text); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--text-3); font-weight: 500; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 500; }
+  .tag-brand { background: var(--brand-light); color: var(--brand-2); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-yellow { background: var(--yellow-light); color: var(--yellow); }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+  .tag-orange { background: var(--orange-light); color: var(--orange); }
+  .tag-cyan { background: var(--cyan-light); color: var(--cyan); }
+  .tag-pink { background: var(--pink-light); color: var(--pink); }
+
+  .layer-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .layer-row:last-child { border-bottom: none; }
+  .layer-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+  }
+  .layer-name { font-size: 15px; font-weight: 600; }
+  .layer-desc { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+  .layer-owner { font-size: 14px; }
+
+  .quote-box {
+    background: var(--surface-2);
+    border-left: 3px solid var(--brand);
+    padding: 14px 20px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--text-2);
+    font-style: italic;
+  }
+
+  .flow-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    padding: 20px 0;
+  }
+  .flow-node {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 24px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+  }
+  .flow-arrow { color: var(--text-3); font-size: 18px; margin: 4px 0; }
+  .flow-title { font-size: 14px; font-weight: 600; }
+  .flow-sub { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+
+  .footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border); margin-top: 40px; }
+  .footer p { color: var(--text-3); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">六大系统定位 v1.0</div>
+  <h1>全球经济体中的六大平台</h1>
+  <p>不站功能看重叠 · 站全球经济体看不可替代性</p>
+</div>
+
+<!-- ════════ 核心理念 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">0</div>
+    <h2>定位原则</h2>
+  </div>
+
+  <div class="platform-card">
+    <div class="quote-box">
+      之前我的错误：从"功能重叠"角度看出 Codex 和 WorkBuddy 多余。<br>
+      纠正后的思路：从"搭建全球经济体需要什么"角度，看每个平台有没有<b>不可替代的位置</b>。<br><br>
+      结论：六个都需要。每个在全球经济体中承担不同层级的角色。
+    </div>
+
+    <p style="font-size:14px; color:var(--text-2);">
+      全球经济体是一个8层系统：数据采集 → 数据处理 → 周期分析 → 预测 → 决策 → 执行 → 监控 → 传播。<br>
+      六个平台分别对应不同层，少数平台跨层协作。没有一个平台是多余的。
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 1. Hermes ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>Hermes — 执行层</h2>
+  </div>
+
+  <div class="platform-card">
+    <div class="platform-header">
+      <div class="platform-icon" style="background: var(--green-light); color: var(--green);">H</div>
+      <div>
+        <div class="platform-name">Hermes</div>
+        <div class="platform-tag">AWS VPS · 24/7运行 · 币安+火币+欧易</div>
+      </div>
+      <div class="platform-role" style="background: var(--green-light); color: var(--green);">执行层</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="info-box">
+        <div class="info-label">不可替代的优势</div>
+        <div class="info-body">
+          唯一直接连交易所API、执行真实买卖的平台。24/7在AWS上运行，不依赖任何人工操作。
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">在全球经济体中的角色</div>
+        <div class="info-body">
+          <b>第⑥层 执行层</b><br>
+          接收决策层信号 → 执行买卖 → 回报结果。<br>
+          现货 → 后期合约、杠杆。
+        </div>
+      </div>
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr><th style="width:30%">能力</th><th style="width:30%">详情</th><th style="width:40%">在系统中的用途</th></tr>
+      <tr><td>交易所API对接</td><td>币安、火币、欧易</td><td>执行加密货币交易</td></tr>
+      <tr><td>策略引擎</td><td>RSI+布林均值回归、网格</td><td>自动挂单、止盈止损</td></tr>
+      <tr><td>F&G联动止损</td><td>恐惧指数动态调整止损</td><td>风控执行</td></tr>
+      <tr><td>量比过滤</td><td>>2.0x拒绝入场</td><td>避免FOMO追高</td></tr>
+      <tr><td>后期扩展</td><td>合约、杠杆、期权</td><td>Phase 2+ 放大收益</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 2. TraeCode ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>TraeCode — 战略大脑</h2>
+  </div>
+
+  <div class="platform-card">
+    <div class="platform-header">
+      <div class="platform-icon" style="background: var(--brand-light); color: var(--brand-2);">T</div>
+      <div>
+        <div class="platform-name">TraeCode</div>
+        <div class="platform-tag">就是我 · 多模型 · Skill+MCP+Agent</div>
+      </div>
+      <div class="platform-role" style="background: var(--brand-light); color: var(--brand-2);">决策+编排</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="info-box">
+        <div class="info-label">不可替代的优势</div>
+        <div class="info-body">
+          唯一具备<b>全局视野</b>的平台 — 能同时读代码、查网页、写文件、调MCP、编排其他平台。
+          是整个系统的"总指挥"。
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">在全球经济体中的角色</div>
+        <div class="info-body">
+          <b>第③④⑤层 分析+预测+决策</b><br>
+          采集全球数据 → 美林时钟判断 → 传导链推演 → 输出策略方向给Hermes执行。<br>
+          同时负责<b>第⑧层 传播层</b>的内容创作。
+        </div>
+      </div>
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr><th style="width:30%">能力</th><th style="width:30%">详情</th><th style="width:40%">在系统中的用途</th></tr>
+      <tr><td>WebSearch + WebFetch</td><td>实时搜索全球新闻+数据</td><td>宏观数据采集补充</td></tr>
+      <tr><td>MCP工具集成</td><td>文件系统、代码执行、浏览器</td><td>编排其他平台、自动化流程</td></tr>
+      <tr><td>Skill系统</td><td>HTML报告、PPT、PDF、xlsx</td><td>产出分析报告+内容</td></tr>
+      <tr><td>多模型</td><td>可调用不同模型</td><td>分析、推理、内容创作</td></tr>
+      <tr><td>Agent编排</td><td>启动子Agent并行处理</td><td>同时分析多个市场</td></tr>
+      <tr><td>记忆系统</td><td>项目记忆+用户画像</td><td>保持策略一致性</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 3. Claude Code ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>Claude Code — 策略工程</h2>
+  </div>
+
+  <div class="platform-card">
+    <div class="platform-header">
+      <div class="platform-icon" style="background: var(--blue-light); color: var(--blue);">C</div>
+      <div>
+        <div class="platform-name">Claude Code</div>
+        <div class="platform-tag">Anthropic · CLI · 终端原生</div>
+      </div>
+      <div class="platform-role" style="background: var(--blue-light); color: var(--blue);">策略工程</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="info-box">
+        <div class="info-label">不可替代的优势</div>
+        <div class="info-body">
+          Anthropic Claude模型驱动的<b>终端原生编码Agent</b>。
+          读写文件、运行测试、调试代码 — 在终端里直接操作项目代码库。
+          擅长复杂逻辑设计、策略回测脚本、深度重构。
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">在全球经济体中的角色</div>
+        <div class="info-body">
+          <b>第②层 数据处理层 + 策略代码层</b><br>
+          写数据清洗管道、回测框架、策略代码。<br>
+          偏"重工程" — 复杂项目、深度调试、架构设计。
+        </div>
+      </div>
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr><th style="width:30%">能力</th><th style="width:30%">详情</th><th style="width:40%">在系统中的用途</th></tr>
+      <tr><td>终端原生</td><td>直接操作本地文件系统</td><td>开发策略代码、调试</td></tr>
+      <tr><td>Claude模型推理</td><td>Anthropic最强模型</td><td>复杂策略逻辑设计</td></tr>
+      <tr><td>代码审查+重构</td><td>理解整个项目结构</td><td>优化交易引擎架构</td></tr>
+      <tr><td>测试编写</td><td>自动生成测试用例</td><td>策略回测验证</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 4. Codex ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>Codex — 数据管道+运维</h2>
+  </div>
+
+  <div class="platform-card">
+    <div class="platform-header">
+      <div class="platform-icon" style="background: var(--orange-light); color: var(--orange);">C</div>
+      <div>
+        <div class="platform-name">Codex (OpenAI)</div>
+        <div class="platform-tag">Rust原生 · 极速 · 多模型 · 异步执行</div>
+      </div>
+      <div class="platform-role" style="background: var(--orange-light); color: var(--orange);">数据管道+运维</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="info-box">
+        <div class="info-label">不可替代的优势</div>
+        <div class="info-body">
+          <b>Rust原生构建</b>，极速启动、极低内存。支持<b>多模型</b>（OpenAI、Ollama本地、LM Studio、Bedrock）。
+          可<b>异步执行</b> — 从终端、VS Code或GitHub Actions触发。
+          能自动开PR、重构文件、写测试。
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">在全球经济体中的角色</div>
+        <div class="info-body">
+          <b>第①②层 数据采集+数据处理</b><br>
+          关键差异：Rust原生 = 极速，Ollama = 可本地运行（不花钱调API），
+          GitHub Actions = 定时自动跑数据管道。<br>
+          负责：24/7运行数据采集脚本、清洗入库、定时任务。
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-box" style="border-left-color: var(--orange);">
+      <b>Claude Code vs Codex 不是重叠，是分工：</b><br>
+      Claude Code = 重型工程（设计架构、写复杂策略、深度调试）<br>
+      Codex = 轻型运维（跑数据管道、定时任务、本地模型推理、GitHub Actions自动化）<br><br>
+      一个是建筑师，一个是物业管家。两个都要。
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr><th style="width:30%">能力</th><th style="width:30%">详情</th><th style="width:40%">在系统中的用途</th></tr>
+      <tr><td>Rust原生</td><td>极速启动，低内存</td><td>高频数据采集不卡机器</td></tr>
+      <tr><td>Ollama本地模型</td><td>不需要调OpenAI API</td><td>零成本本地推理分类</td></tr>
+      <tr><td>GitHub Actions</td><td>定时触发异步任务</td><td>每天自动跑数据管道</td></tr>
+      <tr><td>非交互模式</td><td>codex "任务描述"</td><td>无人值守自动执行</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 5. OpenClaw ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>OpenClaw — 监控+通知枢纽</h2>
+  </div>
+
+  <div class="platform-card">
+    <div class="platform-header">
+      <div class="platform-icon" style="background: var(--cyan-light); color: var(--cyan);">O</div>
+      <div>
+        <div class="platform-name">OpenClaw</div>
+        <div class="platform-tag">开源 · 6万+Skill · WhatsApp/Telegram/微信 · 本地运行</div>
+      </div>
+      <div class="platform-role" style="background: var(--cyan-light); color: var(--cyan);">监控+通知</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="info-box">
+        <div class="info-label">不可替代的优势</div>
+        <div class="info-body">
+          唯一能<b>连接所有聊天平台</b>（WhatsApp、Telegram、微信）的AI助手。
+          6万+个Skill生态。SOUL.md配置人格和能力。
+          在本地运行，不经过云端。已适配微信和DeepSeek。
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">在全球经济体中的角色</div>
+        <div class="info-body">
+          <b>第⑦层 监控层 + 数据采集补充</b><br>
+          监控交易异常 → 推送到手机微信/Telegram。<br>
+          监控全球新闻 → 通过Skill抓取社交媒体情绪。<br>
+          是系统的"感官神经"。
+        </div>
+      </div>
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr><th style="width:30%">能力</th><th style="width:30%">详情</th><th style="width:40%">在系统中的用途</th></tr>
+      <tr><td>多平台消息</td><td>WhatsApp/Telegram/微信</td><td>交易告警推送到手机</td></tr>
+      <tr><td>6万+ Skill生态</td><td>ClawHub市场</td><td>抓取Twitter/新闻/社交媒体情绪</td></tr>
+      <tr><td>SOUL.md人格配置</td><td>定义Agent性格+边界</td><td>定制交易监控助手人格</td></tr>
+      <tr><td>本地运行</td><td>不经过云端</td><td>API密钥安全、隐私保护</td></tr>
+      <tr><td>DeepSeek集成</td><td>已适配中国模型</td><td>低成本AI推理</td></tr>
+      <tr><td>Jetson边缘部署</td><td>NVIDIA官方支持</td><td>后期可部署到边缘设备</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 6. WorkBuddy ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>WorkBuddy — 多模态内容工厂</h2>
+  </div>
+
+  <div class="platform-card">
+    <div class="platform-header">
+      <div class="platform-icon" style="background: var(--pink-light); color: var(--pink);">W</div>
+      <div>
+        <div class="platform-name">WorkBuddy (腾讯)</div>
+        <div class="platform-tag">多模态 · PPT/Word/Excel/PDF · 硬件生态 · Skill+Expert+Connector</div>
+      </div>
+      <div class="platform-role" style="background: var(--pink-light); color: var(--pink);">内容工厂</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="info-box">
+        <div class="info-label">不可替代的优势</div>
+        <div class="info-body">
+          腾讯出品的<b>多模态内容生成平台</b>。
+          一句话生成PPT、Word、Excel、PDF、海报。
+          接入智能眼镜、录音设备、耳机等30+品牌硬件。
+          自动拆解复杂任务、多步执行。
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">在全球经济体中的角色</div>
+        <div class="info-body">
+          <b>第⑧层 传播层</b><br>
+          TraeCode负责分析+写文案 → WorkBuddy负责<b>生成多模态内容</b>（PPT、视频脚本、海报）。<br>
+          智能眼镜 = 移动数据采集（录音+拍照 → 会议纪要 → 投资分析素材）。<br>
+          是系统的"嘴巴和手"。
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-box" style="border-left-color: var(--pink);">
+      <b>TraeCode vs WorkBuddy 不是重叠，是分工：</b><br>
+      TraeCode = 大脑（分析、决策、编排、写代码）<br>
+      WorkBuddy = 手（生成PPT/Excel/海报、多模态内容、硬件采集）<br><br>
+      一个负责想，一个负责做出来。两个都要。
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr><th style="width:30%">能力</th><th style="width:30%">详情</th><th style="width:40%">在系统中的用途</th></tr>
+      <tr><td>多模态生成</td><td>PPT/Word/Excel/PDF/海报</td><td>每日经济报告 → 一键生成PPT</td></tr>
+      <tr><td>硬件生态</td><td>智能眼镜/录音/耳机/穿戴</td><td>移动采集会议/演讲/实地调研素材</td></tr>
+      <tr><td>任务自动拆解</td><td>复杂任务分步执行</td><td>"做一期BTC分析视频" → 自动拆解</td></tr>
+      <tr><td>Skill+Expert+Connector</td><td>开放平台能力</td><td>接入自定义投资分析Expert</td></tr>
+      <tr><td>本地文件操作</td><td>读写授权目录</td><td>直接输出到项目文件夹</td></tr>
+      <tr><td>跨端同步</td><td>眼镜/手机/PC/Web</td><td>随时随地查看+编辑</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 全景图 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>全球经济体8层 × 6平台全景</h2>
+  </div>
+
+  <div class="platform-card">
+    <div style="margin-bottom:8px;">
+      <div class="layer-row">
+        <div class="layer-num" style="background: var(--orange-light); color: var(--orange);">①</div>
+        <div>
+          <div class="layer-name">数据采集层</div>
+          <div class="layer-desc">全球GDP/CPI/利率/汇率/大宗/股市/链上/资金流向/社交媒体情绪</div>
+        </div>
+        <div class="layer-owner"><span class="tag tag-orange">Codex</span> <span class="tag tag-cyan">OpenClaw</span></div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num" style="background: var(--blue-light); color: var(--blue);">②</div>
+        <div>
+          <div class="layer-name">数据处理层</div>
+          <div class="layer-desc">清洗、标准化、存储、关联、历史回测数据库</div>
+        </div>
+        <div class="layer-owner"><span class="tag tag-blue">Claude Code</span> <span class="tag tag-orange">Codex</span></div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num" style="background: var(--brand-light); color: var(--brand-2);">③</div>
+        <div>
+          <div class="layer-name">周期分析层</div>
+          <div class="layer-desc">美林时钟判断 + 达利欧全天候 + 霍华德·马克斯周期</div>
+        </div>
+        <div class="layer-owner"><span class="tag tag-brand">TraeCode</span></div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num" style="background: var(--brand-light); color: var(--brand-2);">④</div>
+        <div>
+          <div class="layer-name">预测层</div>
+          <div class="layer-desc">传导链推演 + 历史模式匹配 + 下个阶段预测</div>
+        </div>
+        <div class="layer-owner"><span class="tag tag-brand">TraeCode</span></div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num" style="background: var(--brand-light); color: var(--brand-2);">⑤</div>
+        <div>
+          <div class="layer-name">决策层</div>
+          <div class="layer-desc">策略方向（激进/保守/空仓）+ 仓位 + 止损止盈</div>
+        </div>
+        <div class="layer-owner"><span class="tag tag-brand">TraeCode</span></div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num" style="background: var(--green-light); color: var(--green);">⑥</div>
+        <div>
+          <div class="layer-name">执行层</div>
+          <div class="layer-desc">买卖、止损止盈、合约杠杆（后期）</div>
+        </div>
+        <div class="layer-owner"><span class="tag tag-green">Hermes</span></div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num" style="background: var(--cyan-light); color: var(--cyan);">⑦</div>
+        <div>
+          <div class="layer-name">监控层</div>
+          <div class="layer-desc">交易异常、价格波动、API断连、市场极端事件 → 推送告警</div>
+        </div>
+        <div class="layer-owner"><span class="tag tag-cyan">OpenClaw</span></div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num" style="background: var(--pink-light); color: var(--pink);">⑧</div>
+        <div>
+          <div class="layer-name">传播层</div>
+          <div class="layer-desc">推特/视频号/抖音 · PPT/视频/海报 · 建立个人品牌</div>
+        </div>
+        <div class="layer-owner"><span class="tag tag-brand">TraeCode</span> <span class="tag tag-pink">WorkBuddy</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="platform-card">
+    <div style="font-size:16px; font-weight:600; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border);">
+      数据流向 — 一个完整的交易决策周期
+    </div>
+
+    <div class="flow-diagram">
+      <div class="flow-node" style="border-color: rgba(251,146,60,0.3);">
+        <div class="flow-title" style="color: var(--orange);">① Codex 采集全球数据</div>
+        <div class="flow-sub">GDP/CPI/DXY/VIX/ETF资金流/链上数据 → 定时GitHub Actions</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node" style="border-color: rgba(96,165,250,0.3);">
+        <div class="flow-title" style="color: var(--blue);">② Claude Code 处理+标准化</div>
+        <div class="flow-sub">清洗入库、格式化、关联历史数据</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node" style="border-color: rgba(139,92,246,0.3);">
+        <div class="flow-title" style="color: var(--brand-2);">③④⑤ TraeCode 分析+预测+决策</div>
+        <div class="flow-sub">美林时钟 → 传导链推演 → "当前复苏期，策略=趋势跟踪"</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node" style="border-color: rgba(52,211,153,0.3);">
+        <div class="flow-title" style="color: var(--green);">⑥ Hermes 执行交易</div>
+        <div class="flow-sub">接收信号 → 挂买单 → 止损止盈 → 回报结果</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node" style="border-color: rgba(34,211,238,0.3);">
+        <div class="flow-title" style="color: var(--cyan);">⑦ OpenClaw 监控+告警</div>
+        <div class="flow-sub">异常 → 推送微信/Telegram "ETH止损触发 -4%"</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node" style="border-color: rgba(244,114,182,0.3);">
+        <div class="flow-title" style="color: var(--pink);">⑧ TraeCode+WorkBuddy 产出内容</div>
+        <div class="flow-sub">分析报告 → WorkBuddy生成PPT/视频脚本 → 推特/视频号发布</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 协同关系 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <h2>平台间协同关系</h2>
+  </div>
+
+  <div class="platform-card">
+    <table>
+      <tr>
+        <th style="width:20%">协同</th>
+        <th style="width:30%">怎么协同</th>
+        <th style="width:25%">触发方式</th>
+        <th style="width:25%">产出</th>
+      </tr>
+      <tr>
+        <td><b>Codex → TraeCode</b></td>
+        <td>Codex采集数据 → 存入JSON/CSV → TraeCode读取分析</td>
+        <td>GitHub Actions定时</td>
+        <td>每日数据包</td>
+      </tr>
+      <tr>
+        <td><b>TraeCode → Hermes</b></td>
+        <td>TraeCode输出策略方向 → 写入Hermes配置 → Hermes执行</td>
+        <td>TraeCode改配置文件</td>
+        <td>交易信号</td>
+      </tr>
+      <tr>
+        <td><b>Hermes → OpenClaw</b></td>
+        <td>Hermes交易结果 → OpenClaw推送到微信/Telegram</td>
+        <td>Hermes写日志 → OpenClaw监控</td>
+        <td>手机通知</td>
+      </tr>
+      <tr>
+        <td><b>TraeCode → WorkBuddy</b></td>
+        <td>TraeCode写分析文案 → WorkBuddy生成PPT/视频</td>
+        <td>TraeCode输出Markdown</td>
+        <td>多模态内容</td>
+      </tr>
+      <tr>
+        <td><b>Claude Code → Codex</b></td>
+        <td>Claude Code写管道代码 → Codex运行管道</td>
+        <td>Claude Code提交代码</td>
+        <td>数据管道</td>
+      </tr>
+      <tr>
+        <td><b>OpenClaw → TraeCode</b></td>
+        <td>OpenClaw抓取社交媒体情绪 → 传给TraeCode分析</td>
+        <td>OpenClaw Skill</td>
+        <td>情绪数据</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <p>六大系统定位 v1.0 · 2026-09-06</p>
+  <p>Hermes(执行) × TraeCode(大脑) × Claude Code(工程) × Codex(管道) × OpenClaw(监控) × WorkBuddy(内容)</p>
+</div>
+
+</body>
+</html>

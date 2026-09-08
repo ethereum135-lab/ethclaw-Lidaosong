@@ -1,0 +1,9 @@
+{
+  "unit_governance": {
+    "Intelligence": "Must run cross-source search for every coin before score tagging.",
+    "Quant": "Mandatory LOT_SIZE and Precision pre-check before API call.",
+    "Skill_Hunter": "Archive every new fix as a version-controlled Skill.",
+    "Security": "Monitor Rate-Limit every 60s to prevent IP bans.",
+    "Liaison": "Exclusive standard: Beijing Time UTC+8. No guestimates."
+  }
+}

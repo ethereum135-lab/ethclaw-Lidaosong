@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ZQ-Web4.0 LIVE COMMAND CENTER</title>
+    <style>
+        body { background: #0a0e14; color: #00ff9d; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .panel { border: 1px solid #00ff9d; padding: 15px; background: rgba(0, 255, 157, 0.05); box-shadow: 0 0 10px rgba(0, 255, 157, 0.1); }
+        .header { text-align: center; border-bottom: 2px solid #00ff9d; margin-bottom: 20px; padding-bottom: 10px; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: #00ff9d; animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .log-entry { font-size: 0.8em; margin-bottom: 5px; border-left: 2px solid #333; padding-left: 10px; }
+        .skill-tag { background: #004422; color: #00ff9d; padding: 2px 5px; border-radius: 3px; font-size: 0.7em; }
+        h2 { font-size: 1.2em; margin-top: 0; display: flex; align-items: center; gap: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ZQ-WEB4.0 TRADING SYSTEM - MASTER CONSOLE</h1>
+        <p><span class="status-dot"></span> SYSTEM ONLINE | WELCOME, 老李 | CEO: ZQ</p>
+    </div>
+    <div class="grid">
+        <div class="panel">
+            <h2>[1] AGENT OPERATIONAL STATUS</h2>
+            <div class="log-entry">● Intelligence Unit: <span style="color:white">SCANNING SOLANA MEMPOOL...</span></div>
+            <div class="log-entry">● Quant Strategy: <span style="color:white">BACKTESTING RWA-ARBITRAGE v4.1</span></div>
+            <div class="log-entry">● Skill Hunter: <span style="color:#00ff9d">DISCOVERED NEW DEX-AGR-API</span></div>
+            <div class="log-entry">● Security: <span style="color:#00ff9d">ALL CONTRACTS AUDITED</span></div>
+        </div>
+        <div class="panel">
+            <h2>[2] SKILL HUNTING (REAL-TIME)</h2>
+            <div class="log-entry"><span class="skill-tag">NEW</span> Identified: MEV-Protection-Module</div>
+            <div class="log-entry"><span class="skill-tag">LOADED</span> Skill: Flash-Loan-Router-v2</div>
+            <div class="log-entry"><span class="skill-tag">EVOLVING</span> Brain: Pattern Recognition Core... 89%</div>
+        </div>
+        <div class="panel" style="grid-column: span 2;">
+            <h2>[3] MARKET INSIGHTS</h2>
+            <div style="height: 100px; display: flex; align-items: flex-end; gap: 5px; padding: 10px; background: #000;">
+                <div style="height: 40%; width: 20px; background: #00ff9d;"></div>
+                <div style="height: 60%; width: 20px; background: #00ff9d;"></div>
+                <div style="height: 55%; width: 20px; background: #00ff9d;"></div>
+                <div style="height: 90%; width: 20px; background: #00ff9d;"></div>
+                <div style="height: 70%; width: 20px; background: #00ff9d;"></div>
+                <p style="margin-left: 20px; color: #666;">Waiting for real-time link...</p>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 20px; font-size: 0.7em; color: #444;">
+        WEB4.0 TRANSACTION GATEWAY | PERSISTENT MEMORY ACTIVE
+    </div>
+</body>
+</html>

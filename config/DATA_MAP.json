@@ -1,0 +1,53 @@
+{
+    "sectors": {
+        "AI": [
+            "NEAR",
+            "FET",
+            "RNDR",
+            "ARKM",
+            "TAO"
+        ],
+        "MEME": [
+            "DOGE",
+            "PEPE",
+            "SHIB",
+            "FLOKI",
+            "WIF"
+        ],
+        "L2": [
+            "OP",
+            "ARB",
+            "STRK",
+            "METIS",
+            "ZK"
+        ],
+        "RWA": [
+            "ONDO",
+            "PENDLE",
+            "OM",
+            "POLYX",
+            "MKR"
+        ],
+        "Infrastructure": [
+            "SOL",
+            "AVAX",
+            "LINK",
+            "TIA",
+            "SUI"
+        ]
+    },
+    "whale_monitors": {
+        "General_Top_Wallets": [
+            "0x71c7624ec7ab3c028a157a3e472064119d85664f",
+            "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD"
+        ],
+        "KAT_Holders": [
+            "0x937c9803158A59Be344A325883d6C57A8B744cf2"
+        ],
+        "KOL_Handles": [
+            "@lookonchain",
+            "@whale_alert",
+            "@WuBlockchain"
+        ]
+    }
+}

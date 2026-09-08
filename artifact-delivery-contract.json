@@ -1,0 +1,71 @@
+{
+  "outputs": [
+    {
+      "path": "/Users/lidaosong/zq_web4_trading_system/.github/workflows/ci-cd.yml",
+      "type": "yaml",
+      "editable": true
+    },
+    {
+      "path": "/Users/lidaosong/zq_web4_trading_system/scripts/deploy.sh",
+      "type": "shell",
+      "editable": true
+    },
+    {
+      "path": "/Users/lidaosong/zq_web4_trading_system/scripts/sync_cron.sh",
+      "type": "shell",
+      "editable": true
+    },
+    {
+      "path": "/Users/lidaosong/zq_web4_trading_system/scripts/verify_blueprint.sh",
+      "type": "shell",
+      "editable": true
+    },
+    {
+      "path": "/Users/lidaosong/zq_web4_trading_system/cron_list.txt",
+      "type": "text",
+      "editable": true
+    },
+    {
+      "path": "/Users/lidaosong/zq_web4_trading_system/.github/DEPLOY_SETUP.md",
+      "type": "markdown",
+      "editable": true
+    }
+  ],
+  "source_files": [],
+  "acceptance_items": [
+    {
+      "quote": "全流程方案CI/CD配置",
+      "expected": "HARD | 包含6个输出文件：ci-cd.yml + deploy.sh + sync_cron.sh + verify_blueprint.sh + cron_list.txt + DEPLOY_SETUP.md",
+      "final_check": "PASS | 6个文件全部存在且非空：ci-cd.yml(5409B) + deploy.sh(2901B) + sync_cron.sh(2305B) + verify_blueprint.sh(4418B) + cron_list.txt(12504B/110行) + DEPLOY_SETUP.md(4409B)"
+    },
+    {
+      "quote": "CI/CD包含测试+部署+蓝图一致性检查+Cron同步",
+      "expected": "HARD | ci-cd.yml包含3个job(lint-test+blueprint-check+deploy)，deploy job内包含Cron同步步骤",
+      "final_check": "PASS | ci-cd.yml包含3个job: lint-test, blueprint-check, deploy；deploy job内调用sync_cron.sh实现Cron同步"
+    },
+    {
+      "quote": "部署到AWS VPS",
+      "expected": "HARD | deploy.sh包含SSH SCP部署逻辑和版本记录写入",
+      "final_check": "PASS | deploy.sh包含8处scp/ssh命令，5步部署流程，DEPLOY_VERSION.txt版本记录"
+    },
+    {
+      "quote": "蓝图一致性检查",
+      "expected": "HARD | verify_blueprint.sh验证24个脚本存在性+蓝图提及+版本元信息",
+      "final_check": "PASS | verify_blueprint.sh包含4组检查：文件存在(24脚本)+蓝图提及(14项)+版本元信息+总结，7处check_file_exists调用"
+    },
+    {
+      "quote": "Cron同步",
+      "expected": "HARD | sync_cron.sh将cron_list.txt与服务器crontab合并去重后同步",
+      "final_check": "PASS | sync_cron.sh包含5处crontab操作：读取服务器Cron+合并去重+语法验证+SCP上传+crontab应用"
+    },
+    {
+      "quote": "部署设置说明文档",
+      "expected": "HARD | DEPLOY_SETUP.md包含GitHub Secrets配置步骤和SSH key生成方法",
+      "final_check": "PASS | DEPLOY_SETUP.md包含5步配置：SSH Key生成+known_hosts获取+5个Secrets配置+推送步骤+验证方法，5处Secrets/SSH Key提及"
+    }
+  ],
+  "claims": [],
+  "target_scope": {
+    "required": false
+  }
+}

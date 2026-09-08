@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>总蓝图 — 量化交易帝国 v1.0</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #131318;
+    --surface-2: #1a1a22;
+    --surface-3: #22222e;
+    --border: #2a2a35;
+    --border-2: #3a3a48;
+    --text: #e4e4e8;
+    --text-2: #9898a0;
+    --text-3: #62626a;
+    --brand: #8b5cf6;
+    --brand-2: #a78bfa;
+    --brand-light: rgba(139, 92, 246, 0.12);
+    --green: #34d399;
+    --green-light: rgba(52, 211, 153, 0.12);
+    --red: #f87171;
+    --red-light: rgba(248, 113, 113, 0.12);
+    --yellow: #fbbf24;
+    --yellow-light: rgba(251, 191, 36, 0.12);
+    --blue: #60a5fa;
+    --blue-light: rgba(96, 165, 250, 0.12);
+    --orange: #fb923c;
+    --orange-light: rgba(251, 146, 60, 0.12);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    line-height: 1.75;
+    padding: 40px 20px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .hero {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--brand-light);
+    color: var(--brand-2);
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--brand), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    color: var(--text-2);
+    font-size: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .section { margin-bottom: 48px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    background: var(--brand);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left;
+    color: var(--text-3);
+    font-weight: 500;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  .pillar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 700px) { .pillar { grid-template-columns: 1fr; } }
+  .pillar-card {
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    border: 1px solid var(--border);
+  }
+  .pillar-1 { background: var(--brand-light); border-color: rgba(139,92,246,0.3); }
+  .pillar-2 { background: var(--blue-light); border-color: rgba(96,165,250,0.3); }
+  .pillar-3 { background: var(--orange-light); border-color: rgba(251,146,60,0.3); }
+  .pillar-num {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .pillar-1 .pillar-num { color: var(--brand-2); }
+  .pillar-2 .pillar-num { color: var(--blue); }
+  .pillar-3 .pillar-num { color: var(--orange); }
+  .pillar-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .pillar-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+  .truth {
+    background: var(--red-light);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .truth-title {
+    color: var(--red);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .truth-body {
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .platform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 700px) { .platform-grid { grid-template-columns: 1fr; } }
+  .platform-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .platform-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .platform-role {
+    font-size: 12px;
+    color: var(--brand-2);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .platform-body {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+  .platform-status {
+    margin-top: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    display: inline-block;
+  }
+  .status-active { background: var(--green-light); color: var(--green); }
+  .status-redundant { background: var(--red-light); color: var(--red); }
+  .status-merge { background: var(--yellow-light); color: var(--yellow); }
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-2);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--brand);
+    border: 2px solid var(--bg);
+  }
+  .timeline-phase {
+    font-size: 12px;
+    color: var(--brand-2);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .timeline-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .timeline-body {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .tag-brand { background: var(--brand-light); color: var(--brand-2); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-yellow { background: var(--yellow-light); color: var(--yellow); }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+  .tag-orange { background: var(--orange-light); color: var(--orange); }
+  .agent-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .agent-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .agent-name {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+  .agent-platform {
+    font-size: 11px;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .agent-body {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 640px) { .stat-row { grid-template-columns: 1fr 1fr; } }
+  .stat-box {
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-val { font-size: 22px; font-weight: 700; color: var(--brand-2); }
+  .stat-label { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+  .quote-box {
+    background: var(--surface-2);
+    border-left: 3px solid var(--brand);
+    padding: 14px 20px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--text-2);
+    font-style: italic;
+  }
+  .book-list { list-style: none; }
+  .book-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .book-list li:last-child { border-bottom: none; }
+  .footer {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+  .footer p { color: var(--text-3); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-badge">总蓝图 v1.0 · 活文档</div>
+  <h1>量化交易帝国</h1>
+  <p>加密货币 · 全球股市 · 竞猜平台 · 内容创作<br>从 $280 到持续盈利的完整路线图</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 1: 愿景与核心目标 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>愿景与核心目标</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">最终愿景</div>
+    <p style="font-size:15px; margin-bottom:16px;">
+      建立一个<b>自动化量化交易+全球市场分析+内容传播</b>的三位一体系统。
+      用代码和AI做杠杆，一个人实现过去需要一个团队才能完成的事。
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-val">$280</div>
+        <div class="stat-label">当前资金</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">$5K</div>
+        <div class="stat-label">第一阶段目标</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">$50K</div>
+        <div class="stat-label">第二阶段目标</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">$1M</div>
+        <div class="stat-label">终极目标</div>
+      </div>
+    </div>
+
+    <div class="quote-box">
+      "真正的财富不是靠出卖时间赚来的，而是靠系统、代码和资本杠杆创造出来的。这个系统的本质是：让机器做执行，让AI做分析，让人做决策。"
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 2: 三大业务板块 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>三大业务板块</h2>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-card pillar-1">
+      <div class="pillar-num">01</div>
+      <div class="pillar-title">自动交易</div>
+      <div class="pillar-desc">
+        <b>核心引擎：Hermes</b><br><br>
+        币安 · 火币 · 欧易<br>
+        现阶段：现货 RSI+布林带均值回归<br>
+        后期：合约、杠杆、套利<br><br>
+        <b>盈利模式：</b> 每日0.1-0.3%复利<br>
+        <b>资金：</b> 当前$280，全部投入加密货币
+      </div>
+    </div>
+    <div class="pillar-card pillar-2">
+      <div class="pillar-num">02</div>
+      <div class="pillar-title">市场分析</div>
+      <div class="pillar-desc">
+        <b>核心引擎：TraeCode</b><br><br>
+        全球经济 · 政治 · 政策<br>
+        私募/公募基金动向<br>
+        财团/家族办公室方向<br>
+        全球500强动态<br><br>
+        <b>产出：</b> 每日分析报告<br>
+        <b>用途：</b> 指导交易 + 服务内容创作
+      </div>
+    </div>
+    <div class="pillar-card pillar-3">
+      <div class="pillar-num">03</div>
+      <div class="pillar-title">内容传播</div>
+      <div class="pillar-desc">
+        <b>核心引擎：TraeCode + OpenClaw</b><br><br>
+        推特 · 视频号 · 抖音<br>
+        每日经济走向分享<br>
+        交易策略解读<br>
+        市场趋势分析<br><br>
+        <b>目的：</b> 建立个人品牌<br>
+        <b>后期：</b> 付费社群、课程、咨询
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">三大板块的关系 — 不是并列，是飞轮</div>
+    <table>
+      <tr>
+        <th style="width:25%">环节</th>
+        <th style="width:25%">输入</th>
+        <th style="width:25%">输出</th>
+        <th style="width:25%">反哺</th>
+      </tr>
+      <tr>
+        <td><b>① 市场分析</b></td>
+        <td>全球数据、新闻、政策</td>
+        <td>每日分析报告</td>
+        <td>→ 指导交易策略调整</td>
+      </tr>
+      <tr>
+        <td><b>② 自动交易</b></td>
+        <td>分析报告 + 策略信号</td>
+        <td>交易执行 + 盈亏数据</td>
+        <td>→ 交易记录成为内容素材</td>
+      </tr>
+      <tr>
+        <td><b>③ 内容传播</b></td>
+        <td>分析报告 + 交易记录</td>
+        <td>推特/视频/抖音内容</td>
+        <td>→ 吸引粉丝 → 后期变现</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-3);">
+      分析指导交易，交易产出内容，内容吸引关注，关注带来资金，资金扩大交易。这就是飞轮效应。
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 3: 平台定位 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>平台定位 — 6个平台整合为4个角色</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">说真话：6个平台太多了</div>
+    <div class="truth">
+      <div class="truth-title">问题：严重重叠</div>
+      <div class="truth-body">
+        Claude Code 和 Codex 做同一件事（写代码），WorkBuddy 就是 TraeCode（就是AI助手本身）。
+        6个平台 = 3个在做重复的事。不是平台越多越强，是定位越清晰越快。
+      </div>
+    </div>
+  </div>
+
+  <div class="platform-grid">
+    <div class="platform-card">
+      <div class="platform-name">Hermes</div>
+      <div class="platform-role">交易执行引擎</div>
+      <div class="platform-body">
+        唯一的交易执行平台。连接币安、火币、欧易交易所API。<br><br>
+        职责：接收信号 → 执行买卖 → 管理仓位 → 止损止盈<br>
+        运行：AWS VPS 24/7 cron自动运行
+      </div>
+      <div class="platform-status status-active">已激活</div>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-name">TraeCode</div>
+      <div class="platform-role">战略大脑 + 内容引擎</div>
+      <div class="platform-body">
+        就是你的AI助手（我）。统一负责：策略设计、全球市场分析、内容创作、系统编排。<br><br>
+        职责：分析数据 → 设计策略 → 写交易代码 → 生成社交媒体内容<br>
+        吸收 WorkBuddy 的全部功能
+      </div>
+      <div class="platform-status status-active">已激活</div>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-name">Claude Code</div>
+      <div class="platform-role">代码开发工具</div>
+      <div class="platform-body">
+        写策略代码、回测脚本、数据管道。<br><br>
+        职责：Python代码开发 → 调试 → 部署<br>
+        <b>替代 Codex</b>（功能重叠，保留一个即可）
+      </div>
+      <div class="platform-status status-active">保留</div>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-name">OpenClaw</div>
+      <div class="platform-role">监控 + 通知系统</div>
+      <div class="platform-body">
+        系统的"神经系统"。监控一切异常并推送通知。<br><br>
+        职责：交易异常告警 → 价格剧烈波动通知 → API断连告警 → 每日报告推送<br>
+        可以推送到手机/Telegram/微信
+      </div>
+      <div class="platform-status status-active">已安装</div>
+    </div>
+
+    <div class="platform-card" style="opacity:0.5;">
+      <div class="platform-name">Codex</div>
+      <div class="platform-role">与 Claude Code 重复</div>
+      <div class="platform-body">
+        功能与 Claude Code 完全重叠。两个代码生成工具同时用会造成混乱。<br><br>
+        <b>建议：卸载或停用</b>，所有代码开发统一走 Claude Code。
+      </div>
+      <div class="platform-status status-redundant">冗余 — 建议停用</div>
+    </div>
+
+    <div class="platform-card" style="opacity:0.5;">
+      <div class="platform-name">WorkBuddy</div>
+      <div class="platform-role">已并入 TraeCode</div>
+      <div class="platform-body">
+        WorkBuddy 的功能（AI助手、研究、分析、写作）就是 TraeCode 在做的事。<br><br>
+        <b>不需要单独定位</b>，我就是 WorkBuddy，也是 TraeCode。
+      </div>
+      <div class="platform-status status-merge">已合并到 TraeCode</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">最终架构：4个角色</div>
+    <table>
+      <tr>
+        <th style="width:15%">角色</th>
+        <th style="width:15%">平台</th>
+        <th style="width:20%">定位</th>
+        <th style="width:30%">核心职责</th>
+        <th style="width:20%">运行方式</th>
+      </tr>
+      <tr>
+        <td><b>手</b></td>
+        <td>Hermes</td>
+        <td>交易执行</td>
+        <td>买卖、止损止盈、仓位管理</td>
+        <td>AWS cron 24/7</td>
+      </tr>
+      <tr>
+        <td><b>脑</b></td>
+        <td>TraeCode</td>
+        <td>策略+分析+内容</td>
+        <td>策略设计、全球分析、内容创作</td>
+        <td>按需调用 + 定时任务</td>
+      </tr>
+      <tr>
+        <td><b>工具</b></td>
+        <td>Claude Code</td>
+        <td>代码开发</td>
+        <td>写策略代码、回测、调试</td>
+        <td>开发时手动调用</td>
+      </tr>
+      <tr>
+        <td><b>眼</b></td>
+        <td>OpenClaw</td>
+        <td>监控告警</td>
+        <td>异常通知、每日报告推送</td>
+        <td>后台常驻</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 4: Agent 架构 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>Agent 架构 — 7个专业Agent</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">不是每个平台一个Agent，是按职能分</div>
+    <p style="font-size:13px; color:var(--text-2); margin-bottom:20px;">
+      Agent不是越多越好。每个Agent有明确的单一职责，不交叉。
+      一个Agent的输出是另一个Agent的输入，形成流水线。
+    </p>
+
+    <div class="agent-box">
+      <div class="agent-icon" style="background:var(--brand-light);">🎯</div>
+      <div>
+        <div class="agent-name">Agent 1: 交易执行Agent</div>
+        <div class="agent-platform">运行在 Hermes | AWS cron 每5分钟</div>
+        <div class="agent-body">
+          职责：扫描币种 → 计算RSI/布林带 → 判断信号 → 执行买卖 → 止损止盈<br>
+          输入：策略参数、API密钥<br>
+          输出：交易日志、持仓状态、每日盈亏<br>
+          <span class="tag tag-green">已部署</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-box">
+      <div class="agent-icon" style="background:var(--blue-light);">📊</div>
+      <div>
+        <div class="agent-name">Agent 2: 市场分析Agent</div>
+        <div class="agent-platform">运行在 TraeCode | 每日定时 + 按需</div>
+        <div class="agent-body">
+          职责：收集全球宏观数据（GDP/CPI/利率） → 分析政策影响 → 追踪基金动向 → 生成每日市场报告<br>
+          数据源：CoinGecko, Fear&Greed, TradingEconomics, 新闻API<br>
+          输出：每日市场分析报告（Markdown格式）<br>
+          <span class="tag tag-yellow">部分部署 — 需扩展数据源</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-box">
+      <div class="agent-icon" style="background:var(--red-light);">🛡️</div>
+      <div>
+        <div class="agent-name">Agent 3: 风控Agent</div>
+        <div class="agent-platform">运行在 Hermes | 每次交易前检查</div>
+        <div class="agent-body">
+          职责：单笔风险 ≤ 2% → 总回撤 ≤ 8% → 连续5亏熔断 → 仓位集中度 ≤ 30%<br>
+          规则：不等到亏了才管，每笔交易前先通过风控检查<br>
+          输出：风控通过/拒绝 + 原因<br>
+          <span class="tag tag-green">已部署</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-box">
+      <div class="agent-icon" style="background:var(--orange-light);">📝</div>
+      <div>
+        <div class="agent-name">Agent 4: 内容创作Agent</div>
+        <div class="agent-platform">运行在 TraeCode | 每日</div>
+        <div class="agent-body">
+          职责：读取市场分析报告 + 交易记录 → 生成推特/视频号/抖音内容<br>
+          输出：每日3条推特 + 1条视频脚本 + 1条抖音文案<br>
+          关键：不是简单复制报告，要根据平台特点改编（推特短平快、视频号深度、抖音情绪化）<br>
+          <span class="tag tag-red">未部署 — 下一步</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-box">
+      <div class="agent-icon" style="background:var(--green-light);">📈</div>
+      <div>
+        <div class="agent-name">Agent 5: 复盘优化Agent</div>
+        <div class="agent-platform">运行在 TraeCode | 每日22:00</div>
+        <div class="agent-body">
+          职责：读取当日所有交易 → 归因分析（赚在哪/亏在哪） → 输出优化建议<br>
+          输出：每日复盘报告 + 参数调整建议<br>
+          关键：不只是说"亏了"，要说"为什么亏 + 怎么改 + 改完预期改善多少"<br>
+          <span class="tag tag-yellow">脚本存在 — 需升级</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-box">
+      <div class="agent-icon" style="background:var(--yellow-light);">🔔</div>
+      <div>
+        <div class="agent-name">Agent 6: 监控告警Agent</div>
+        <div class="agent-platform">运行在 OpenClaw | 后台常驻</div>
+        <div class="agent-body">
+          职责：监控交易异常（连续亏损/API断连/价格剧烈波动） → 推送通知到手机<br>
+          输出：实时告警消息<br>
+          <span class="tag tag-yellow">已安装 — 需配置告警规则</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="agent-box">
+      <div class="agent-icon" style="background:var(--brand-light);">🔧</div>
+      <div>
+        <div class="agent-name">Agent 7: 代码维护Agent</div>
+        <div class="agent-platform">运行在 Claude Code | 按需</div>
+        <div class="agent-body">
+          职责：修复bug → 优化策略代码 → 写新功能 → 回测验证<br>
+          不是自动运行，是在需要时手动调用<br>
+          <span class="tag tag-green">已可用</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Agent协同流水线</div>
+    <table>
+      <tr>
+        <th style="width:15%">时间</th>
+        <th style="width:20%">Agent</th>
+        <th style="width:30%">动作</th>
+        <th style="width:35%">输出</th>
+      </tr>
+      <tr>
+        <td>全天</td>
+        <td>Agent 2 (分析)</td>
+        <td>收集全球数据</td>
+        <td>市场分析报告</td>
+      </tr>
+      <tr>
+        <td>每5分钟</td>
+        <td>Agent 1 (交易)</td>
+        <td>扫描信号→风控检查→执行</td>
+        <td>交易日志</td>
+      </tr>
+      <tr>
+        <td>每5分钟</td>
+        <td>Agent 3 (风控)</td>
+        <td>检查仓位/回撤/熔断</td>
+        <td>风控通过/拒绝</td>
+      </tr>
+      <tr>
+        <td>22:00</td>
+        <td>Agent 5 (复盘)</td>
+        <td>分析当日交易</td>
+        <td>复盘报告 + 优化建议</td>
+      </tr>
+      <tr>
+        <td>次日08:00</td>
+        <td>Agent 4 (内容)</td>
+        <td>读报告→改编内容</td>
+        <td>3条推特+视频脚本</td>
+      </tr>
+      <tr>
+        <td>异常时</td>
+        <td>Agent 6 (告警)</td>
+        <td>检测异常→推送</td>
+        <td>手机通知</td>
+      </tr>
+      <tr>
+        <td>按需</td>
+        <td>Agent 7 (代码)</td>
+        <td>修复/优化/新功能</td>
+        <td>更新后的代码</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 5: 资金分配与交易品种 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>资金分配与交易品种 — 分阶段推进</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">为什么不能一步到位</div>
+    <div class="truth">
+      <div class="truth-title">$280做股票不现实</div>
+      <div class="truth-body">
+        美股 Tesla 一股 $250，一张期权最低几百美元。API开户需要SSN或境外券商账户。
+        $280在股市等于没有。必须先在加密货币赚到 $5,000+ 再开股票。
+      </div>
+    </div>
+    <div class="truth">
+      <div class="truth-title">竞猜平台无法自动化</div>
+      <div class="truth-body">
+        Polymarket 是链上操作，没有公开交易API，只能手动。
+        可以作为手动副线（你已有经验），但不能纳入Hermes自动交易。
+      </div>
+    </div>
+    <div class="truth">
+      <div class="truth-title">合约杠杆 = 加倍的风险</div>
+      <div class="truth-body">
+        $280做10x杠杆，一个-5%波动就爆仓归零。
+        必须先在现货证明策略能赚钱（连续30天正期望值），再上合约。
+        合约是放大器，好策略放大，坏策略也放大。
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">分阶段资金分配</div>
+    <table>
+      <tr>
+        <th style="width:12%">阶段</th>
+        <th style="width:10%">资金</th>
+        <th style="width:20%">加密货币</th>
+        <th style="width:20%">股票</th>
+        <th style="width:18%">竞猜</th>
+        <th style="width:20%">合约/杠杆</th>
+      </tr>
+      <tr>
+        <td><b>现在</b></td>
+        <td>$280</td>
+        <td>100% 现货</td>
+        <td>—</td>
+        <td>手动 小额</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><b>阶段2</b></td>
+        <td>$1K-5K</td>
+        <td>80% 现货</td>
+        <td>—</td>
+        <td>10% 手动</td>
+        <td>10% 低倍(2-3x)</td>
+      </tr>
+      <tr>
+        <td><b>阶段3</b></td>
+        <td>$5K-20K</td>
+        <td>50% 现货+合约</td>
+        <td>30% 美股ETF</td>
+        <td>10%</td>
+        <td>10%</td>
+      </tr>
+      <tr>
+        <td><b>阶段4</b></td>
+        <td>$20K+</td>
+        <td>40% 多策略</td>
+        <td>40% 股票+期权</td>
+        <td>10%</td>
+        <td>10%</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-3);">
+      每个阶段的"升级条件"不是时间到了就升，是<b>当前阶段连续30天正期望值</b>才升。
+      赚不到钱不升级，赚到了才扩大。
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 6: 你需要补充的方面 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>你还没说清楚的 — 我来补充</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">7个你没提到但必须有的方面</div>
+
+    <div class="truth" style="border-color:rgba(96,165,250,0.2); background:var(--blue-light);">
+      <div class="truth-title" style="color:var(--blue);">① 数据基础设施 — 你的"全球分析"数据从哪来？</div>
+      <div class="truth-body">
+        你说要分析全球经济、政治、政策、基金动向、500强 — 这些数据从哪来？<br>
+        需要：宏观经济数据API（GDP/CPI/利率）、新闻API、基金持仓公开数据、链上数据、社交媒体情绪。<br>
+        <b>现状：</b> 只有 CoinGecko + F&G指数。远远不够。需要接入更多数据源。
+      </div>
+    </div>
+
+    <div class="truth" style="border-color:rgba(96,165,250,0.2); background:var(--blue-light);">
+      <div class="truth-title" style="color:var(--blue);">② 合规与税务 — 多交易所、多品种的合规</div>
+      <div class="truth-body">
+        币安、火币、欧易在不同国家有不同的监管要求。<br>
+        股票交易需要券商账户（嘉信、盈透、富途等），需要身份认证。<br>
+        竞猜平台在某些地区可能不合法。<br>
+        交易盈利的税务申报 — 不申报 = 违法。<br>
+        <b>现状：</b> 未涉及。需要在扩大规模前处理。
+      </div>
+    </div>
+
+    <div class="truth" style="border-color:rgba(96,165,250,0.2); background:var(--blue-light);">
+      <div class="truth-title" style="color:var(--blue);">③ 安全体系 — API密钥和资金安全</div>
+      <div class="truth-body">
+        3个交易所的API密钥、AWS SSH密钥、钱包私钥 — 这些是整个系统的命脉。<br>
+        规则：API只开读取+交易权限，<b>禁止提现权限</b>。<br>
+        推荐：绑定服务器IP白名单。<br>
+        备份：所有密钥加密备份，不在代码中硬编码。<br>
+        <b>现状：</b> 已在遵循（API无提现权限），但密钥管理可以更规范。
+      </div>
+    </div>
+
+    <div class="truth" style="border-color:rgba(96,165,250,0.2); background:var(--blue-light);">
+      <div class="truth-title" style="color:var(--blue);">④ 竞争优势 — 你的"边"在哪里？</div>
+      <div class="truth-body">
+        市场上有无数交易者、分析师、内容创作者。你凭什么赢？<br>
+        可能的"边"：<br>
+        - 速度边：AI+自动化比人快，5分钟扫描20个币<br>
+        - 纪律边：机器没有恐惧和贪婪，严格止损<br>
+        - 数据边：积累自己的交易数据库，别人没有<br>
+        - 内容边：用真实交易记录做内容，不是空谈<br>
+        <b>关键洞察：你的边 = 自动化 + 真实交易记录 + AI分析。不要跟人比手动分析，你赢不了华尔街分析师。</b>
+      </div>
+    </div>
+
+    <div class="truth" style="border-color:rgba(96,165,250,0.2); background:var(--blue-light);">
+      <div class="truth-title" style="color:var(--blue);">⑤ 内容变现路径 — 不只是分享</div>
+      <div class="truth-body">
+        分享经济走向不能直接赚钱，需要变现路径：<br>
+        1. 积累粉丝 → 付费社群（知识星球/Discord）<br>
+        2. 交易策略课程 → 售卖<br>
+        3. 付费研报 → 订阅制<br>
+        4. 带单分润 → 跟单平台<br>
+        <b>前期（0-3个月）只做免费内容积累粉丝，不急于变现。</b>
+      </div>
+    </div>
+
+    <div class="truth" style="border-color:rgba(96,165,250,0.2); background:var(--blue-light);">
+      <div class="truth-title" style="color:var(--blue);">⑥ 团队 vs 个人 — 一个人能做多大？</div>
+      <div class="truth-body">
+        前期完全个人 + AI。AI就是你的团队。<br>
+        当资金到 $20K+ 时，考虑：<br>
+        - 虚拟助手处理日常内容发布<br>
+        - 会计师处理税务<br>
+        - 技术顾问（如果代码维护跟不上）<br>
+        <b>原则：能用AI做的不雇人，能自动化的不手动。</b>
+      </div>
+    </div>
+
+    <div class="truth" style="border-color:rgba(96,165,250,0.2); background:var(--blue-light);">
+      <div class="truth-title" style="color:var(--blue);">⑦ 失败预案 — 如果亏完了怎么办？</div>
+      <div class="truth-body">
+        $280全部亏损的可能性是存在的。需要预案：<br>
+        1. 设置硬性回撤线：总资金回撤到 $200 时暂停交易，复盘<br>
+        2. 永远不留全部资金在交易所 — 留 $50 在冷钱包作为"重启资金"<br>
+        3. 如果策略连续30天亏损 → 停止，不是加仓<br>
+        <b>原则：能输得起才玩得起。$280是学费，不是身家。</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 7: 知识体系 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>知识体系 — 需要掌握的工具、技能、书籍、方法</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">工具栈</div>
+    <table>
+      <tr>
+        <th style="width:20%">类别</th>
+        <th style="width:40%">工具</th>
+        <th style="width:40%">用途</th>
+      </tr>
+      <tr>
+        <td><b>编程</b></td>
+        <td>Python, CCXT库, pandas, numpy</td>
+        <td>策略开发、数据分析、回测</td>
+      </tr>
+      <tr>
+        <td><b>交易所API</b></td>
+        <td>币安API, 火币API, 欧易API</td>
+        <td>行情数据、交易执行</td>
+      </tr>
+      <tr>
+        <td><b>数据源</b></td>
+        <td>CoinGecko, CoinMarketCap, TradingEconomics, F&G Index</td>
+        <td>价格、市值、宏观经济、情绪</td>
+      </tr>
+      <tr>
+        <td><b>基础设施</b></td>
+        <td>AWS EC2, cron, SSH, CloudWatch</td>
+        <td>服务器、定时任务、监控</td>
+      </tr>
+      <tr>
+        <td><b>分析工具</b></td>
+        <td>TraeCode (我), Claude Code</td>
+        <td>策略分析、代码开发</td>
+      </tr>
+      <tr>
+        <td><b>内容工具</b></td>
+        <td>推特, 视频号, 抖音, 剪映</td>
+        <td>内容发布、视频剪辑</td>
+      </tr>
+      <tr>
+        <td><b>通知工具</b></td>
+        <td>OpenClaw, Telegram Bot</td>
+        <td>告警推送、日报推送</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">必须掌握的技能（按优先级）</div>
+    <table>
+      <tr>
+        <th style="width:10%">优先级</th>
+        <th style="width:30%">技能</th>
+        <th style="width:30%">为什么需要</th>
+        <th style="width:30%">学习方式</th>
+      </tr>
+      <tr>
+        <td><span class="tag tag-red">P0</span></td>
+        <td>RSI/布林带原理</td>
+        <td>当前策略的核心指标</td>
+        <td>费曼技巧 + 实际K线验证</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-red">P0</span></td>
+        <td>期望值/胜率/盈亏比</td>
+        <td>判断策略是否值得继续</td>
+        <td>回测数据计算</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-red">P0</span></td>
+        <td>仓位管理/凯利公式</td>
+        <td>决定每笔下多少</td>
+        <td>书籍 + 数学推导</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-yellow">P1</span></td>
+        <td>回测方法论</td>
+        <td>验证策略在历史数据上是否有效</td>
+        <td>写backtest.py实际跑</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-yellow">P1</span></td>
+        <td>市场状态判断</td>
+        <td>区分趋势/震荡，选择策略</td>
+        <td>ADX/布林带宽度分析</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-yellow">P1</span></td>
+        <td>宏观经济基础</td>
+        <td>理解利率/CPI对加密市场的影响</td>
+        <td>书籍 + 新闻分析</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">P2</span></td>
+        <td>内容写作</td>
+        <td>推特/视频号内容创作</td>
+        <td>每日练习 + 数据驱动</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">P2</span></td>
+        <td>链上数据分析</td>
+        <td>大额转账、交易所流入流出</td>
+        <td>Glassnode/Whale Alert</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-green">P3</span></td>
+        <td>美股交易规则</td>
+        <td>后期进入股票市场</td>
+        <td>券商文档 + 书籍</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-green">P3</span></td>
+        <td>期权定价</td>
+        <td>后期做期权交易</td>
+        <td>Black-Scholes模型</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">书单 — 从基础到进阶</div>
+    <table>
+      <tr>
+        <th style="width:15%">阶段</th>
+        <th style="width:45%">书名</th>
+        <th style="width:40%">为什么读</th>
+      </tr>
+      <tr>
+        <td><span class="tag tag-red">入门</span></td>
+        <td>《日本蜡烛图技术》— Steve Nison</td>
+        <td>K线是所有分析的基础</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-red">入门</span></td>
+        <td>《技术分析（第五版）》— Martin Pring</td>
+        <td>系统理解RSI/布林带/量价</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-red">入门</span></td>
+        <td>《通透》— Naval Ravikant</td>
+        <td>杠杆思维、复利思维的第一性原理</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-yellow">进阶</span></td>
+        <td>《刻意练习》— Anders Ericsson</td>
+        <td>如何高效学习任何技能</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-yellow">进阶</span></td>
+        <td>《量化交易》— Ernest Chan</td>
+        <td>如何用Python做策略回测和实盘</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-yellow">进阶</span></td>
+        <td>《海龟交易法则》— Curtis Faith</td>
+        <td>趋势跟踪+仓位管理的经典</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-yellow">进阶</span></td>
+        <td>《对赌》— Annie Duke</td>
+        <td>在不确定中做决策的思维方式</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">高级</span></td>
+        <td>《动态对冲》— Nassim Taleb</td>
+        <td>期权和高级风险管理</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">高级</span></td>
+        <td>《随机漫步的傻瓜》— Nassim Taleb</td>
+        <td>理解概率、风险和运气</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">高级</span></td>
+        <td>《聪明的投资者》— Benjamin Graham</td>
+        <td>价值投资 — 后期做股票的基础</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">投资方法体系</div>
+    <table>
+      <tr>
+        <th style="width:25%">方法</th>
+        <th style="width:25%">适用场景</th>
+        <th style="width:25%">适用阶段</th>
+        <th style="width:25%">当前状态</th>
+      </tr>
+      <tr>
+        <td><b>均值回归</b></td>
+        <td>震荡市场</td>
+        <td>现在</td>
+        <td><span class="tag tag-green">已部署</span></td>
+      </tr>
+      <tr>
+        <td><b>趋势跟踪</b></td>
+        <td>趋势市场</td>
+        <td>Phase 3</td>
+        <td><span class="tag tag-red">未部署</span></td>
+      </tr>
+      <tr>
+        <td><b>网格交易</b></td>
+        <td>低波动震荡</td>
+        <td>备用</td>
+        <td><span class="tag tag-yellow">已停用</span></td>
+      </tr>
+      <tr>
+        <td><b>套利</b></td>
+        <td>跨交易所价差</td>
+        <td>Phase 3</td>
+        <td><span class="tag tag-red">未部署</span></td>
+      </tr>
+      <tr>
+        <td><b>动量突破</b></td>
+        <td>趋势启动</td>
+        <td>Phase 3</td>
+        <td><span class="tag tag-red">未部署</span></td>
+      </tr>
+      <tr>
+        <td><b>价值投资</b></td>
+        <td>股票长线</td>
+        <td>Phase 4</td>
+        <td><span class="tag tag-red">未涉及</span></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 8: 发展路线图 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <h2>发展路线图 — 4个阶段</h2>
+  </div>
+
+  <div class="card">
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-phase">PHASE 1 · 现在 → 3个月</div>
+        <div class="timeline-title">加密货币现货 — 证明策略能赚钱</div>
+        <div class="timeline-body">
+          <b>资金：</b> $280 → $5K<br>
+          <b>交易：</b> 币安(动态RSI策略) + 火币(SOL/SUI/UNI波段)<br>
+          <b>目标：</b> 连续30天正期望值<br>
+          <b>内容：</b> 每日推特分享交易记录和市场观察<br>
+          <b>升级条件：</b> 30天正期望值 + 资金到$1K<br>
+          <b>关键里程碑：</b> 回测系统搭建完成、每日复盘闭环建立
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-phase">PHASE 2 · 3-6个月</div>
+        <div class="timeline-title">加合约 + 欧易 + 内容积累</div>
+        <div class="timeline-body">
+          <b>资金：</b> $1K → $5K<br>
+          <b>新增：</b> 欧易交易所接入、低倍合约(2-3x)<br>
+          <b>交易：</b> 现货为主 + 小仓位合约试水<br>
+          <b>内容：</b> 推特+视频号，每周3-5条<br>
+          <b>升级条件：</b> 合约策略30天正期望值 + 资金到$5K<br>
+          <b>关键里程碑：</b> 多策略切换(均值回归+趋势跟踪)、OpenClaw告警体系
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-phase">PHASE 3 · 6-12个月</div>
+        <div class="timeline-title">进入美股 + 内容变现</div>
+        <div class="timeline-body">
+          <b>资金：</b> $5K → $20K<br>
+          <b>新增：</b> 美股券商账户(盈透/富途)、ETF定投+波段<br>
+          <b>交易：</b> 加密40% + 股票30% + 合约10% + 竞猜10% + 现金10%<br>
+          <b>内容：</b> 抖音+视频号+推特全面铺开，开始付费社群<br>
+          <b>升级条件：</b> 股票策略30天正期望值 + 粉丝到1万<br>
+          <b>关键里程碑：</b> 跨市场分析体系、自动参数优化
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-phase">PHASE 4 · 12个月+</div>
+        <div class="timeline-title">系统自我进化 + 规模化</div>
+        <div class="timeline-body">
+          <b>资金：</b> $20K → $50K+<br>
+          <b>新增：</b> 期权交易、跨市场套利<br>
+          <b>交易：</b> 全品种、多策略、自动切换<br>
+          <b>内容：</b> 付费课程、付费研报、咨询<br>
+          <b>升级条件：</b> 持续6个月正期望值 + 系统自动进化<br>
+          <b>关键里程碑：</b> 系统每周自动优化参数、每月自动生成策略报告
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 9: 风控体系 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">9</div>
+    <h2>风控体系 — 系统的免疫系统</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:20%">层级</th>
+        <th style="width:20%">规则</th>
+        <th style="width:30%">触发条件</th>
+        <th style="width:30%">动作</th>
+      </tr>
+      <tr>
+        <td><b>L1 单笔</b></td>
+        <td>单笔风险 ≤ 2%</td>
+        <td>每笔交易前检查</td>
+        <td>超过则拒绝开仓</td>
+      </tr>
+      <tr>
+        <td><b>L2 止损</b></td>
+        <td>F&G联动止损</td>
+        <td>持仓浮亏达止损线</td>
+        <td>立即市价平仓</td>
+      </tr>
+      <tr>
+        <td><b>L3 集中度</b></td>
+        <td>单币 ≤ 30%</td>
+        <td>开仓前检查</td>
+        <td>超过则减少仓位</td>
+      </tr>
+      <tr>
+        <td><b>L4 并发</b></td>
+        <td>最多3个同时持仓</td>
+        <td>开仓前检查</td>
+        <td>满仓则不开新仓</td>
+      </tr>
+      <tr>
+        <td><b>L5 熔断</b></td>
+        <td>连续5亏 或 日回撤3%</td>
+        <td>每日复盘检查</td>
+        <td>暂停交易1天 + 人工复查</td>
+      </tr>
+      <tr>
+        <td><b>L6 总回撤</b></td>
+        <td>总回撤 ≥ 8%</td>
+        <td>实时监控</td>
+        <td>停止所有交易 + 全面复盘</td>
+      </tr>
+      <tr>
+        <td><b>L7 底线</b></td>
+        <td>总资金 < $200</td>
+        <td>每次交易后检查</td>
+        <td>提取$50到冷钱包 + 暂停</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 10: 立即执行 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <h2>立即执行 — 本周7天行动表</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:8%">天</th>
+        <th style="width:25%">交易系统</th>
+        <th style="width:25%">分析系统</th>
+        <th style="width:25%">内容系统</th>
+        <th style="width:17%">学习</th>
+      </tr>
+      <tr>
+        <td><b>D1</b></td>
+        <td>给mean_rev_bot加交易日志</td>
+        <td>列出需要的数据源清单</td>
+        <td>注册推特账号(如没有)</td>
+        <td>RSI原理</td>
+      </tr>
+      <tr>
+        <td><b>D2</b></td>
+        <td>写每日复盘脚本</td>
+        <td>接入第1个宏观数据源</td>
+        <td>发第1条推特(交易策略介绍)</td>
+        <td>布林带原理</td>
+      </tr>
+      <tr>
+        <td><b>D3</b></td>
+        <td>回测脚本框架</td>
+        <td>接入F&G历史数据</td>
+        <td>发第2条(今日市场观察)</td>
+        <td>量价关系</td>
+      </tr>
+      <tr>
+        <td><b>D4</b></td>
+        <td>回测RSI阈值优化</td>
+        <td>写每日市场分析模板</td>
+        <td>发第3条(RSI策略解读)</td>
+        <td>期望值公式</td>
+      </tr>
+      <tr>
+        <td><b>D5</b></td>
+        <td>回测止损参数优化</td>
+        <td>第1份完整市场分析报告</td>
+        <td>发第4条(本周交易总结)</td>
+        <td>凯利公式</td>
+      </tr>
+      <tr>
+        <td><b>D6</b></td>
+        <td>部署优化后的参数</td>
+        <td>配置OpenClaw告警规则</td>
+        <td>拍第1条视频号(策略讲解)</td>
+        <td>市场状态分类</td>
+      </tr>
+      <tr>
+        <td><b>D7</b></td>
+        <td>第一周复盘报告</td>
+        <td>分析报告质量评估</td>
+        <td>拍第1条抖音(交易心得)</td>
+        <td>主动回忆默写</td>
+      </tr>
+    </table>
+    <p style="margin-top:16px; font-size:13px; color:var(--text-3);">
+      每天交易+分析+内容+学习四条线并行，不是做完一个再下一个。
+    </p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>总蓝图 v1.0 · 2026-09-06 · 活文档 — 在执行中持续修正</p>
+  <p>纳瓦尔思维 × 刻意练习 × 第一性原理</p>
+</div>
+
+</body>
+</html>

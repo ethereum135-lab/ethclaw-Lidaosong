@@ -1,0 +1,76 @@
+# 敏感配置
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.pub
+
+# 日志文件
+*.log
+logs/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# 运行时数据目录（动态生成，不需要版本控制）
+data/
+state/
+shared/
+trades/
+positions/
+signals/
+alerts/
+reviews/
+events/
+content/
+futures/
+fx/
+stocks/
+macro/*.json
+risk/*.json
+
+# 策略运行时数据
+strategies/__trade_db__/
+
+# 备份
+*.backup
+*.bak
+backup/
+backups/
+*.tar.gz
+
+# 嵌套Git仓库（不作为子模块）
+shared/advisor/
+tools/coinos/
+
+# 数据目录
+data_sources/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+.github/workflows/

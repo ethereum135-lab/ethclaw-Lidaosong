@@ -1,0 +1,70 @@
+# A7 舆情官 配置文件
+# 创建日期: 2026-05-11
+
+# ==========================================
+# 模型配置
+# ==========================================
+model:
+  default: deepseek-v4-flash
+  provider: deepseek
+  temperature: 0.2       # 告警判断需要精确
+  fallback:
+    model: claude-sonnet-4
+    provider: anthropic
+
+# ==========================================
+# 路径配置
+# ==========================================
+paths:
+  profile_dir: profiles/a7-sentinel/
+  output_dir: profiles/a7-sentinel/output/
+  logs_dir: profiles/a7-sentinel/logs/
+  alert_output: agents/a7/alert.md
+
+# ==========================================
+# 监控频率
+# ==========================================
+schedule:
+  monitor: "*/15 * * * *"    # 每15分钟
+  learning: "0 8 * * 3,5"     # 周三、五08:00学习
+
+# ==========================================
+# F&G阈值
+# ==========================================
+fear_greed:
+  extreme_fear: 20            # F&G<20 → 恐慌底告警
+  extreme_greed: 80           # F&G>80 → 贪婪顶告警
+  rapid_drop_threshold: 30    # 单次下跌>30点 → 情绪快速恶化
+
+# ==========================================
+# 监控关键词
+# ==========================================
+keywords:
+  twitter:
+    - "Elon Musk crypto"
+    - "CZ Binance"
+    - "Saylor bitcoin"
+  news:
+    - "crypto hack"
+    - "crypto regulation"
+    - "crypto ban"
+    - "crypto upgrade mainnet"
+
+# ==========================================
+# 告警控制
+# ==========================================
+alert:
+  max_lines: 10               # alert不超过10行
+  dedup_window: 60            # 同一事件60分钟内不重复告警
+
+# ==========================================
+# 学习配置
+# ==========================================
+learning:
+  enabled: true
+  schedule: "0 8 * * 3,5"
+  topics:
+    - "舆情监控方法（社交媒体情绪分析/事件驱动交易）"
+    - "KOL影响力评估（谁的话能影响市场/谁只是噪音）"
+    - "黑天鹅事件模式（历史重大crypto事件回顾）"
+    - "误报过滤技术（如何区分真实信号和噪音）"

@@ -1,0 +1,25 @@
+# A9 学研官 配置文件
+
+model:
+  default: deepseek-v4-flash
+  provider: deepseek
+  temperature: 0.4       # 学习可以有些创新
+  fallback:
+    model: claude-sonnet-4
+    provider: anthropic
+
+paths:
+  profile_dir: profiles/a9-research/
+  output_dir: profiles/a9-research/output/
+  logs_dir: profiles/a9-research/logs/
+  research_output: agents/a9/weekly_research.md
+
+schedule:
+  weekly_research: "0 8 * * 1"     # 每周一08:00
+
+learning:
+  search_dimensions:
+    - "新工具"
+    - "新数据源"
+    - "新策略"
+    - "案例学习"

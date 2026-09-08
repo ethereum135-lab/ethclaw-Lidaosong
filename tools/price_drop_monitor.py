@@ -1,0 +1,340 @@
+#!/usr/bin/env python3
+"""
+价格暴跌监控 — 每15分钟扫描coin pool活跃币的实时价格
+检测 ≥-5% (黄) / ≥-8% (红) 的突然下跌
+
+模式：no_agent cron，无暴跌时静默(不输出)，有暴跌输出告警
+"""
+import json
+import os
+import sys
+import time
+import urllib.request
+import urllib.error
+
+# ── 路径 ─────────────────────────────────────────
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+COIN_POOL_PATH = os.path.join(BASE_DIR, "data", "coin_pool.json")
+SNAPSHOT_PATH = os.path.join(BASE_DIR, "data", "price_snapshot.json")
+ALERT_LOG_PATH = os.path.join(BASE_DIR, "data", "price_drop_alerts.json")
+ENRICH_DIR = os.path.join(BASE_DIR, "data", "coin_enrichment")
+
+# ── 阈值 ──────────────────────────────────────────
+YELLOW_THRESHOLD = 0.05   # -5%
+RED_THRESHOLD = 0.08      # -8%
+DROP_DEDUP_SEC = 900      # 同一币种15分钟不重复告警
+
+# ── 工具函数 ──────────────────────────────────────
+
+def fetch_prices_via_aws(wanted_symbols=None):
+    """AWS端预筛选fallback（2026-09-02 A5午检修复，08-09已验证模式）
+
+    本地直连被GFW重置 + SOCKS5隧道(ssh -D 1080)对大响应(>100KB)结构性失败时，
+    ticker/24hr全量1.88MB经隧道必失败。改为：ssh web4(AWS悉尼)直连Binance拉全量
+    (AWS端0.45s)，在AWS端用python3过滤出需要的币种，只回传小JSON(~10KB)。
+    08-09 fast_scan / 08-11 gainer_coverage 同模式已验证。
+    """
+    import subprocess
+    try:
+        # 需要监控的币种: base名 -> 加USDT后缀；未指定则回传全部USDT价格
+        if wanted_symbols:
+            wanted_list = [s + "USDT" if not s.endswith("USDT") else s for s in wanted_symbols]
+            sym_args = " ".join(wanted_list)
+        else:
+            sym_args = ""
+        # AWS端命令：curl全量 + python3过滤（symbols作为argv传入，避免引号嵌套问题）
+        aws_cmd = (
+            "curl -s --max-time 15 'https://api.binance.com/api/v3/ticker/24hr' | "
+            "python3 -c 'import json,sys;"
+            "w=set(sys.argv[1:]) if len(sys.argv)>1 else None;"
+            "d=json.load(sys.stdin);"
+            "out={t[\"symbol\"]:t[\"lastPrice\"] for t in d if t[\"symbol\"].endswith(\"USDT\") and (w is None or t[\"symbol\"] in w)};"
+            "print(json.dumps(out))' " + sym_args
+        )
+        r = subprocess.run(
+            ['ssh', '-o', 'ConnectTimeout=15', '-o', 'ServerAliveInterval=10', 'web4', aws_cmd],
+            capture_output=True, text=True, timeout=60)
+        if r.returncode == 0 and r.stdout and r.stdout.strip().startswith("{"):
+            data = json.loads(r.stdout)
+            if data:
+                print(f"[INFO] AWS fallback成功: 获取{len(data)}个币价格", file=sys.stderr)
+                return data
+            print(f"[ERROR] AWS fallback返回空: {r.stdout[:200]}", file=sys.stderr)
+        else:
+            print(f"[ERROR] AWS fallback命令失败 rc={r.returncode}: {r.stderr[:200]}", file=sys.stderr)
+    except Exception as e:
+        print(f"[ERROR] AWS fallback异常: {e}", file=sys.stderr)
+    return {}
+
+
+def fetch_all_prices(wanted_symbols=None):
+    """一次性从币安获取所有USDT交易对价格
+    wanted_symbols: 可选，需要监控的币种base列表，AWS fallback时用于AWS端预筛选
+    """
+    url = "https://api.binance.com/api/v3/ticker/24hr"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    try:
+        resp = urllib.request.urlopen(req, timeout=15)
+        data = json.loads(resp.read())
+    except Exception:
+        # SOCKS5 fallback via SSH tunnel
+        import subprocess
+        try:
+            r = subprocess.run(
+                ['curl', '-s', '--connect-timeout', '10', '--max-time', '25',
+                 '--socks5-hostname', '127.0.0.1:1080', url],
+                capture_output=True, text=True, timeout=30)
+            if r.returncode == 0 and r.stdout:
+                data = json.loads(r.stdout)
+            else:
+                data = None
+        except:
+            data = None
+        if data is None:
+            # 第三通道：AWS端预筛选fallback（大响应经隧道结构性失败，2026-09-02修复）
+            data = fetch_prices_via_aws(wanted_symbols)
+            if not data:
+                print(f"[ERROR] Binance API unreachable (direct+SOCKS5+AWS all failed)", file=sys.stderr)
+                return {}
+    
+    # 过滤出USDT交易对，建立 symbol -> price 映射
+    # 兼容两种数据格式：list(ticker数组, 直连/SOCKS5) 或 dict({SYMUSDT: price}, AWS fallback扁平格式)
+    prices = {}
+    if isinstance(data, dict):
+        # AWS fallback扁平格式: {"BTCUSDT": "77507.56", ...}
+        for sym_usdt, last_price in data.items():
+            if str(sym_usdt).endswith("USDT"):
+                base = str(sym_usdt)[:-4]
+                try:
+                    prices[base] = float(last_price)
+                except (ValueError, TypeError):
+                    pass
+    else:
+        for ticker in data:
+            sym = ticker.get("symbol", "")
+            if sym.endswith("USDT"):
+                base = sym[:-4]  # 去掉USDT后缀
+                try:
+                    prices[base] = float(ticker["lastPrice"])
+                except (ValueError, KeyError):
+                    pass
+    return prices
+
+
+def read_coin_pool():
+    """读取选币库，返回活跃币的 symbol列表 和 当前参考价"""
+    if not os.path.exists(COIN_POOL_PATH):
+        print(f"[ERROR] 选币库文件不存在: {COIN_POOL_PATH}", file=sys.stderr)
+        sys.exit(1)
+    
+    with open(COIN_POOL_PATH) as f:
+        pool_data = json.load(f)
+    
+    coins = pool_data.get("pool", [])
+    active_coins = {}
+    for c in coins:
+        if c.get("status") in ("active",):
+            sym = c.get("symbol", "").upper()
+            if sym:
+                active_coins[sym] = {
+                    "pool_price": c.get("price", 0),
+                }
+    return active_coins
+
+
+def read_snapshot():
+    """读取上一次的价格快照"""
+    if not os.path.exists(SNAPSHOT_PATH):
+        return {}
+    try:
+        with open(SNAPSHOT_PATH) as f:
+            return json.load(f)
+    except (json.JSONDecodeError, IOError):
+        return {}
+
+
+def write_snapshot(snapshot):
+    """写入价格快照"""
+    os.makedirs(os.path.dirname(SNAPSHOT_PATH), exist_ok=True)
+    with open(SNAPSHOT_PATH, "w") as f:
+        json.dump(snapshot, f, indent=2)
+
+
+def read_alert_log():
+    """读取告警记录（用于去重）"""
+    if not os.path.exists(ALERT_LOG_PATH):
+        return {}
+    try:
+        with open(ALERT_LOG_PATH) as f:
+            return json.load(f)
+    except (json.JSONDecodeError, IOError):
+        return {}
+
+
+def write_alert_log(log):
+    """写入告警记录"""
+    os.makedirs(os.path.dirname(ALERT_LOG_PATH), exist_ok=True)
+    with open(ALERT_LOG_PATH, "w") as f:
+        json.dump(log, f, indent=2)
+
+
+def write_to_enrich(alerts):
+    """将暴跌告警写入策略数据区 (data/coin_enrichment/<SYMBOL>USDT.json)
+    这样sync_enrich_to_coinpool.py会同步到coin_pool.json的tags，A3/A4/A5都能读到"""
+    os.makedirs(ENRICH_DIR, exist_ok=True)
+    for a in alerts:
+        sym = a["symbol"]
+        enrich_path = os.path.join(ENRICH_DIR, f"{sym}USDT.json")
+        
+        # 读取已有enrich数据（如果有），保留其他Agent的标签
+        enrich_data = {}
+        if os.path.exists(enrich_path):
+            try:
+                with open(enrich_path) as f:
+                    enrich_data = json.load(f)
+            except (json.JSONDecodeError, IOError):
+                enrich_data = {}
+        
+        if "tags" not in enrich_data or not isinstance(enrich_data.get("tags"), dict):
+            enrich_data["tags"] = {}
+        
+        # 写暴跌标签
+        enrich_data["tags"]["P_drop"] = {
+            "last_updated": a["time"],
+            "drop_pct": a["drop_pct"],
+            "drop_level": "red" if a["level"] == "🔴" else "yellow",
+            "current_price": a["current_price"],
+            "prev_price": a["prev_price"],
+        }
+        enrich_data["symbol"] = f"{sym}USDT"
+        enrich_data["updated_at"] = a["time"]
+        
+        with open(enrich_path, "w") as f:
+            json.dump(enrich_data, f, indent=2, ensure_ascii=False)
+
+
+def should_alert(symbol, alert_log):
+    """检查是否在去重窗口内"""
+    now = time.time()
+    last_alert = alert_log.get(symbol, {}).get("last_alert_at", 0)
+    return (now - last_alert) > DROP_DEDUP_SEC
+
+
+# ── 主逻辑 ────────────────────────────────────────
+
+def main():
+    now_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    now_ts = time.time()
+    
+    # 1. 读取选币库活跃币
+    pool_coins = read_coin_pool()
+    if not pool_coins:
+        print(f"[OK] 选币库无活跃币，跳过", file=sys.stderr)
+        sys.exit(0)
+    
+    # 2. 读取价格快照
+    snapshot = read_snapshot()
+    
+    # 3. 拉取当前币安价格（直连→SOCKS5→AWS预筛选三通道，2026-09-02修复）
+    print(f"[INFO] 拉取币安价格...", file=sys.stderr)
+    all_prices = fetch_all_prices(wanted_symbols=list(pool_coins.keys()))
+    if not all_prices:
+        print(f"[ERROR] 币安价格获取失败", file=sys.stderr)
+        sys.exit(1)
+    
+    # 4. 读取告警记录（去重用）
+    alert_log = read_alert_log()
+    
+    # 5. 遍历活跃币，检测暴跌
+    alerts = []  # 本轮新发现的告警
+    new_snapshot = {}
+    
+    for sym, info in pool_coins.items():
+        current_price = all_prices.get(sym)
+        if current_price is None or current_price <= 0:
+            continue  # 没找到该币的价格或价格为0
+        
+        # 记录快照：优先用上次快照价做基准，首次用选币库价
+        prev_price = snapshot.get(sym, info["pool_price"])
+        new_snapshot[sym] = current_price
+        
+        if prev_price is None or prev_price <= 0:
+            continue  # 没有基准价，跳过
+        
+        # 计算跌幅
+        drop_pct = (current_price - prev_price) / prev_price
+        
+        if drop_pct <= -RED_THRESHOLD:
+            # 🔴 红色告警 ≥-8%
+            if should_alert(sym, alert_log):
+                alerts.append({
+                    "level": "🔴",
+                    "symbol": sym,
+                    "drop_pct": round(drop_pct * 100, 1),
+                    "prev_price": round(prev_price, 4),
+                    "current_price": round(current_price, 4),
+                    "type": "红色暴跌",
+                    "time": now_str,
+                })
+                alert_log[sym] = {"last_alert_at": now_ts, "level": "red"}
+        elif drop_pct <= -YELLOW_THRESHOLD:
+            # 🟡 黄色告警 ≥-5% 但 < -8%
+            if should_alert(sym, alert_log):
+                alerts.append({
+                    "level": "🟡",
+                    "symbol": sym,
+                    "drop_pct": round(drop_pct * 100, 1),
+                    "prev_price": round(prev_price, 4),
+                    "current_price": round(current_price, 4),
+                    "type": "次级下跌",
+                    "time": now_str,
+                })
+                alert_log[sym] = {"last_alert_at": now_ts, "level": "yellow"}
+    
+    # 6. 保存快照和告警记录
+    write_snapshot(new_snapshot)
+    write_alert_log(alert_log)
+
+    # 6b. 同时写入策略数据区 (coin_enrichment)，让sync自动同步到coin_pool
+    if alerts:
+        write_to_enrich(alerts)
+
+    # 7. 输出结果
+    if not alerts:
+        # 无暴跌 → 静默（no_agent模式下不输出=不推送）
+        print(f"[OK] {now_str} 扫描 {len(pool_coins)} 个活跃币，无暴跌", file=sys.stderr)
+        sys.exit(0)
+    
+    # 有告警 → 输出（会被cron递送到飞书）
+    print(f"🚨 价格暴跌监控告警")
+    print(f"━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print(f"🕐 {now_str}")
+    print(f"📊 扫描范围: {len(pool_coins)} 个活跃币")
+    print(f"⚠️  本轮告警: {len(alerts)} 个")
+    print()
+    
+    # 红色告警在前
+    alerts.sort(key=lambda a: a["drop_pct"])  # 跌幅最大的在前
+    red = [a for a in alerts if a["level"] == "🔴"]
+    yellow = [a for a in alerts if a["level"] == "🟡"]
+    
+    if red:
+        print("🔴 红色暴跌告警 (≥-8%)")
+        print("──────────────────────")
+        for a in red:
+            print(f"  {a['symbol']}: {a['drop_pct']}%  (${a['prev_price']} → ${a['current_price']})")
+        print()
+    
+    if yellow:
+        print("🟡 次级下跌告警 (-5%~-8%)")
+        print("──────────────────────────")
+        for a in yellow:
+            print(f"  {a['symbol']}: {a['drop_pct']}%  (${a['prev_price']} → ${a['current_price']})")
+        print()
+    
+    print(f"📝 告警详情已记录: price_drop_alerts.json")
+    print(f"━━━━━━━━━━━━━━━━━━━━━━━━━━")
+
+
+if __name__ == "__main__":
+    main()

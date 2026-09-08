@@ -1,0 +1,59 @@
+# A4 交易官 配置文件
+# 路径: profiles/a4-blade/config.yaml
+
+# ⚡ 执行型Agent — 需要精确、低延迟、高一致性
+# 模型温度设为最低，减少随机性
+
+# Cron配置（BJT时间）
+cron:
+  - task: 每30分钟执行节点
+    schedule: "*/30 7-23 * * *"  # 07:00-23:00 每30分钟
+    description: 读A3报告→四查→执行→记录
+
+  - task: 每日自检
+    schedule: "0 17 * * *"  # 每天17:00 BJT
+    description: 文件完整性检查 + 日志检查 + 执行记录检查
+
+  - task: 每日学习
+    schedule: "0 8 * * *"  # 每天08:00 BJT
+    description: 执行技术学习（API/滑点/风控）
+
+# 路径配置
+paths:
+  output_dir: output
+  log_dir: logs
+  a3_data_dir: ../a3-bull/output
+  fk_veto_path: ../../agents/fk/veto.json
+  trades_path: ../../audit/TRADES.md
+  node_data_path: ../../data/node_history.jsonl
+  errors_path: ../../audit/ERRORS.md
+
+# 执行参数
+execution:
+  default_mode: market          # 默认市价单
+  price_deviation_pct: 2.0      # 价格偏离容忍度(%)，±2%
+  min_usdt_amount: 10           # 最小执行金额($10)
+  large_order_threshold: 100    # 大额定单阈值(>$100用分单)
+  max_retries: 3                # API重试次数
+  retry_intervals_sec: [5, 15, 30]  # 重试间隔（秒）
+
+# 行情数据源
+data_source:
+  primary: binance              # 主数据源
+  backup: okx                   # 备用数据源（451限制时切换）
+  binance_base: https://api.binance.com
+  okx_base: https://www.okx.com
+
+# 运行限制
+runtime:
+  max_log_size_mb: 10
+  execution_record_days: 30     # 保留30天执行记录
+
+# API认证
+auth:
+  path: ../../config/auth.json  # Binance API密钥
+  format: json                   # { "binance": { "api_key": "...", "api_secret": "..." } }
+
+# 执行金额
+trade:
+  default_usdt_amount: 15        # 默认单笔执行金额（430U账户，约3.5%/笔）

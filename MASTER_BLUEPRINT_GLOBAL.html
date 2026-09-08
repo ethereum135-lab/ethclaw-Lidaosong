@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>总蓝图补充 — 全球经济体与周期模型</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #131318;
+    --surface-2: #1a1a22;
+    --border: #2a2a35;
+    --text: #e4e4e8;
+    --text-2: #9898a0;
+    --text-3: #62626a;
+    --brand: #8b5cf6;
+    --brand-2: #a78bfa;
+    --brand-light: rgba(139, 92, 246, 0.12);
+    --green: #34d399;
+    --green-light: rgba(52, 211, 153, 0.12);
+    --red: #f87171;
+    --red-light: rgba(248, 113, 113, 0.12);
+    --yellow: #fbbf24;
+    --yellow-light: rgba(251, 191, 36, 0.12);
+    --blue: #60a5fa;
+    --blue-light: rgba(96, 165, 250, 0.12);
+    --orange: #fb923c;
+    --orange-light: rgba(251, 146, 60, 0.12);
+    --cyan: #22d3ee;
+    --cyan-light: rgba(34, 211, 238, 0.12);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    line-height: 1.75;
+    padding: 40px 20px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .hero {
+    text-align: center;
+    padding: 48px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--brand-light);
+    color: var(--brand-2);
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--cyan), var(--brand));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p { color: var(--text-2); font-size: 14px; }
+  .section { margin-bottom: 44px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    background: var(--brand);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 22px; font-weight: 700; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 16px; font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left;
+    color: var(--text-3);
+    font-weight: 500;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .tag-brand { background: var(--brand-light); color: var(--brand-2); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-yellow { background: var(--yellow-light); color: var(--yellow); }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+  .tag-orange { background: var(--orange-light); color: var(--orange); }
+  .tag-cyan { background: var(--cyan-light); color: var(--cyan); }
+
+  /* ── 美林时钟 ── */
+  .clock {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .clock-cell {
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    border: 1px solid;
+  }
+  .clock-cell h4 { font-size: 14px; margin-bottom: 4px; }
+  .clock-cell p { font-size: 12px; color: var(--text-2); }
+  .clock-cell .asset { font-size: 16px; font-weight: 700; margin-top: 8px; }
+
+  /* ── 周期模型 ── */
+  .cycle-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 700px) { .cycle-row { grid-template-columns: 1fr; } }
+  .cycle-card {
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .cycle-label { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .cycle-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .cycle-body { font-size: 12px; color: var(--text-2); line-height: 1.6; }
+
+  /* ── 传导图 ── */
+  .flow-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 8px;
+  }
+  .flow-arrow {
+    text-align: center;
+    color: var(--text-3);
+    font-size: 18px;
+    margin: 4px 0;
+  }
+  .flow-cause { font-size: 13px; color: var(--yellow); font-weight: 600; margin-bottom: 4px; }
+  .flow-effect { font-size: 13px; color: var(--text-2); }
+  .flow-result { font-size: 14px; font-weight: 600; margin-top: 4px; }
+
+  /* ── 资产卡片 ── */
+  .asset-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 700px) { .asset-grid { grid-template-columns: 1fr; } }
+  .asset-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .asset-name { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+  .asset-en { font-size: 11px; color: var(--text-3); margin-bottom: 8px; }
+  .asset-body { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .asset-meta { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .quote-box {
+    background: var(--surface-2);
+    border-left: 3px solid var(--brand);
+    padding: 14px 20px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--text-2);
+    font-style: italic;
+  }
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .footer p { color: var(--text-3); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">总蓝图补充 v1.1</div>
+  <h1>全球经济体与周期模型</h1>
+  <p>全资产全景 · 美林投资时钟 · 短中长线判断 · 市场联动传导</p>
+</div>
+
+<!-- ════════ 1. 全球资产全景 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>全球资产全景 — 7大类</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">不只是加密货币 — 完整资产版图</div>
+    <p style="font-size:14px; color:var(--text-2); margin-bottom:20px;">
+      即使现在只做加密货币，也必须盯住全部7类资产 — 因为它们互相传导。
+      美元涨 → 大宗跌 → 加密跌。美联储加息 → 美债涨 → 股票跌 → 加密跌。
+      你不看其他市场，加密货币的暴跌就来得很突然。
+    </p>
+
+    <div class="asset-grid">
+      <div class="asset-card" style="border-color: rgba(139,92,246,0.3);">
+        <div class="asset-name">加密货币</div>
+        <div class="asset-en">Crypto · BTC/ETH/Altcoins</div>
+        <div class="asset-body">
+          高波动、24/7交易、与科技股相关性高<br>
+          <b>当前阶段：</b> 已在交易<br>
+          <b>数据指标：</b> F&G指数、链上数据、稳定币市值
+        </div>
+        <div class="asset-meta">
+          <span class="tag tag-green">已交易</span>
+          <span class="tag tag-brand">币安+火币+欧易</span>
+        </div>
+      </div>
+
+      <div class="asset-card" style="border-color: rgba(96,165,250,0.3);">
+        <div class="asset-name">美股</div>
+        <div class="asset-en">US Stocks · SPY/QQQ/Tesla</div>
+        <div class="asset-body">
+          全球最大资本市场、影响全球风险偏好<br>
+          <b>关键指标：</b> S&P500、纳斯达克、VIX恐慌指数<br>
+          <b>接入方式：</b> 盈透/富途证券API
+        </div>
+        <div class="asset-meta">
+          <span class="tag tag-yellow">Phase 3</span>
+          <span class="tag tag-blue">VIX必看</span>
+        </div>
+      </div>
+
+      <div class="asset-card" style="border-color: rgba(251,146,60,0.3);">
+        <div class="asset-name">A股</div>
+        <div class="asset-en">China A-Shares · 沪深300/创业板</div>
+        <div class="asset-body">
+          中国经济晴雨表、政策驱动型市场<br>
+          <b>关键指标：</b> 沪深300、北向资金、社融数据、LPR<br>
+          <b>接入方式：</b> QMT/迅投API、东方财富
+        </div>
+        <div class="asset-meta">
+          <span class="tag tag-yellow">Phase 3</span>
+          <span class="tag tag-orange">政策驱动</span>
+        </div>
+      </div>
+
+      <div class="asset-card" style="border-color: rgba(34,211,238,0.3);">
+        <div class="asset-name">港股</div>
+        <div class="asset-en">HK Stocks · 恒生/恒科</div>
+        <div class="asset-body">
+          中概股+国际资本交汇、流动性敏感<br>
+          <b>关键指标：</b> 恒生指数、恒生科技、南向资金<br>
+          <b>接入方式：</b> 富途/老虎证券API
+        </div>
+        <div class="asset-meta">
+          <span class="tag tag-yellow">Phase 3</span>
+          <span class="tag tag-cyan">中美交汇</span>
+        </div>
+      </div>
+
+      <div class="asset-card" style="border-color: rgba(251,191,36,0.3);">
+        <div class="asset-name">大宗商品</div>
+        <div class="asset-en">Commodities · 黄金/原油/铜</div>
+        <div class="asset-body">
+          通胀晴雨表、地缘风险对冲<br>
+          <b>关键指标：</b> 黄金(XAUUSD)、WTI原油、伦铜、CRB指数<br>
+          <b>信号意义：</b> 金涨=避险、油涨=通胀、铜涨=经济好
+        </div>
+        <div class="asset-meta">
+          <span class="tag tag-yellow">必须监控</span>
+          <span class="tag tag-yellow">不交易也要看</span>
+        </div>
+      </div>
+
+      <div class="asset-card" style="border-color: rgba(248,113,113,0.3);">
+        <div class="asset-name">期货</div>
+        <div class="asset-en">Futures · 股指/商品期货</div>
+        <div class="asset-body">
+          杠杆工具、对冲+投机<br>
+          <b>品种：</b> CME微型股指期货、上期所铜/金、CBOT农产品<br>
+          <b>注意：</b> 杠杆放大风险，Phase 2后才参与
+        </div>
+        <div class="asset-meta">
+          <span class="tag tag-red">Phase 2+</span>
+          <span class="tag tag-red">高杠杆</span>
+        </div>
+      </div>
+
+      <div class="asset-card" style="border-color: rgba(52,211,153,0.3);">
+        <div class="asset-name">外汇+债券</div>
+        <div class="asset-en">FX + Bonds · DXY/USTBTL</div>
+        <div class="asset-body">
+          全球资金流向的源头<br>
+          <b>关键指标：</b> 美元指数(DXY)、10年期美债收益率、中美国债利差<br>
+          <b>信号意义：</b> 美元涨→风险资产跌；美债收益率涨→科技股承压
+        </div>
+        <div class="asset-meta">
+          <span class="tag tag-yellow">必须监控</span>
+          <span class="tag tag-green">不交易也要看</span>
+        </div>
+      </div>
+
+      <div class="asset-card" style="border-color: rgba(139,92,246,0.3);">
+        <div class="asset-name">竞猜平台</div>
+        <div class="asset-en">Prediction Markets · Polymarket</div>
+        <div class="asset-body">
+          事件驱动的概率市场、情绪指标<br>
+          <b>用途：</b> 大选/政策/事件概率 = 市场情绪的另类数据<br>
+          <b>注意：</b> 无API、手动操作、部分地区合规风险
+        </div>
+        <div class="asset-meta">
+          <span class="tag tag-brand">手动</span>
+          <span class="tag tag-yellow">情绪指标</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">各资产与加密货币的传导关系</div>
+    <table>
+      <tr>
+        <th style="width:25%">触发事件</th>
+        <th style="width:20%">美元</th>
+        <th style="width:20%">大宗</th>
+        <th style="width:15%">美股</th>
+        <th style="width:20%">加密货币</th>
+      </tr>
+      <tr>
+        <td>美联储加息</td>
+        <td><span class="tag tag-green">↑ 涨</span></td>
+        <td><span class="tag tag-red">↓ 跌</span></td>
+        <td><span class="tag tag-red">↓ 跌</span></td>
+        <td><span class="tag tag-red">↓ 跌</span></td>
+      </tr>
+      <tr>
+        <td>美联储降息</td>
+        <td><span class="tag tag-red">↓ 跌</span></td>
+        <td><span class="tag tag-green">↑ 涨</span></td>
+        <td><span class="tag tag-green">↑ 涨</span></td>
+        <td><span class="tag tag-green">↑ 涨</span></td>
+      </tr>
+      <tr>
+        <td>地缘冲突</td>
+        <td><span class="tag tag-green">↑ 涨</span></td>
+        <td><span class="tag tag-green">↑ 金涨油涨</span></td>
+        <td><span class="tag tag-red">↓ 跌</span></td>
+        <td><span class="tag tag-red">↓ 跌</span></td>
+      </tr>
+      <tr>
+        <td>中国经济刺激</td>
+        <td><span class="tag tag-red">↓ 跌</span></td>
+        <td><span class="tag tag-green">↑ 铜涨</span></td>
+        <td><span class="tag tag-yellow">~ 中性</span></td>
+        <td><span class="tag tag-green">↑ 涨(流动性)</span></td>
+      </tr>
+      <tr>
+        <td>美股暴跌(VIX>30)</td>
+        <td><span class="tag tag-yellow">~ 波动</span></td>
+        <td><span class="tag tag-green">↑ 金涨</span></td>
+        <td><span class="tag tag-red">↓ 跌</span></td>
+        <td><span class="tag tag-red">↓ 跌(避险)</span></td>
+      </tr>
+      <tr>
+        <td>SEC批准BTC ETF</td>
+        <td><span class="tag tag-yellow">~ 中性</span></td>
+        <td><span class="tag tag-yellow">~ 中性</span></td>
+        <td><span class="tag tag-green">↑ 涨</span></td>
+        <td><span class="tag tag-green">↑ 大涨</span></td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-3);">
+      这就是为什么即使只做加密货币，也必须监控美元、大宗、美股 — 它们是加密市场的"上游信号"。
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 2. 美林投资时钟 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>美林投资时钟 — 经济周期决定投什么</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">美林投资时钟（Merrill Lynch Investment Clock）</div>
+    <p style="font-size:14px; color:var(--text-2); margin-bottom:20px;">
+      美林银行根据1973-2004年数据回测发现：
+      不同经济周期阶段，不同资产表现差异巨大。
+      时钟分为4个阶段，每个阶段有一类"最佳资产"。
+    </p>
+
+    <div class="clock">
+      <div class="clock-cell" style="background: var(--green-light); border-color: rgba(52,211,153,0.3);">
+        <h4 style="color: var(--green);">阶段1: 复苏期</h4>
+        <p>低增长 + 低通胀<br>GDP↑ + CPI↓</p>
+        <div class="asset" style="color: var(--green);">→ 股票</div>
+        <p style="margin-top:6px;">企业盈利改善，股市先行</p>
+      </div>
+
+      <div class="clock-cell" style="background: var(--orange-light); border-color: rgba(251,146,60,0.3);">
+        <h4 style="color: var(--orange);">阶段2: 过热期</h4>
+        <p>高增长 + 高通胀<br>GDP↑ + CPI↑</p>
+        <div class="asset" style="color: var(--orange);">→ 大宗商品</div>
+        <p style="margin-top:6px;">需求旺盛推高资源价格</p>
+      </div>
+
+      <div class="clock-cell" style="background: var(--red-light); border-color: rgba(248,113,113,0.3);">
+        <h4 style="color: var(--red);">阶段3: 滞胀期</h4>
+        <p>低增长 + 高通胀<br>GDP↓ + CPI↑</p>
+        <div class="asset" style="color: var(--red);">→ 现金</div>
+        <p style="margin-top:6px;">现金为王，等待机会</p>
+      </div>
+
+      <div class="clock-cell" style="background: var(--blue-light); border-color: rgba(96,165,250,0.3);">
+        <h4 style="color: var(--blue);">阶段4: 衰退期</h4>
+        <p>低增长 + 低通胀<br>GDP↓ + CPI↓</p>
+        <div class="asset" style="color: var(--blue);">→ 债券</div>
+        <p style="margin-top:6px;">央行降息，债券涨</p>
+      </div>
+    </div>
+
+    <div class="quote-box">
+      "周期不会重演，但会押韵。" — 霍华德·马克斯
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr>
+        <th style="width:15%">阶段</th>
+        <th style="width:15%">GDP</th>
+        <th style="width:15%">CPI</th>
+        <th style="width:20%">最佳资产</th>
+        <th style="width:15%">加密货币</th>
+        <th style="width:20%">策略</th>
+      </tr>
+      <tr>
+        <td><b>复苏期</b></td>
+        <td>↑</td>
+        <td>↓</td>
+        <td>股票</td>
+        <td><span class="tag tag-green">利好</span></td>
+        <td>趋势跟踪、动量买入</td>
+      </tr>
+      <tr>
+        <td><b>过热期</b></td>
+        <td>↑</td>
+        <td>↑</td>
+        <td>大宗商品</td>
+        <td><span class="tag tag-yellow">中性</span></td>
+        <td>均值回归、逐步减仓</td>
+      </tr>
+      <tr>
+        <td><b>滞胀期</b></td>
+        <td>↓</td>
+        <td>↑</td>
+        <td>现金</td>
+        <td><span class="tag tag-red">利空</span></td>
+        <td>空仓或轻仓、严格止损</td>
+      </tr>
+      <tr>
+        <td><b>衰退期</b></td>
+        <td>↓</td>
+        <td>↓</td>
+        <td>债券</td>
+        <td><span class="tag tag-red">偏空</span></td>
+        <td>等待复苏信号、不抄底</td>
+      </tr>
+    </table>
+
+    <p style="margin-top:16px; font-size:14px; color:var(--text-2);">
+      <b>怎么用：</b> 每月检查美国和中国GDP增速+CPI数据 → 判断当前在哪个阶段 →
+      决定加密货币策略是激进、保守还是空仓。<br><br>
+      <b>当前判断（2026年9月）：</b> 美国GDP增速放缓+CPI回落 → 接近<b>衰退→复苏</b>过渡期 →
+      加密货币应该在"复苏信号确认"时转向趋势跟踪策略。
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 3. 短中长线模型 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>短中长线判断模型 — 不是拍脑袋</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">投资周期的三层模型</div>
+    <p style="font-size:14px; color:var(--text-2); margin-bottom:20px;">
+      为什么有的该持1天，有的该持1年？因为不同周期由不同力量驱动：
+    </p>
+
+    <div class="cycle-row">
+      <div class="cycle-card" style="background: var(--brand-light); border-color: rgba(139,92,246,0.3);">
+        <div class="cycle-label" style="color: var(--brand-2);">短线 · 1天-数周</div>
+        <div class="cycle-title">情绪+技术面驱动</div>
+        <div class="cycle-body">
+          <b>驱动力：</b> RSI超买超卖、资金流入流出、新闻事件、FOMO/恐慌<br><br>
+          <b>工具：</b> 15m-1h K线、RSI、布林带、量比<br><br>
+          <b>策略：</b> 均值回归、日内波段<br><br>
+          <b>判断"这是短线"的信号：</b><br>
+          → RSI极端（<30或>70）<br>
+          → 价格偏离均线超过2σ<br>
+          → 量比>2（情绪爆发）<br>
+          → 有明确催化剂（新闻/数据）<br><br>
+          <b>退出条件：</b> RSI回归中性、量比恢复正常<br><br>
+          <b>不适用场景：</b> 趋势明确时（均线多头排列时不要做均值回归）
+        </div>
+      </div>
+
+      <div class="cycle-card" style="background: var(--blue-light); border-color: rgba(96,165,250,0.3);">
+        <div class="cycle-label" style="color: var(--blue);">中线 · 1-6个月</div>
+        <div class="cycle-title">趋势+资金面驱动</div>
+        <div class="cycle-body">
+          <b>驱动力：</b> 行业周期、资金流向、机构持仓变化、政策周期<br><br>
+          <b>工具：</b> 4h-日线K线、EMA20/50、MACD、周线RSI<br><br>
+          <b>策略：</b> 趋势跟踪、动量突破<br><br>
+          <b>判断"这是中线"的信号：</b><br>
+          → EMA20 > EMA50（多头趋势确立）<br>
+          → MACD金叉 + 量能放大<br>
+          → 行业ETF持续流入（如比特币ETF）<br>
+          → 有行业级催化剂（减半、ETF、监管）<br><br>
+          <b>退出条件：</b> EMA20跌破EMA50、MACD死叉<br><br>
+          <b>不适用场景：</b> 震荡市（EMA频繁交叉时不要做趋势）
+        </div>
+      </div>
+
+      <div class="cycle-card" style="background: var(--orange-light); border-color: rgba(251,146,60,0.3);">
+        <div class="cycle-label" style="color: var(--orange);">长线 · 6个月-数年</div>
+        <div class="cycle-title">周期+基本面驱动</div>
+        <div class="cycle-body">
+          <b>驱动力：</b> 经济周期（美林时钟）、技术革命、人口结构、制度变革<br><br>
+          <b>工具：</b> 月线K线、200日均线、美林时钟、康波周期<br><br>
+          <b>策略：</b> 定投+持有、周期配置<br><br>
+          <b>判断"这是长线"的信号：</b><br>
+          → 价格在200日均线上方（长期牛市）<br>
+          → 美林时钟在复苏/过热期<br>
+          → 有结构性变化（BTC减半、AI革命、碳中和）<br>
+          → 哈希率/活跃地址持续增长（基本面）<br><br>
+          <b>退出条件：</b> 周期反转（美林时钟转滞胀）、基本面恶化<br><br>
+          <b>不适用场景：</b> 流动性紧缩周期（美联储加息时减仓）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">决策树 — 怎么判断当前该做短中长线</div>
+    <table>
+      <tr>
+        <th style="width:25%">问题</th>
+        <th style="width:25%">看什么指标</th>
+        <th style="width:25%">答案是Yes</th>
+        <th style="width:25%">答案是No</th>
+      </tr>
+      <tr>
+        <td><b>市场有没有趋势？</b></td>
+        <td>EMA20 vs EMA50 + ADX</td>
+        <td>ADX>25 + EMA20>EMA50 → 转中线趋势跟踪</td>
+        <td>ADX<20 + EMA纠缠 → 转短线均值回归</td>
+      </tr>
+      <tr>
+        <td><b>有没有长期基本面支撑？</b></td>
+        <td>200日均线 + 美林时钟阶段</td>
+        <td>价格>200MA + 复苏期 → 建长线底仓</td>
+        <td>价格<200MA + 滞胀期 → 只做短线</td>
+      </tr>
+      <tr>
+        <td><b>当前波动率够不够？</b></td>
+        <td>ATR + 布林带宽度</td>
+        <td>ATR高 + BB宽 → 短线空间大</td>
+        <td>ATR低 + BB窄 → 等待突破</td>
+      </tr>
+      <tr>
+        <td><b>有没有催化剂？</b></td>
+        <td>新闻/事件日历</td>
+        <td>有明确催化剂 → 短线博事件</td>
+        <td>无催化剂 → 看技术面</td>
+      </tr>
+      <tr>
+        <td><b>F&G情绪极端吗？</b></td>
+        <td>Fear & Greed Index</td>
+        <td>极度恐惧(<25) → 中线抄底</td>
+        <td>中性(40-60) → 短线波段</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-3);">
+      不是先决定做短线还是长线，而是<b>通过指标判断当前市场状态</b>，
+      然后让状态告诉你该用什么策略。
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 4. 达利欧全天候模型 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>达利欧全天候模型 — 跨周期配置</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ray Dalio 的 "All Weather" 框架</div>
+    <div class="quote-box">
+      "不要把鸡蛋放在一个篮子里。要理解经济四季，在每个季节都有一类资产表现好。"
+      — Ray Dalio
+    </div>
+
+    <p style="font-size:14px; color:var(--text-2); margin-bottom:16px;">
+      达利欧的核心思想：你无法预测未来，但可以确保<b>任何经济环境下都有一类资产在涨</b>。
+    </p>
+
+    <table>
+      <tr>
+        <th style="width:20%">经济环境</th>
+        <th style="width:20%">占比</th>
+        <th style="width:30%">配置资产</th>
+        <th style="width:30%">加密货币版</th>
+      </tr>
+      <tr>
+        <td>经济增长</td>
+        <td>30%</td>
+        <td>股票、大宗商品</td>
+        <td>BTC/ETH（成长型）</td>
+      </tr>
+      <tr>
+        <td>通胀上升</td>
+        <td>15%</td>
+        <td>黄金、大宗商品</td>
+        <td>BTC（数字黄金）</td>
+      </tr>
+      <tr>
+        <td>通胀下降</td>
+        <td>15%</td>
+        <td>长期债券</td>
+        <td>稳定币（USDT/USDC）</td>
+      </tr>
+      <tr>
+        <td>经济衰退</td>
+        <td>40%</td>
+        <td>中短期债券</td>
+        <td>稳定币 + 低波动币</td>
+      </tr>
+    </table>
+
+    <p style="margin-top:16px; font-size:14px; color:var(--text-2);">
+      <b>对我们的启示：</b> $280不需要全押山寨币波段。
+      应该留一部分（比如$50）作为"衰退期储备"放在稳定币里，
+      当市场暴跌时才有子弹抄底。
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 5. 市场联动传导 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>市场联动传导 — 一个事件如何影响所有市场</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">传导链模型 — 从美联储加息到你的加密货币</div>
+
+    <div class="flow-box">
+      <div class="flow-cause">触发：美联储宣布加息0.25%</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-effect">美元指数(DXY)上涨 → 全球美元回流美国</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-effect">美债收益率上升 → 无风险利率提高</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-effect">资金从风险资产撤出 → 美股下跌（尤其科技股）</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-effect">大宗商品下跌（美元计价的资产变贵了）</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-effect">A股/港股承压（外资撤出新兴市场）</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-result" style="color: var(--red);">加密货币下跌（BTC跟科技股相关性高 + 流动性收紧）</div>
+    </div>
+
+    <p style="margin-top:16px; font-size:14px; color:var(--text-2);">
+      <b>关键：你的加密货币在最后端。等加密货币跌了再反应已经晚了。</b><br>
+      要在第一步（美元涨）就收到信号，在最后一步（加密跌）之前减仓。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">每日必看的联动指标</div>
+    <table>
+      <tr>
+        <th style="width:15%">指标</th>
+        <th style="width:15%">来源</th>
+        <th style="width:30%">信号意义</th>
+        <th style="width:20%">看涨加密</th>
+        <th style="width:20%">看跌加密</th>
+      </tr>
+      <tr>
+        <td><b>DXY 美元指数</b></td>
+        <td>TradingView</td>
+        <td>美元是全球资产定价锚</td>
+        <td>DXY下跌</td>
+        <td>DXY上涨</td>
+      </tr>
+      <tr>
+        <td><b>10Y美债收益率</b></td>
+        <td>Investing.com</td>
+        <td>无风险利率，影响风险偏好</td>
+        <td>收益率下降</td>
+        <td>收益率>4.5%</td>
+      </tr>
+      <tr>
+        <td><b>VIX恐慌指数</b></td>
+        <td>CBOE</td>
+        <td>美股波动率 = 市场恐惧度</td>
+        <td>VIX<15</td>
+        <td>VIX>30</td>
+      </tr>
+      <tr>
+        <td><b>黄金价格</b></td>
+        <td>币安(XAUUSDT)</td>
+        <td>避险情绪 + 通胀预期</td>
+        <td>金稳/小涨</td>
+        <td>金暴涨(避险)</td>
+      </tr>
+      <tr>
+        <td><b>BTCETF资金流</b></td>
+        <td>SoSoValue</td>
+        <td>机构资金进出BTC的实时数据</td>
+        <td>净流入</td>
+        <td>连续3天净流出</td>
+      </tr>
+      <tr>
+        <td><b>纳指期货</b></td>
+        <td>Investing.com</td>
+        <td>科技股 = BTC的高相关性"表兄"</td>
+        <td>纳指期货涨</td>
+        <td>纳指期货跌</td>
+      </tr>
+      <tr>
+        <td><b>F&G恐惧指数</b></td>
+        <td>alternative.me</td>
+        <td>加密市场情绪温度计</td>
+        <td>恐惧(<25)抄底</td>
+        <td>贪婪(>75)减仓</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-3);">
+      这7个指标就是全球资金流向的"天气预报"。每天看一遍，不超过10分钟。
+    </p>
+  </div>
+</div>
+
+<!-- ════════ 6. 系统集成 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>怎么集成到我们的系统</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">市场分析Agent的数据源升级</div>
+    <table>
+      <tr>
+        <th style="width:20%">数据源</th>
+        <th style="width:20%">指标</th>
+        <th style="width:20%">频率</th>
+        <th style="width:40%">用途</th>
+      </tr>
+      <tr>
+        <td>Binance API</td>
+        <td>价格+K线+量</td>
+        <td>5分钟</td>
+        <td>交易执行 + 技术分析</td>
+      </tr>
+      <tr>
+        <td>alternative.me</td>
+        <td>F&G指数</td>
+        <td>5分钟</td>
+        <td>情绪面 + 联动止损</td>
+      </tr>
+      <tr>
+        <td>CoinGecko API</td>
+        <td>市值+交易量</td>
+        <td>1小时</td>
+        <td>市场总览</td>
+      </tr>
+      <tr>
+        <td style="color:var(--yellow);">TradingEconomics API</td>
+        <td style="color:var(--yellow);">GDP/CPI/利率</td>
+        <td style="color:var(--yellow);">每日</td>
+        <td style="color:var(--yellow);">美林时钟周期判断</td>
+      </tr>
+      <tr>
+        <td style="color:var(--yellow);">Investing.com</td>
+        <td style="color:var(--yellow);">DXY/美债/VIX</td>
+        <td style="color:var(--yellow);">每日</td>
+        <td style="color:var(--yellow);">全球资金流向</td>
+      </tr>
+      <tr>
+        <td style="color:var(--yellow);">SoSoValue</td>
+        <td style="color:var(--yellow);">BTC ETF资金流</td>
+        <td style="color:var(--yellow);">每日</td>
+        <td style="color:var(--yellow);">机构资金方向</td>
+      </tr>
+      <tr>
+        <td style="color:var(--yellow);">东方财富/新浪</td>
+        <td style="color:var(--yellow);">A股/港股/北向资金</td>
+        <td style="color:var(--yellow);">每日</td>
+        <td style="color:var(--yellow);">中国市场情绪</td>
+      </tr>
+      <tr>
+        <td style="color:var(--yellow);">Glassnode</td>
+        <td style="color:var(--yellow);">链上数据</td>
+        <td style="color:var(--yellow);">每日</td>
+        <td style="color:var(--yellow);">BTC基本面（大额转账）</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:13px; color:var(--text-3);">
+      黄色行 = 需要新接入。前3个已有，后5个待开发。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">升级后的每日分析报告模板</div>
+    <table>
+      <tr>
+        <th style="width:15%">板块</th>
+        <th style="width:25%">内容</th>
+        <th style="width:30%">数据来源</th>
+        <th style="width:30%">对交易的影响</th>
+      </tr>
+      <tr>
+        <td><b>① 宏观面</b></td>
+        <td>DXY/美债/VIX/美林时钟阶段</td>
+        <td>TradingEconomics + Investing.com</td>
+        <td>决定整体仓位：风险偏好高→加仓，低→减仓</td>
+      </tr>
+      <tr>
+        <td><b>② 资金面</b></td>
+        <td>BTC ETF流入流出/北向资金</td>
+        <td>SoSoValue + 东方财富</td>
+        <td>机构在买还是卖 → 跟随</td>
+      </tr>
+      <tr>
+        <td><b>③ 链上面</b></td>
+        <td>大额转账/交易所流入流出</td>
+        <td>Glassnode + Whale Alert</td>
+        <td>巨鲸在囤币还是抛售</td>
+      </tr>
+      <tr>
+        <td><b>④ 情绪面</b></td>
+        <td>F&G/社交媒体热度</td>
+        <td>alternative.me + Twitter API</td>
+        <td>极度恐惧→买入信号，极度贪婪→卖出信号</td>
+      </tr>
+      <tr>
+        <td><b>⑤ 技术面</b></td>
+        <td>RSI/布林带/EMA/量比</td>
+        <td>Binance API（已有）</td>
+        <td>具体买卖点</td>
+      </tr>
+      <tr>
+        <td><b>⑥ 事件面</b></td>
+        <td>经济日历/政策会议/监管</td>
+        <td>Investing.com 经济日历</td>
+        <td>大事件前减仓，事件后顺势</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════ 7. 交易策略与周期的关系 ════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>策略与周期的对应关系</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th style="width:15%">周期</th>
+        <th style="width:15%">时间框架</th>
+        <th style="width:20%">策略</th>
+        <th style="width:20%">当前状态</th>
+        <th style="width:30%">什么时候用</th>
+      </tr>
+      <tr>
+        <td><b>短线</b></td>
+        <td>15m-1h</td>
+        <td>RSI均值回归</td>
+        <td><span class="tag tag-green">✅ 已部署</span></td>
+        <td>震荡市场（ADX<20）、RSI极端</td>
+      </tr>
+      <tr>
+        <td><b>短线</b></td>
+        <td>15m-1h</td>
+        <td>动量突破</td>
+        <td><span class="tag tag-red">❌ 未部署</span></td>
+        <td>放量突破阻力位、量比>1.5</td>
+      </tr>
+      <tr>
+        <td><b>中线</b></td>
+        <td>4h-日线</td>
+        <td>趋势跟踪(EMA交叉)</td>
+        <td><span class="tag tag-red">❌ 未部署</span></td>
+        <td>EMA20>EMA50 + ADX>25</td>
+      </tr>
+      <tr>
+        <td><b>中线</b></td>
+        <td>日线</td>
+        <td>波段交易(MACD)</td>
+        <td><span class="tag tag-red">❌ 未部署</span></td>
+        <td>MACD金叉 + 量能放大</td>
+      </tr>
+      <tr>
+        <td><b>长线</b></td>
+        <td>周线-月线</td>
+        <td>定投+持有</td>
+        <td><span class="tag tag-red">❌ 未部署</span></td>
+        <td>美林时钟复苏期 + 200MA上方</td>
+      </tr>
+      <tr>
+        <td><b>长线</b></td>
+        <td>月线</td>
+        <td>周期配置(全天候)</td>
+        <td><span class="tag tag-red">❌ 未部署</span></td>
+        <td>资金>$5K后，跨资产配置</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px; font-size:14px; color:var(--text-2);">
+      <b>核心逻辑：</b> 系统不是永远只做均值回归。
+      它先判断当前市场处于什么周期（震荡/趋势/复苏/衰退），
+      然后自动切换到对应策略。震荡→均值回归，趋势→趋势跟踪，复苏→建长线底仓。
+    </p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>总蓝图补充 v1.1 · 2026-09-06 · 全球经济体与周期模型</p>
+  <p>美林投资时钟 × 达利欧全天候 × 霍华德·马克斯周期理论</p>
+</div>
+
+</body>
+</html>

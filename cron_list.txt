@@ -1,0 +1,110 @@
+# */5 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/binance_band.py >> logs/binance_band.log 2>&1
+# */5 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/grid_bot.py >> logs/grid_bot.log 2>&1
+# === OpenClaw 监控 ===
+# === 外汇+期货数据采集 ===
+# === 外汇+期货辩论桥接 ===
+# === 经济体模型五件套 ===
+# [2026-09-06 停用: TON市场关闭, ZEC波段太宽]
+# [2026-09-06 停用: grid_bot改为mean_rev_bot]
+# ── ZQ Web4 交易系统 (2026-09-06: 均值回归策略) ──
+# ── 副系统 ──
+# 数据采集
+# 核心引擎 (每5分钟)
+# 每日报告/学习/复盘
+# 白名单更新 (每周一)
+# 突破交易策略 (每15分钟)
+# 自动备份
+# 趋势跟踪策略 (每15分钟)
+# 辩论v4.0回测 (每周日3:00)
+# 辩论→合约桥接 (辩论后2分钟)
+# 辩论→火币桥接 (辩论后2分钟)
+# 辩论→网格桥接 (辩论后2分钟)
+*/10 * * * * /home/ubuntu/shared_context/traecode_bridge.sh >> /home/ubuntu/shared_context/bridge.log 2>&1
+*/10 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/follow_engine.py >> logs/follow_engine.log 2>&1
+*/10 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/swing_engine.py >> logs/swing_engine.log 2>&1
+*/10 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/trend_bot.py >> logs/trend_bot.log 2>&1
+*/15 * * * * /usr/bin/python3 /home/ubuntu/shared_context/breakout_bot.py >> /home/ubuntu/shared_context/logs/breakout.log 2>&1
+*/15 * * * * /usr/bin/python3 /home/ubuntu/shared_context/futures_prices.py >> /home/ubuntu/shared_context/logs/futures.log 2>&1
+*/15 * * * * /usr/bin/python3 /home/ubuntu/shared_context/fx_executor.py >> /home/ubuntu/shared_context/logs/fx_executor.log 2>&1
+*/15 * * * * /usr/bin/python3 /home/ubuntu/shared_context/trend_follow_bot.py >> /home/ubuntu/shared_context/logs/trend.log 2>&1
+*/15 * * * * FUTURES_MODE=live /usr/bin/python3 /home/ubuntu/shared_context/futures_bot.py >> /home/ubuntu/shared_context/logs/futures.log 2>&1
+*/15 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/early_signal_detector.py >> logs/early_signal.log 2>&1
+*/15 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/sig_engine.py >> logs/sig_engine.log 2>&1
+*/2 * * * * /usr/bin/python3 /home/ubuntu/shared_context/anomaly_monitor.py >> /home/ubuntu/shared_context/logs/openclaw_anomaly.log 2>&1
+*/2 * * * * /usr/bin/python3 /home/ubuntu/shared_context/heartbeat_manager.py >> /home/ubuntu/shared_context/logs/heartbeat.log 2>&1
+*/2 * * * * /usr/bin/python3 /home/ubuntu/shared_context/openclaw/heartbeat_writer.py >> /home/ubuntu/shared_context/logs/heartbeat_writer.log 2>&1
+*/30 * * * * /usr/bin/python3 /home/ubuntu/shared_context/arbitrage_engine.py >> /home/ubuntu/shared_context/logs/arbitrage.log 2>&1
+*/30 * * * * /usr/bin/python3 /home/ubuntu/shared_context/event_monitor.py >> /home/ubuntu/shared_context/logs/openclaw_events.log 2>&1
+*/30 * * * * /usr/bin/python3 /home/ubuntu/shared_context/futures_signal_generator.py >> /home/ubuntu/shared_context/logs/futures_signals.log 2>&1
+*/30 * * * * /usr/bin/python3 /home/ubuntu/shared_context/stock_data_collector.py >> /home/ubuntu/shared_context/logs/stocks.log 2>&1
+*/30 * * * * /usr/bin/python3 /home/ubuntu/shared_context/stock_signal_generator.py >> /home/ubuntu/shared_context/logs/stock_signals.log 2>&1
+*/30 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/htx_recenter.py >> logs/htx_recenter.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/correlation_gate.py >> /home/ubuntu/shared_context/logs/correlation_gate.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/economy/dashboard.py >> /home/ubuntu/shared_context/logs/dashboard.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/economy/economic_risk_state.py >> /home/ubuntu/shared_context/logs/economic_risk.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/fx_rates_collector.py >> /home/ubuntu/shared_context/logs/fx_rates.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/openclaw/watchdog.py >> /home/ubuntu/shared_context/logs/watchdog.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/risk_manager.py >> /home/ubuntu/shared_context/logs/risk.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/sync_trading_data.py >> /home/ubuntu/shared_context/logs/sync.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/system_dashboard.py >> /home/ubuntu/shared_context/logs/dashboard.log 2>&1
+*/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/system_monitor.py >> /home/ubuntu/shared_context/logs/monitor.log 2>&1
+*/5 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/htx_loop.py >> logs/htx_loop.log 2>&1
+*/5 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/mean_rev_bot.py >> logs/mean_rev.log 2>&1
+*/5 * * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/radar_v2.py >> logs/radar.log 2>&1
+0 * * * * /usr/bin/python3 /home/ubuntu/shared_context/bull_bear_debate.py >> /home/ubuntu/shared_context/logs/debate.log 2>&1
+0 * * * * /usr/bin/python3 /home/ubuntu/shared_context/central_bank_tracker.py >> /home/ubuntu/shared_context/logs/central_bank.log 2>&1
+0 * * * * /usr/bin/python3 /home/ubuntu/shared_context/economy/regime_locator_v3.py >> /home/ubuntu/shared_context/logs/regime_v3.log 2>&1
+0 * * * * /usr/bin/python3 /home/ubuntu/shared_context/news_sentiment.py >> /home/ubuntu/shared_context/logs/news.log 2>&1
+0 * * * * /usr/bin/python3 /home/ubuntu/shared_context/sentiment_collector.py >> /home/ubuntu/shared_context/logs/openclaw_sentiment.log 2>&1
+0 * * * * /usr/bin/python3 /home/ubuntu/shared_context/system_overview.py >> /home/ubuntu/shared_context/logs/overview.log 2>&1
+0 * * * * bash /home/ubuntu/zq_web4_trading_system/data_sources/data_cron.sh coingecko
+0 */2 * * * /usr/bin/python3 /home/ubuntu/shared_context/polymarket_collector.py >> /home/ubuntu/shared_context/logs/polymarket.log 2>&1
+0 */2 * * * /usr/bin/python3 /home/ubuntu/shared_context/polymarket_strategy.py >> /home/ubuntu/shared_context/logs/poly_strategy.log 2>&1
+0 */2 * * * bash /home/ubuntu/zq_web4_trading_system/data_sources/data_cron.sh sentiment
+0 */4 * * * /usr/bin/python3 /home/ubuntu/shared_context/correlation_matrix.py >> /home/ubuntu/shared_context/logs/correlation.log 2>&1
+0 */4 * * * /usr/bin/python3 /home/ubuntu/shared_context/cross_market_corr.py >> /home/ubuntu/shared_context/logs/cross_market.log 2>&1
+0 */4 * * * /usr/bin/python3 /home/ubuntu/shared_context/debate_futures_ext_bridge.py >> /home/ubuntu/shared_context/logs/debate_futures_ext_bridge.log 2>&1
+0 */4 * * * /usr/bin/python3 /home/ubuntu/shared_context/debate_fx_bridge.py >> /home/ubuntu/shared_context/logs/debate_fx_bridge.log 2>&1
+0 */4 * * * /usr/bin/python3 /home/ubuntu/shared_context/economy/rule_library.py >> /home/ubuntu/shared_context/logs/rule_library.log 2>&1
+0 */4 * * * /usr/bin/python3 /home/ubuntu/shared_context/economy/scenario_tree.py >> /home/ubuntu/shared_context/logs/scenario_tree.log 2>&1
+0 10 * * * /usr/bin/python3 /home/ubuntu/shared_context/rule_learning.py >> /home/ubuntu/shared_context/logs/rule_learning.log 2>&1
+0 10 * * 0 /usr/bin/python3 /home/ubuntu/shared_context/content_analyzer.py >> /home/ubuntu/shared_context/logs/content_analysis.log 2>&1
+0 11 * * 0 /usr/bin/python3 /home/ubuntu/shared_context/content_review_generator.py >> /home/ubuntu/shared_context/logs/review_generator.log 2>&1
+0 12,0 * * * /usr/bin/python3 /home/ubuntu/shared_context/content_feedback_collector.py >> /home/ubuntu/shared_context/logs/feedback.log 2>&1
+0 13 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/daily_pnl_report.py >> logs/daily_pnl_report.log 2>&1
+0 15 * * 0 /usr/bin/python3 /home/ubuntu/shared_context/content_fx_futures_generator.py >> /home/ubuntu/shared_context/logs/fx_futures_generator.log 2>&1
+0 15 * * 1,5 /usr/bin/python3 /home/ubuntu/shared_context/content_macro_generator.py >> /home/ubuntu/shared_context/logs/macro_generator.log 2>&1
+0 16 * * * /home/ubuntu/zq_web4_trading_system/auto_backup.sh
+0 16 * * 1-5 /usr/bin/python3 /home/ubuntu/shared_context/content_stock_generator.py >> /home/ubuntu/shared_context/logs/stock_generator.log 2>&1
+0 17 * * 1-5 /usr/bin/python3 /home/ubuntu/shared_context/options_iv_collector.py >> /home/ubuntu/shared_context/logs/options_iv.log 2>&1
+0 22 * * * /usr/bin/python3 /home/ubuntu/shared_context/daily_learning_review.py >> /home/ubuntu/shared_context/logs/learning.log 2>&1
+0 22 * * * /usr/bin/python3 /home/ubuntu/shared_context/learning_loop.py >> /home/ubuntu/shared_context/logs/review.log 2>&1
+0 22 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/daily_review.py >> logs/daily_review.log 2>&1
+0 22 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/risk_report.py >> logs/risk_report.log 2>&1
+0 3 * * 0 /usr/bin/python3 /home/ubuntu/shared_context/debate_backtest.py --days 30 --eval-hours 4 >> /home/ubuntu/shared_context/logs/debate_backtest.log 2>&1
+0 3 * * 1 cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/update_whitelist.py >> logs/update_whitelist.log 2>&1
+0 4 * * * /home/ubuntu/zq_web4_trading_system/auto_backup.sh
+0 6 * * * bash /home/ubuntu/zq_web4_trading_system/data_sources/data_cron.sh all
+0 8 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/prediction_market.py >> logs/prediction_market.log 2>&1
+0 8,20 * * * /usr/bin/python3 /home/ubuntu/shared_context/content_loop_v3.py >> /home/ubuntu/shared_context/logs/content.log 2>&1
+0 9 * * * /usr/bin/python3 /home/ubuntu/shared_context/economic_calendar.py >> /home/ubuntu/shared_context/logs/economic_calendar.log 2>&1
+0 9 * * * /usr/bin/python3 /home/ubuntu/shared_context/economic_indicators.py >> /home/ubuntu/shared_context/logs/economic_indicators.log 2>&1
+0 9 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/daily_learning.py >> logs/daily_learning.log 2>&1
+1 * * * * /usr/bin/python3 /home/ubuntu/shared_context/debate_grid_bridge.py >> /home/ubuntu/shared_context/logs/grid_bridge.log 2>&1
+1-59/5 * * * * /usr/bin/python3 /home/ubuntu/shared_context/economy/economy_debate_bridge.py >> /home/ubuntu/shared_context/logs/economy_bridge.log 2>&1
+10 13 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/review_backfeed.py >> logs/review_backfeed.log 2>&1
+10 8 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/prediction_ledger.py >> logs/prediction_ledger.log 2>&1
+10 8,20 * * * /usr/bin/python3 /home/ubuntu/shared_context/twitter_publisher.py >> /home/ubuntu/shared_context/logs/twitter.log 2>&1
+15 13 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/param_advisor.py >> logs/param_advisor.log 2>&1
+17 3 * * * /usr/bin/python3 /home/ubuntu/shared_context/stop_order_verifier.py >> /home/ubuntu/shared_context/logs/stop_verify.log 2>&1
+2 * * * * /usr/bin/python3 /home/ubuntu/shared_context/debate_futures_bridge.py >> /home/ubuntu/shared_context/logs/futures_bridge.log 2>&1
+3 * * * * /usr/bin/python3 /home/ubuntu/shared_context/debate_htx_bridge.py >> /home/ubuntu/shared_context/logs/htx_bridge.log 2>&1
+30 * * * * bash /home/ubuntu/zq_web4_trading_system/data_sources/data_cron.sh news
+30 22 * * * /usr/bin/python3 /home/ubuntu/shared_context/daily_report.py >> /home/ubuntu/shared_context/logs/report.log 2>&1
+30 22 * * * /usr/bin/python3 /home/ubuntu/shared_context/openclaw/daily_brief.py >> /home/ubuntu/shared_context/logs/daily_brief.log 2>&1
+30 23 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/auto_close_loop.py >> logs/auto_close_loop.log 2>&1
+30 3 * * * /usr/bin/python3 /home/ubuntu/shared_context/event_log_archiver.py >> /home/ubuntu/shared_context/logs/event_archive.log 2>&1
+30 9 * * * /usr/bin/python3 /home/ubuntu/shared_context/api_key_rotation_checker.py >> /home/ubuntu/shared_context/logs/api_key_rotation.log 2>&1
+45 22 * * * /usr/bin/python3 /home/ubuntu/shared_context/daily_report_pusher.py >> /home/ubuntu/shared_context/logs/report_push.log 2>&1
+5 13 * * * cd /home/ubuntu/zq_web4_trading_system && /usr/bin/python3 tools/daily_profit_ledger.py >> logs/daily_profit_ledger.log 2>&1
+5 8,20 * * * /usr/bin/python3 /home/ubuntu/shared_context/content_publisher_v2.py >> /home/ubuntu/shared_context/logs/publish.log 2>&1

@@ -54,8 +54,8 @@ PIPELINE = {
     "collect": {
         "name": "数据采集",
         "tasks": [
-            {"name": "sync_trading_data", "cmd": f"{PYTHON} {SHARED}/sync_trading_data.py", "log": "sync.log", "timeout": 120, "critical": True},
-            {"name": "fx_rates", "cmd": f"{PYTHON} {SHARED}/fx_rates_collector.py", "log": "fx_rates.log", "timeout": 60, "critical": True},
+            {"name": "sync_trading_data", "cmd": f"{PYTHON} {SHARED}/sync_trading_data.py", "log": "sync.log", "timeout": 120, "critical": True, "retries": 3},
+            {"name": "fx_rates", "cmd": f"{PYTHON} {SHARED}/fx_rates_collector.py", "log": "fx_rates.log", "timeout": 60, "critical": True, "retries": 3},
             {"name": "futures_prices", "cmd": f"{PYTHON} {SHARED}/futures_prices.py", "log": "futures.log", "timeout": 60, "critical": False},
             {"name": "stock_data", "cmd": f"{PYTHON} {SHARED}/stock_data_collector.py", "log": "stocks.log", "timeout": 120, "critical": False},
         ],
@@ -71,7 +71,7 @@ PIPELINE = {
     "risk_check": {
         "name": "风控检查",
         "tasks": [
-            {"name": "risk_manager", "cmd": f"{PYTHON} {SHARED}/risk_manager.py", "log": "risk.log", "timeout": 60, "critical": True},
+            {"name": "risk_manager", "cmd": f"{PYTHON} {SHARED}/risk_manager.py", "log": "risk.log", "timeout": 60, "critical": True, "retries": 3},
         ],
     },
     "execute": {
@@ -120,52 +120,85 @@ def save_status(s):
         json.dump(s, f, indent=2, ensure_ascii=False)
 
 
+def _send_pipeline_alert(title, message, task_name, level="WARNING"):
+    """通过 alert_notifier 发送管道告警"""
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "alert_notifier",
+            str(Path(__file__).parent / "alert_notifier.py")
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        notifier = mod.AlertNotifier()
+        notifier.send(title, message, level=level, task_name=task_name)
+    except Exception as e:
+        logger.error(f"告警发送失败: {e}")
+
+
 def run_task(task, phase_key):
     name = task["name"]
     cmd = task["cmd"]
     cwd = task.get("cwd", str(SHARED))
     timeout = task.get("timeout", 300)
     critical = task.get("critical", False)
+    retries = task.get("retries", 1)
 
     t0 = time.time()
     logger.info(f"  ▶ {name}")
 
-    try:
-        result = subprocess.run(
-            cmd, shell=True, cwd=cwd, timeout=timeout,
-            capture_output=True, text=True,
+    last_error = None
+    ok = False
+    exit_code = 0
+
+    for attempt in range(1, retries + 1):
+        if attempt > 1:
+            delay = 5 * (2 ** (attempt - 2))
+            logger.info(f"    ⏳ 第{attempt}/{retries}次, {delay}s后重试...")
+            time.sleep(delay)
+
+        try:
+            result = subprocess.run(
+                cmd, shell=True, cwd=cwd, timeout=timeout,
+                capture_output=True, text=True,
+            )
+            elapsed = time.time() - t0
+            ok = result.returncode == 0
+            exit_code = result.returncode
+
+            if ok:
+                logger.info(f"    ✅ {name} (第{attempt}次, {elapsed:.1f}s)")
+                break
+            else:
+                last_error = f"exit={result.returncode}"
+                logger.warning(f"    ❌ {name} 第{attempt}次失败: exit={result.returncode} ({elapsed:.1f}s)")
+                if result.stderr:
+                    for line in result.stderr.strip().split("\n")[-2:]:
+                        logger.warning(f"       {line}")
+
+        except subprocess.TimeoutExpired:
+            last_error = "timeout"
+            logger.warning(f"    ⏰ {name} 第{attempt}次超时 ({timeout}s)")
+        except Exception as e:
+            last_error = str(e)
+            logger.error(f"    💥 {name} 第{attempt}次异常: {e}")
+
+    elapsed = time.time() - t0
+
+    if not ok and critical:
+        _send_pipeline_alert(
+            f"管道关键任务失败: {name}",
+            f"阶段: {phase_key}\n错误: {last_error}\n重试: {retries}次\n耗时: {elapsed:.1f}s",
+            task_name=name,
+            level="CRITICAL",
         )
-        elapsed = time.time() - t0
-        ok = result.returncode == 0
 
-        if ok:
-            logger.info(f"    ✅ {name} ({elapsed:.1f}s)")
-        else:
-            logger.error(f"    ❌ {name} exit={result.returncode} ({elapsed:.1f}s)")
-            if result.stderr:
-                for line in result.stderr.strip().split("\n")[-2:]:
-                    logger.error(f"       {line}")
-
-        return {
-            "name": name, "phase": phase_key, "success": ok,
-            "exit_code": result.returncode, "duration": round(elapsed, 2),
-            "last_run": datetime.now().isoformat(), "critical": critical,
-        }
-
-    except subprocess.TimeoutExpired:
-        elapsed = time.time() - t0
-        logger.error(f"    ⏰ {name} timeout ({elapsed:.1f}s)")
-        return {"name": name, "phase": phase_key, "success": False,
-                "exit_code": -1, "duration": round(elapsed, 2),
-                "last_run": datetime.now().isoformat(),
-                "error": "timeout", "critical": critical}
-    except Exception as e:
-        elapsed = time.time() - t0
-        logger.error(f"    💥 {name} exception: {e}")
-        return {"name": name, "phase": phase_key, "success": False,
-                "exit_code": -2, "duration": round(elapsed, 2),
-                "last_run": datetime.now().isoformat(),
-                "error": str(e), "critical": critical}
+    return {
+        "name": name, "phase": phase_key, "success": ok,
+        "exit_code": exit_code, "duration": round(elapsed, 2),
+        "last_run": datetime.now().isoformat(), "critical": critical,
+        "retries": retries, "last_error": last_error,
+    }
 
 
 def run_phase(phase_key, status):

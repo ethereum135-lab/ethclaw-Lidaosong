@@ -126,6 +126,21 @@ class AlertNotifier:
             logger.error("Telegram发送失败: %s", e)
             return False
 
+    def _send_feishu(self, text):
+        """发送飞书 Webhook 消息（Telegram降级方案）"""
+        webhook = os.environ.get("FEISHU_WEBHOOK_URL", "")
+        if not webhook:
+            return False
+        try:
+            payload = {"msg_type": "text", "content": {"text": text}}
+            data = json.dumps(payload).encode()
+            req = urllib.request.Request(webhook, data=data, headers={"Content-Type": "application/json"})
+            resp = urllib.request.urlopen(req, timeout=10)
+            return resp.status == 200
+        except Exception as e:
+            logger.error("飞书发送失败: %s", e)
+            return False
+
     def _format_message(self, title, message, level, task_name=None):
         """格式化 Telegram 消息"""
         icon = LEVEL_ICONS.get(level, "⚪")
@@ -192,6 +207,8 @@ class AlertNotifier:
 
         # 发送 Telegram
         success = self._send_telegram(text)
+        if not success:
+            success = self._send_feishu(text)
 
         # 记录
         self.daily_state["sent_count"] += 1
